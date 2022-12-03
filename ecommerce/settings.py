@@ -26,7 +26,11 @@ SECRET_KEY = 'mst6!yv6=eez559kkbgsw8ui30j$9eoc-7&a41e*7nx)z&w&bt'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'mydjangoajax.herokuapp.com' # add for heroku domain name
+    '127.0.0.1' # for local host
+
+]
 
 
 # Application definition
