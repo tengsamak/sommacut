@@ -1,0 +1,285 @@
+{% load static %}
+{% block search %}
+
+<html lang="zxx">
+<head>
+	<!-- Meta Tag -->
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name='copyright' content=''>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<!-- Title Tag  -->
+	<title>Eshop - eCommerce HTML5 Template.</title>
+	<!-- Favicon -->
+	<link rel="icon" type="image/png" href="{% static '' %}images2/favicon.png">
+	<!-- Web Font -->
+	<link href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap" rel="stylesheet">
+
+	<!-- StyleSheet -->
+
+	<!-- Bootstrap -->
+	<link rel="stylesheet" href="{% static '' %}css2/bootstrap.css">
+	<!-- Magnific Popup -->
+	<link rel="stylesheet" href="{% static '' %}css2/magnific-popup.min.css">
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="{% static '' %}css2/font-awesome.css">
+	<!-- Fancybox -->
+	<link rel="stylesheet" href="{% static '' %}css2/jquery.fancybox.min.css">
+	<!-- Themify Icons -->
+	<link rel="stylesheet" href="{% static '' %}css2/themify-icons.css">
+	<!-- Nice Select CSS -->
+	<link rel="stylesheet" href="{% static '' %}css2/niceselect.css">
+	<!-- Animate CSS -->
+	<link rel="stylesheet" href="{% static '' %}css2/animate.css">
+	<!-- Flex Slider CSS -->
+	<link rel="stylesheet" href="{% static '' %}css2/flex-slider.min.css">
+	<!-- Owl Carousel -->
+	<link rel="stylesheet" href="{% static '' %}css2/owl-carousel.css">
+	<!-- Slicknav -->
+	<link rel="stylesheet" href="{% static '' %}css2/slicknav.min.css">
+
+	<!-- Eshop StyleSheet -->
+	<link rel="stylesheet" href="{% static '' %}css2/reset.css">
+	<link rel="stylesheet" href="{% static '' %}css2/style.css">
+	<link rel="stylesheet" href="{% static '' %}css2/responsive.css">
+
+	<!-- jQuery !-->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"> </script>
+	<!-- jQuery UI !-->
+	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+
+
+
+</head>
+<body class="js">
+
+<!-- Preloader -->
+
+<!-- End Preloader -->
+
+
+<!-- Header -->
+<header class="header shop">
+	<!-- Topbar -->
+
+	<!-- End Topbar -->
+	<div class="middle-inner">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-2 col-md-2 col-12">
+					<!-- Logo -->
+					<div class="logo">
+						<a href="index.html"><img alt="logo" src="images/logo.png"></a>
+					</div>
+					<!--/ End Logo -->
+					<!-- Search Form -->
+					<div class="search-top">
+						<div class="top-search"><a href="#0"><i class="ti-search"></i></a></div>
+						<!-- Search Form -->
+						<div class="search-top">
+							<form class="search-form">
+								<input name="search" type="text" placeholder="Search here...">
+								<button type="submit" value="search"><i class="ti-search"></i></button>
+							</form>
+						</div>
+						<!--/ End Search Form -->
+					</div>
+					<!--/ End Search Form -->
+					<div class="mobile-nav"><div class="slicknav_menu"><a tabindex="0" class="slicknav_btn slicknav_collapsed" role="button" aria-haspopup="true" href="#"><span class="slicknav_menutxt"></span><span class="slicknav_icon slicknav_no-text"><span class="slicknav_icon-bar"></span><span class="slicknav_icon-bar"></span><span class="slicknav_icon-bar"></span></span></a><ul class="slicknav_nav slicknav_hidden" role="menu" aria-hidden="true" style="display: none;">
+						<li class="active"><a tabindex="-1" role="menuitem" href="#">Home</a></li>
+						<li><a tabindex="-1" role="menuitem" href="#">Product</a></li>
+						<li><a tabindex="-1" role="menuitem" href="#">Service</a></li>
+						<li class="slicknav_collapsed slicknav_parent"><a tabindex="-1" class="slicknav_item slicknav_row" role="menuitem" aria-haspopup="true" href="#"><a tabindex="-1" href="#">Shop<i class="ti-angle-down"></i><span class="new">New</span></a>
+							<span class="slicknav_arrow">►</span></a><ul class="dropdown slicknav_hidden" role="menu" aria-hidden="true" style="display: none;">
+							<li><a tabindex="-1" role="menuitem" href="shop-grid.html">Shop Grid</a></li>
+							<li><a tabindex="-1" role="menuitem" href="cart.html">Cart</a></li>
+							<li><a tabindex="-1" role="menuitem" href="checkout.html">Checkout</a></li>
+						</ul>
+						</li>
+						<li><a tabindex="-1" role="menuitem" href="#">Pages</a></li>
+						<li class="slicknav_collapsed slicknav_parent"><a tabindex="-1" class="slicknav_item slicknav_row" role="menuitem" aria-haspopup="true" href="#"><a tabindex="-1" href="#">Blog<i class="ti-angle-down"></i></a>
+							<span class="slicknav_arrow">►</span></a><ul class="dropdown slicknav_hidden" role="menu" aria-hidden="true" style="display: none;">
+							<li><a tabindex="-1" role="menuitem" href="blog-single-sidebar.html">Blog Single Sidebar</a></li>
+						</ul>
+						</li>
+						<li><a tabindex="-1" role="menuitem" href="contact.html">Contact Us</a></li>
+					</ul></div></div>
+				</div>
+				<div class="col-lg-8 col-md-7 col-12">
+					<div class="search-bar-top">
+						<script>
+
+                $(function() {
+                  $("#query").autocomplete({
+                    source: "/search_auto/",
+                    select: function (event, ui) { //item selected
+                      AutoCompleteSelectHandler(event, ui)
+                    },
+                    minLength: 2,
+                  });
+                });
+
+                function AutoCompleteSelectHandler(event, ui)
+                {
+                  var selectedObj = ui.item;
+                }
+
+            </script>
+						<div class="search-bar">
+							<form action="/search/" method="post">
+								{% csrf_token %}
+								<select name="catid" style="display: inline;">
+									<option value="0">All</option>
+									{% for rs in category %}
+									<option value="{{ rs.id }}">{{ rs.title }}</option>
+									{% endfor %}
+								</select>
+								<input id="query" name="query" type="search" placeholder="Search Products Here....." class="search-bar">
+
+								<button class="btnn"><i class="ti-search"></i></button>
+							</form>
+						</div>
+					</div>
+				</div>
+				{% load myapptags %}
+				{% shopcartcount user.id as count %}
+				<div class="col-lg-2 col-md-3 col-12">
+					<div class="right-bar">
+						<!-- Search Form -->
+						<div class="sinlge-bar">
+							<a class="single-icon" href="/shopcart"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
+						</div>
+						<div class="sinlge-bar">
+							<a class="single-icon" href="/shopcart"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
+						</div>
+						<div class="sinlge-bar shopping">
+							<a class="single-icon" href="/shopcart"><i class="ti-bag"></i> <span class="total-count">{{count}}</span></a>
+							<!-- Shopping Item -->
+							<div class="shopping-item">
+								<div class="dropdown-cart-header">
+									<span>2 Items</span>
+									<a href="#">View Cart</a>
+								</div>
+								<ul class="shopping-list">
+									<li>
+										<a title="Remove this item" class="remove" href="#"><i class="fa fa-remove"></i></a>
+										<a class="cart-img" href="#"><img alt="#" src="https://via.placeholder.com/70x70"></a>
+										<h4><a href="#">Woman Ring</a></h4>
+										<p class="quantity">1x - <span class="amount">$99.00</span></p>
+									</li>
+									<li>
+										<a title="Remove this item" class="remove" href="#"><i class="fa fa-remove"></i></a>
+										<a class="cart-img" href="#"><img alt="#" src="https://via.placeholder.com/70x70"></a>
+										<h4><a href="#">Woman Necklace</a></h4>
+										<p class="quantity">1x - <span class="amount">$35.00</span></p>
+									</li>
+								</ul>
+								<div class="bottom">
+									<div class="total">
+										<span>Total</span>
+										<span class="total-amount">$134.00</span>
+									</div>
+									<a class="btn animate" href="/shopcart">Checkout</a>
+								</div>
+							</div>
+							<!--/ End Shopping Item -->
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Header Inner -->
+
+	<!--/ End Header Inner -->
+</header>
+<!--/ End Header -->
+
+<!-- Slider Area -->
+
+<!--/ End Slider Area -->
+
+<!-- Start Small Banner  -->
+
+<!-- End Small Banner -->
+
+<!-- Start Product Area -->
+
+<!-- End Product Area -->
+
+<!-- Start Midium Banner  -->
+
+<!-- End Midium Banner -->
+
+<!-- Start Most Popular -->
+
+<!-- End Most Popular Area -->
+
+<!-- Start Shop Home List  -->
+
+<!-- End Shop Home List  -->
+
+<!-- Start Cowndown Area -->
+
+<!-- /End Cowndown Area -->
+
+<!-- Start Shop Blog  -->
+
+<!-- End Shop Blog  -->
+
+<!-- Start Shop Services Area -->
+
+<!-- End Shop Services Area -->
+
+<!-- Start Shop Newsletter  -->
+
+<!-- End Shop Newsletter -->
+
+<!-- Modal -->
+
+<!-- Modal end -->
+
+<!-- Start Footer Area -->
+
+<!-- /End Footer Area -->
+
+<!-- Jquery -->
+<!--script src="{% static '' %}js2/jquery.min.js"></script-->
+<script src="{% static '' %}js2/jquery-migrate-3.0.0.js"></script>
+<!--script src="{% static '' %}js2/jquery-ui.min.js"></script-->
+<!-- Popper JS -->
+<script src="{% static '' %}js2/popper.min.js"></script>
+<!-- Bootstrap JS -->
+<script src="{% static '' %}js2/bootstrap.min.js"></script>
+<!-- Color JS -->
+<script src="{% static '' %}js2/colors.js"></script>
+<!-- Slicknav JS -->
+<script src="{% static '' %}js2/slicknav.min.js"></script>
+<!-- Owl Carousel JS -->
+<script src="{% static '' %}js2/owl-carousel.js"></script>
+<!-- Magnific Popup JS -->
+<script src="{% static '' %}js2/magnific-popup.js"></script>
+<!-- Waypoints JS -->
+<script src="{% static '' %}js2/waypoints.min.js"></script>
+<!-- Countdown JS -->
+<script src="{% static '' %}js2/finalcountdown.min.js"></script>
+<!-- Nice Select JS -->
+<script src="{% static '' %}js2/nicesellect.js"></script>
+<!-- Flex Slider JS -->
+<script src="{% static '' %}js2/flex-slider.js"></script>
+<!-- ScrollUp JS -->
+<script src="{% static '' %}js2/scrollup.js"></script>
+<!-- Onepage Nav JS -->
+<script src="{% static '' %}js2/onepage-nav.min.js"></script>
+<!-- Easing JS -->
+<script src="{% static '' %}js2/easing.js"></script>
+<!-- Active JS -->
+<script src="{% static '' %}js2/active.js"></script>
+</body>
+</html>
+
+{% endblock %}
+
+

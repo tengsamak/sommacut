@@ -1,0 +1,45 @@
+{% extends 'homebase.html' %}
+{% load static %}
+
+{% block author %} SOMMA{% endblock %}
+{% block title %} Contact Us{{ setting.title }} {% endblock %}
+{% block keywords %} {{ setting.keywords }} {% endblock %}
+{% block description %} {{ setting.description }} {% endblock %}
+
+<!--Test category menus every pages-->
+
+<!--end test category-->
+
+{% block contact %}
+      <div class="ps-home-contact">
+        <div id="contact-map" data-address="New York, NY" data-title="BAKERY LOCATION!" data-zoom="17"></div>
+        <div class="ps-home-contact__form">
+          <header>
+            <h3>Contact Us</h3>
+            <p>Learn about our company profile, communityimpact, sustainable motivation, and more.</p>
+          </header>
+            <!--check the message sucessful -->
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{message.tags}}" role="alert">
+                        {{message}}
+                    </div>
+                {% endfor %}
+            {% endif %}
+            <form id="checkout-form" class="clearfix" method="post">
+              {% csrf_token %}
+              <div class="form-group">
+              {{ form.as_p }}
+              </div>
+
+              <div class="form-group text-center">
+                <button class="ps-btn">Send Message<i class="fa fa-angle-right"></i></button>
+              </div>
+            </form>
+
+        </div>
+
+      </div>
+      <!--test from database-->
+       <div> {{ setting.contact|safe }}</div>
+{% endblock %}

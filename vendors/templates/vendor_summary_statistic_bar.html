@@ -1,0 +1,114 @@
+
+{% block vendorstatistic %}
+<div class="market-updates">
+			<div class="col-md-4 market-update-gd" style="background-color:#8ec641;">
+				<div class="market-update-block clr-block-1">
+					<div class="col-md-8 market-update-left" >
+						<h3>{% if not totalordercode %} 0 {% else %} {{totalordercode}} {% endif %}</h3>
+						<h4>Total Invoices </h4>
+						<p></p>
+					</div>
+					<div class="col-md-4 market-update-right">
+						<i class="fa fa-file-text-o"> </i>
+					</div>
+				  <div class="clearfix"> </div>
+				</div>
+			</div>
+            <div class="col-md-4 market-update-gd" style="background-color:#8ec699;">
+				<div class="market-update-block clr-block-1">
+					<div class="col-md-8 market-update-left" >
+						<h3>{% if not productlistcount %} 0 {% else %}{{productlistcount}}{% endif %}</h3>
+						<h4>Total Products </h4>
+						<p></p>
+					</div>
+					<div class="col-md-4 market-update-right">
+						<i class="fa fa-file-text-o"> </i>
+					</div>
+				  <div class="clearfix"> </div>
+				</div>
+			</div>
+            <div class="col-md-4 market-update-gd" style="background-color:#8ec750;">
+				<div class="market-update-block clr-block-1">
+					<div class="col-md-8 market-update-left" >
+						<h3>{% if not totalluserorder %} 0 {% else %}{{totalluserorder}} {% endif %}</h3>
+						<h4>Total Customers </h4>
+						<p></p>
+					</div>
+					<div class="col-md-4 market-update-right">
+						<i class="fa fa-file-text-o"> </i>
+					</div>
+				  <div class="clearfix"> </div>
+				</div>
+			</div>
+            <div class="col-md-4 market-update-gd" style="background-color:#9ec950;">
+				<div class="market-update-block clr-block-1">
+					<div class="col-md-8 market-update-left" >
+						<h3>{{df1}}</h3>
+						<h4>User Invoice Order </h4>
+						<p></p>
+					</div>
+					<div class="col-md-4 market-update-right">
+						<i class="fa fa-file-text-o"> </i>
+					</div>
+				  <div class="clearfix"> </div>
+				</div>
+			</div>
+			<div class="col-md-4 market-update-gd"style="background-color:#f8931d;">
+				<div class="market-update-block clr-block-2">
+				 <div class="col-md-8 market-update-left">
+					<h3>{{totalordercode}}</h3>
+					<h4>Total Payment</h4>
+					<p></p>
+				  </div>
+					<div class="col-md-4 market-update-right">
+						<i class="fa fa-eye"> </i>
+					</div>
+				  <div class="clearfix"> </div>
+				</div>
+			</div>
+			<div class="col-md-4 market-update-gd" style="background-color:#0e74bc;">
+				<div class="market-update-block clr-block-3">
+					<div class="col-md-8 market-update-left">
+						<h3>{{productlistcount}}</h3>
+						<h4>Your Products </h4>
+						<p></p>
+					</div>
+					<div class="col-md-4 market-update-right">
+						<i class="fa fa-envelope-o"> </i>
+					</div>
+				  <div class="clearfix"> </div>
+				</div>
+			</div>
+		   <div class="clearfix"> </div>
+		</div>
+{{df|safe}}<br>
+{{df2|safe}}<br>
+{{df3|safe}}<br>
+{{count2}}<br>
+					<table>
+						<tr><td>
+							<p>User Image</p>
+							</td>
+							<td>
+							<p>User Name</p>
+							</td>
+							<td>
+							<p>Number</p>
+							</td>
+						</tr>
+						{% for key,value in count2.items %}
+							{% for j in alluser %}
+								{% if j.id == key %}
+
+						<tr>
+							<td><img src="{{j.userprofile.image.url}}" alt="user/buyer" style="height: 50px"></td>
+							<td>{{j.username}}/{{j.id}}</td>
+							<td><a href="{% url 'vendorstatisticlistinvoicebyid' j.id %}" >{{value}}</a> Order</td>
+						</tr>
+								{%endif%}
+							{%endfor%}
+				{%endfor%}</table>
+<br>{{count3}}<br>
+{{count4}}<br>
+
+{% endblock %}

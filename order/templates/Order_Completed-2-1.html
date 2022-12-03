@@ -1,0 +1,135 @@
+{% extends 'homebase.html' %}
+{% load static %}
+
+{% block author %} SOMMA{% endblock %}
+{% block title %} Order Completed {{ setting.title }} {% endblock %}
+{% block keywords %} {{ setting.keywords }} {% endblock %}
+{% block description %} {{ setting.description }} {% endblock %}
+
+<!--Test category menus every pages-->
+{% block head %}
+<link rel="stylesheet" href="{% static ''%}css/style-invoice.css" media="all" />
+{% endblock %}
+<!--end test category-->
+
+{% block shopcart %}
+
+
+
+    <header class="clearfix">
+      <div id="logo">
+        <img src="logo.png">
+      </div>
+      <div id="company">
+        <h2 class="name">{{ setting.title}}</h2>
+        <div>{{ setting.address}}</div>
+        <div>{{ setting.phone}}</div>
+        <div><a href="mailto:{{ setting.email}}">{{ setting.email}}</a></div>
+      </div>
+      </div>
+    </header>
+<hr>
+<!--    <main style="padding:30px 30px 30px 30px;">-->
+      <div id="details" class="clearfix">
+        <div id="client">
+          <div class="to">INVOICE TO:</div>
+          <h2 class="name">{{ user.first_name }} {{  user.last_name }}</h2>
+          <div class="address">{{profile.address}}</div>
+          <div class="email"><a href="{{profile.email}}">{{profile.email}}</a></div>
+        </div>
+
+
+        <div id="invoice">
+          <h1>INVOICE: {{ ordercode }}</h1>
+          <div class="date">Date of Invoice: 01/06/2014</div>
+          <div class="date">Due Date: 30/06/2014</div>
+        </div>
+
+      </div>
+      <hr />
+      <div id="details" class="clearfix">
+        <div id="client">
+          <div class="to">Bill TO:</div>
+          <h2 class="name">{{ user.first_name }} {{  user.last_name }}</h2>
+          <div class="address">796 Silver Harbour, TX 79273, US</div>
+          <div class="email"><a href="mailto:john@example.com">john@example.com</a></div>
+        </div>
+        <div id="client">
+          <div class="to">Ship TO:</div>
+          <h2 class="name">{{order.name}}</h2>
+          <div class="address">{{order.address}}</div>
+          <div class="email"><a href="mailto:john@example.com">john@example.com</a></div>
+        </div>
+        <div id="invoice">
+          <h1>Payment</h1>
+          <div class="date" style="color:red;">Status: NOT PAID</div>
+          <div class="date">Paid by: ABA ACCOUNT</div>
+          <div class="date">Paid Date: 30/06/2014</div>
+        </div>
+      </div>
+
+
+      <table border="0" cellspacing="0" cellpadding="0">
+        <thead>
+          <tr>
+            <th class="no">#</th>
+            <th class="desc">DESCRIPTION</th>
+            <th class="unit">UNIT PRICE</th>
+            <th class="qty">QUANTITY</th>
+            <th class="total">TOTAL</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="no">01</td>
+            <td class="desc"><h3>Website Design</h3>Creating a recognizable design solution based on the company's existing visual identity</td>
+            <td class="unit">$40.00</td>
+            <td class="qty">30</td>
+            <td class="total">$1,200.00</td>
+          </tr>
+          <tr>
+            <td class="no">02</td>
+            <td class="desc"><h3>Website Development</h3>Developing a Content Management System-based Website</td>
+            <td class="unit">$40.00</td>
+            <td class="qty">80</td>
+            <td class="total">$3,200.00</td>
+          </tr>
+          <tr>
+            <td class="no">03</td>
+            <td class="desc"><h3>Search Engines Optimization</h3>Optimize the site for search engines (SEO)</td>
+            <td class="unit">$40.00</td>
+            <td class="qty">20</td>
+            <td class="total">$800.00</td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="2"></td>
+            <td colspan="2">SUBTOTAL</td>
+            <td>$5,200.00</td>
+          </tr>
+          <tr>
+            <td colspan="2"></td>
+            <td colspan="2">VAT 10%</td>
+            <td>$1,300.00</td>
+          </tr>
+          <tr>
+            <td colspan="2"></td>
+            <td colspan="2">GRAND TOTAL</td>
+            <td>$6,500.00</td>
+          </tr>
+        </tfoot>
+      </table>
+      <div id="thanks">Thank you!</div>
+      <div id="notices">
+        <div>NOTICE:</div>
+        <div class="notice">A finance charge of 1.5% will be made on unpaid balances after 30 days.</div>
+      </div>
+<!--    </main>-->
+    <div>
+      Invoice was created on a computer and is valid without the signature and seal.
+    </div>
+
+
+
+{% endblock %}

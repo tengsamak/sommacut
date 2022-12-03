@@ -1,0 +1,101 @@
+{% extends 'homebase.html' %}
+{% load static %}
+
+{% block author %} SOMMA{% endblock %}
+{% block title %} Shop Cart List {{ setting.title }} {% endblock %}
+{% block keywords %} {{ setting.keywords }} {% endblock %}
+{% block description %} {{ setting.description }} {% endblock %}
+
+<!--Test category menus every pages-->
+
+<!--end test category-->
+{% block breadcrumb %}
+<!-- for everypage excepte index page-->
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/">Home</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Shop Cart</li>
+  </ol>
+</nav>
+<!-- end for page -->
+{% endblock %}
+{% block shopcart %}
+<div class="ps-content pt-80 pb-80">
+  <div class="ps-container">
+    <div class="ps-cart-listing">
+      <table class="table ps-cart__table">
+        <thead>
+        <tr>
+
+          {% if messages %}
+          {% for message in messages %}
+          <div class="alert alert-{{message.tags}}" role="alert">
+            {{ message }}
+          </div>
+          {% endfor %}
+          {% endif %}
+
+          <th>All Your Products Add to Shop Cart</th>
+          <th>Price</th>
+          <th>Quantity</th>
+          <th>Total</th>
+          <th>Noted</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for rs in shopcart %}
+        <tr>
+          <td>
+            {% if rs.variant.image_id  > 0 %}
+            <img src="{{rs.variant.image }}" alt="" style="height: 70px">
+            {% else %}
+            <img src="{{rs.product.image.url}}" alt=""style="height: 70px">
+            {% endif %}
+          </td>
+          <td class="thumb"><a class="thumb" href="/product/{{rs.product.id}}/{{rs.product.slug}}"><img class="mr-15" alt="" src="{{rs.product.image.url}}" width="100" height="100" >
+            {{rs.product}} {{ rs.variant.size }} {{ rs.variant.color }}</a></td>
+          <td class="price text-center"><strong>
+            {% if rs.product.variant == 'None' %}
+            {{ rs.product.price }}
+            {% else %}
+            {{ rs.variant.price }}
+            {% endif %}
+          </strong></td>
+          <td>
+            <div class="form-group--number">
+              {{rs.quantity}}
+            </div>
+          </td>
+          <td class="total text-center"><strong class="primary-color">$
+            {% if rs.product.variant == 'None' %}
+            {{ rs.amount}}
+            {% else %}
+            {{ rs.varamount }}
+            {% endif %}
+          </strong></td>
+          <td>
+            <div class="ps-remove"><a href="/order/deletefromcart/{{rs.id}}" onclick="return confirm('delete ! Are you sure?'" class="main-btn icon-btn"><i class="fa fa-close"></i> </a> </div>
+          </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+      <div class="ps-cart__actions">
+        <div class="ps-cart__promotion">
+          <div class="form-group">
+            <div class="ps-form--icon"><i class="fa fa-angle-right"></i>
+              <input class="form-control" type="text" placeholder="Promo Code">
+            </div>
+          </div>
+          <div class="form-group">
+            <button class="ps-btn ps-btn--gray">Continue Shopping</button>
+          </div>
+        </div>
+        <div class="ps-cart__total">
+          <h3>Total Price: <span> {{total}} $</span></h3><a class="ps-btn" href="/order/orderproduct">Process to checkout<i class="ps-icon-next"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

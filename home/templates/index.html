@@ -1,0 +1,32 @@
+{% extends 'homebase.html' %}
+{% load static %}
+{% block author %} SOMMA{% endblock %}
+{% block title %} {{ setting.title }} Home SOMMA Mart{% endblock %}
+{% block keywords %} {{ setting.keywords }} {% endblock %}
+{% block description %} {{ setting.description }} {% endblock %}
+
+{% load mptt_tags %}
+{% recursetree category %}
+{% endrecursetree %}
+
+<!--(3)-->
+{% block slider %} {% include 'slider.html' %} {% endblock %}
+<!--(4)-->
+{% block product_features %} {% include 'product_features.html' %}{% endblock %}
+<!--      (4-1)-->
+{% block promotion %}  {% include 'promotion.html' %}           {% endblock %}
+ <!--(5)-->
+{% block product_banner_offer %}{% include 'product_banner.html' %} {% endblock %}
+ <!--(6)-->
+{% block sale_off %} {% endblock %}
+<!-- (7)-->
+{% block topsale %} {% include 'topsale.html' %} {% endblock %}
+<!--(8)-->
+{% block testimonianl %} {% include 'testimonial.html' %} {% endblock %}
+<!--(9)-->
+{% block blog_news %} {% include 'blog_news.html' %} {% endblock %}
+<!--(10)-->
+
+ <!--(11)-->
+{% block subscribe %}{% include 'subscribe.html' %}{% endblock %}
+

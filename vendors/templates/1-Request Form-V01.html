@@ -1,0 +1,1340 @@
+<!--[if lt IE 9]><script src="https://cdn03.jotfor.ms/js/vendor/flashcanvas.js?3.3.32402" type="text/javascript"></script><![endif]-->
+<script src="https://cdn01.jotfor.ms/js/vendor/jquery-1.8.0.min.js?3.3.32402" type="text/javascript"></script>
+<script src="https://cdn02.jotfor.ms/js/vendor/jSignature.min.noconflict.js?3.3.32402" type="text/javascript"></script>
+<script src="https://cdn03.jotfor.ms/js/vendor/jotform.signaturepad.js?3.3.32402" type="text/javascript"></script>
+<script src="https://cdn01.jotfor.ms/static/prototype.forms.js" type="text/javascript"></script>
+<script src="https://cdn02.jotfor.ms/static/jotform.forms.js?3.3.32402" type="text/javascript"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/punycode/1.4.1/punycode.js"></script>
+<script type="text/javascript">	JotForm.newDefaultTheme = false;
+	JotForm.extendsNewTheme = false;
+	JotForm.newPaymentUIForNewCreatedForms = true;
+	JotForm.newPaymentUI = true;
+	JotForm.clearFieldOnHide="disable";
+	JotForm.submitError="jumpToFirstError";
+
+	JotForm.init(function(){
+	/*INIT-START*/
+if (window.JotForm && JotForm.accessible) $('input_11').setAttribute('tabindex',0);
+if (window.JotForm && JotForm.accessible) $('input_29').setAttribute('tabindex',0);
+if (window.JotForm && JotForm.accessible) $('input_32').setAttribute('tabindex',0);
+      setTimeout(function() {
+          $('input_20').hint('ex: 23');
+       }, 20);
+      setTimeout(function() {
+          $('input_28').hint('ex: 23');
+       }, 20);
+if (window.JotForm && JotForm.accessible) $('input_16').setAttribute('tabindex',0);
+if (window.JotForm && JotForm.accessible) $('input_27').setAttribute('tabindex',0);
+
+ JotForm.formatDate({date:(new Date()), dateField:$("id_"+25)});
+      JotForm.alterTexts(undefined);
+	/*INIT-END*/
+	});
+
+   JotForm.prepareCalculationsOnTheFly([null,{"name":"vendorInformation1","qid":"1","text":"Vendor Information Form","type":"control_head"},{"name":"submit2","qid":"2","text":"Submit","type":"control_button"},null,null,null,null,null,null,null,{"name":"vendorDetails","qid":"10","text":"Vendor Details","type":"control_head"},{"name":"companyName","qid":"11","text":"Company name","type":"control_textbox"},{"name":"contactNumber","qid":"12","text":"Contact Number","type":"control_phone"},{"name":"officeAddress","qid":"13","text":"Office Address","type":"control_address"},{"name":"companyEmail","qid":"14","subLabel":"example@example.com","text":"Company Email","type":"control_email"},null,{"name":"companyDescription","qid":"16","text":"Company Description","type":"control_textarea"},null,{"name":"businessOrganization","qid":"18","text":"Business Organization Type","type":"control_radio"},{"name":"name19","qid":"19","text":"Nature of Business\u002FTrade","type":"control_checkbox"},{"name":"yearThe20","qid":"20","subLabel":"e.g since 2003","text":"Year the Company was founded (since)","type":"control_number"},null,{"name":"vendorType","qid":"22","text":"Vendor Type","type":"control_radio"},null,{"name":"vendorsRepresentative","qid":"24","subLabel":"Touch the screen or mobile pen to sign ","text":"Vendor's Representative Signature","type":"control_signature"},{"name":"dateSigned","qid":"25","text":"Date Signed","type":"control_datetime"},{"name":"vendorsRepresentative26","qid":"26","text":"Vendor's Representative Name","type":"control_fullname"},{"name":"acceptedPayment","qid":"27","subLabel":"Check, bank transfer, purchase order, credit card","text":"Accepted Payment Method","type":"control_textbox"},{"name":"numberOf","qid":"28","text":"Number of Employees","type":"control_number"},{"name":"websiteUrl","qid":"29","subLabel":"www.example.com","text":"Website URL","type":"control_textbox"},{"name":"vendorsRepresentative30","qid":"30","subLabel":"example@example.com","text":"Vendor's Representative Email","type":"control_email"},null,{"description":"","name":"facebookigyoutube","qid":"32","subLabel":"www.facebook.com\u002Fexample.com","text":"Facebook\u002FIG\u002FYoutube","type":"control_textbox"},{"description":"","name":"phone1Number","qid":"33","text":"Phone1 Number (Vendor's Representative)","type":"control_phone"},{"name":"contactPerson34","qid":"34","text":"Contact Person Details","type":"control_head"},{"description":"","name":"phone2Number","qid":"35","text":"Phone2 Number","type":"control_phone"},null,null,{"name":"thankYou","qid":"38","text":"Thank you for your information. we will contact you via phone number or email soon.","type":"control_text"}]);
+   setTimeout(function() {
+JotForm.paymentExtrasOnTheFly([null,{"name":"vendorInformation1","qid":"1","text":"Vendor Information Form","type":"control_head"},{"name":"submit2","qid":"2","text":"Submit","type":"control_button"},null,null,null,null,null,null,null,{"name":"vendorDetails","qid":"10","text":"Vendor Details","type":"control_head"},{"name":"companyName","qid":"11","text":"Company name","type":"control_textbox"},{"name":"contactNumber","qid":"12","text":"Contact Number","type":"control_phone"},{"name":"officeAddress","qid":"13","text":"Office Address","type":"control_address"},{"name":"companyEmail","qid":"14","subLabel":"example@example.com","text":"Company Email","type":"control_email"},null,{"name":"companyDescription","qid":"16","text":"Company Description","type":"control_textarea"},null,{"name":"businessOrganization","qid":"18","text":"Business Organization Type","type":"control_radio"},{"name":"name19","qid":"19","text":"Nature of Business\u002FTrade","type":"control_checkbox"},{"name":"yearThe20","qid":"20","subLabel":"e.g since 2003","text":"Year the Company was founded (since)","type":"control_number"},null,{"name":"vendorType","qid":"22","text":"Vendor Type","type":"control_radio"},null,{"name":"vendorsRepresentative","qid":"24","subLabel":"Touch the screen or mobile pen to sign ","text":"Vendor's Representative Signature","type":"control_signature"},{"name":"dateSigned","qid":"25","text":"Date Signed","type":"control_datetime"},{"name":"vendorsRepresentative26","qid":"26","text":"Vendor's Representative Name","type":"control_fullname"},{"name":"acceptedPayment","qid":"27","subLabel":"Check, bank transfer, purchase order, credit card","text":"Accepted Payment Method","type":"control_textbox"},{"name":"numberOf","qid":"28","text":"Number of Employees","type":"control_number"},{"name":"websiteUrl","qid":"29","subLabel":"www.example.com","text":"Website URL","type":"control_textbox"},{"name":"vendorsRepresentative30","qid":"30","subLabel":"example@example.com","text":"Vendor's Representative Email","type":"control_email"},null,{"description":"","name":"facebookigyoutube","qid":"32","subLabel":"www.facebook.com\u002Fexample.com","text":"Facebook\u002FIG\u002FYoutube","type":"control_textbox"},{"description":"","name":"phone1Number","qid":"33","text":"Phone1 Number (Vendor's Representative)","type":"control_phone"},{"name":"contactPerson34","qid":"34","text":"Contact Person Details","type":"control_head"},{"description":"","name":"phone2Number","qid":"35","text":"Phone2 Number","type":"control_phone"},null,null,{"name":"thankYou","qid":"38","text":"Thank you for your information. we will contact you via phone number or email soon.","type":"control_text"}]);}, 20);
+</script>
+<link href="https://cdn01.jotfor.ms/static/formCss.css?3.3.32402" rel="stylesheet" type="text/css" />
+<link type="text/css" rel="stylesheet" href="https://cdn02.jotfor.ms/css/styles/nova.css?3.3.32402" />
+<style type="text/css">@media print{.form-section{display:inline!important}.form-pagebreak{display:none!important}.form-section-closed{height:auto!important}.page-section{position:initial!important}}</style>
+<link type="text/css" rel="stylesheet" href="https://cdn03.jotfor.ms/themes/CSS/566a91c2977cdfcd478b4567.css?themeRevisionID=5dca5ac9a5e86d17235d90c1"/>
+<link type="text/css" rel="stylesheet" href="https://cdn01.jotfor.ms/css/styles/payment/payment_styles.css?3.3.32402" />
+<link type="text/css" rel="stylesheet" href="https://cdn02.jotfor.ms/css/styles/payment/payment_feature.css?3.3.32402" />
+<style type="text/css">
+@import (css) '@{buttonFontLink}';
+
+    .form-label-left{
+        width:150px;
+    }
+    .form-line{
+        padding-top:12px;
+        padding-bottom:12px;
+    }
+    .form-label-right{
+        width:150px;
+    }
+    .form-all{
+        width:690px;
+        color:rgb(110, 59, 59) !important;
+        font-family:'Open Sans';
+        font-size:14px;
+    }
+</style>
+
+<style type="text/css" id="form-designer-style">
+    /* Injected CSS Code */
+@import "https://fonts.googleapis.com/css?family=Open Sans:light,lightitalic,normal,italic,bold,bolditalic";
+.form-all:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.form-all {
+  font-family: "Open Sans", sans-serif;
+}
+.form-all {
+  width: 690px;
+}
+.form-label-left,
+.form-label-right {
+  width: 150px;
+}
+.form-label {
+  white-space: normal;
+}
+
+.form-label-left {
+  display: inline-block;
+  white-space: normal;
+  float: left;
+  text-align: left;
+}
+.form-label-right {
+  display: inline-block;
+  white-space: normal;
+  float: left;
+  text-align: right;
+}
+.form-label-top {
+  white-space: normal;
+  display: block;
+  float: none;
+  text-align: left;
+}
+.form-radio-item label:before {
+  top: 0;
+}
+.form-all {
+  font-size: 14px;
+}
+.form-label {
+  font-weight: bold;
+}
+.form-checkbox-item label,
+.form-radio-item label {
+  font-weight: normal;
+}
+.supernova {
+  background-color: #ffffff;
+  background-color: #f3cf7a;
+}
+.supernova body {
+  background-color: transparent;
+}
+/*
+@width30: (unit(@formWidth, px) + 60px);
+@width60: (unit(@formWidth, px)+ 120px);
+@width90: (unit(@formWidth, px)+ 180px);
+*/
+/* | */
+@media screen and (min-width: 480px) {
+  .supernova .form-all {
+    border: 1px solid #efbe4b;
+    box-shadow: 0 3px 9px rgba(0, 0, 0, 0.1);
+  }
+}
+/* | */
+/* | */
+@media screen and (max-width: 480px) {
+  .jotform-form .form-all {
+    margin: 0;
+    width: 100%;
+  }
+}
+/* | */
+/* | */
+@media screen and (min-width: 480px) and (max-width: 767px) {
+  .jotform-form .form-all {
+    margin: 0;
+    width: 100%;
+  }
+}
+/* | */
+/* | */
+@media screen and (min-width: 480px) and (max-width: 689px) {
+  .jotform-form .form-all {
+    margin: 0;
+    width: 100%;
+  }
+}
+/* | */
+/* | */
+@media screen and (min-width: 768px) {
+  .jotform-form {
+    padding: 60px 0;
+  }
+}
+/* | */
+/* | */
+@media screen and (max-width: 689px) {
+  .jotform-form .form-all {
+    margin: 0;
+    width: 100%;
+  }
+}
+/* | */
+.supernova .form-all,
+.form-all {
+  background-color: #ffffff;
+  border: 1px solid transparent;
+}
+.form-header-group {
+  border-color: #e6e6e6;
+}
+.form-matrix-table tr {
+  border-color: #e6e6e6;
+}
+.form-matrix-table tr:nth-child(2n) {
+  background-color: #f2f2f2;
+}
+.form-all {
+  color: #6e3b3b;
+}
+.form-header-group .form-header {
+  color: #6e3b3b;
+}
+.form-header-group .form-subHeader {
+  color: #8f4d4d;
+}
+.form-sub-label {
+  color: #8f4d4d;
+}
+.form-label-top,
+.form-label-left,
+.form-label-right,
+.form-html {
+  color: #6e3b3b;
+}
+.form-checkbox-item label,
+.form-radio-item label {
+  color: #8f4d4d;
+}
+.form-line.form-line-active {
+  -webkit-transition-property: all;
+  -moz-transition-property: all;
+  -ms-transition-property: all;
+  -o-transition-property: all;
+  transition-property: all;
+  -webkit-transition-duration: 0.3s;
+  -moz-transition-duration: 0.3s;
+  -ms-transition-duration: 0.3s;
+  -o-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  -webkit-transition-timing-function: ease;
+  -moz-transition-timing-function: ease;
+  -ms-transition-timing-function: ease;
+  -o-transition-timing-function: ease;
+  transition-timing-function: ease;
+  background-color: #ffffe0;
+}
+/* omer */
+.form-radio-item,
+.form-checkbox-item {
+  padding-bottom: 0px !important;
+}
+.form-radio-item:last-child,
+.form-checkbox-item:last-child {
+  padding-bottom: 0;
+}
+/* omer */
+.form-single-column .form-checkbox-item,
+.form-single-column .form-radio-item {
+  width: 100%;
+}
+.form-checkbox-item .editor-container div,
+.form-radio-item .editor-container div {
+  position: relative;
+}
+.form-checkbox-item .editor-container div:before,
+.form-radio-item .editor-container div:before {
+  display: inline-block;
+  vertical-align: middle;
+  box-sizing: border-box;
+  left: 0;
+  width: 18px;
+  height: 18px;
+}
+.form-radio-item:not(#foo) {
+  position: relative;
+}
+.form-radio-item:not(#foo) .form-radio-other-input,
+.form-radio-item:not(#foo) .form-checkbox-item:not(#foo) .form-checkbox-other-input {
+  margin-left: 0;
+}
+.form-radio-item:not(#foo) .form-radio-other.form-radio {
+  display: none !important;
+}
+.form-radio-item:not(#foo) input[type="checkbox"],
+.form-radio-item:not(#foo) input[type="radio"] {
+  opacity: 0;
+  width: 0;
+  margin: 0;
+  padding: 0;
+}
+.form-radio-item:not(#foo) .form-radio-other,
+.form-radio-item:not(#foo) .form-checkbox-other {
+  display: inline-block !important;
+  margin-left: 17px;
+  margin-right: 13px;
+  margin-top: 0px;
+}
+.form-radio-item:not(#foo) .form-checkbox-other-input,
+.form-radio-item:not(#foo) .form-radio-other-input {
+  margin: 0;
+}
+.form-radio-item:not(#foo) label {
+  line-height: 18px;
+  float: left;
+  margin-left: 37px;
+  outline: none !important;
+}
+.form-radio-item:not(#foo) label:before {
+  content: '';
+  position: absolute;
+  display: inline-block;
+  vertical-align: baseline;
+  margin-right: 4px;
+  box-sizing: border-box;
+  border-radius: 50%;
+  left: 4px;
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+.form-radio-item:not(#foo) label:after {
+  content: '';
+  position: absolute;
+  z-index: 10;
+  display: inline-block;
+  opacity: 0;
+  top: 5px;
+  left: 9px;
+  width: 8px;
+  height: 8px;
+}
+.form-radio-item:not(#foo) input:checked + label:after {
+  opacity: 1;
+}
+.form-radio-item:not(#foo) label:before {
+  border: 2px solid #be6a15;
+}
+.form-radio-item:not(#foo) label:after {
+  background-color: #be6a15;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.form-radio-item:not(#foo) .editor-container div:before {
+  content: '';
+  border: 2px solid #be6a15;
+  border-radius: 50%;
+  margin: 0 4px 0 -6px;
+}
+.form-checkbox-item:not(#foo) {
+  position: relative;
+}
+.form-checkbox-item:not(#foo) label {
+  display: block;
+}
+.form-checkbox-item:not(#foo) .form-radio-other-input,
+.form-checkbox-item:not(#foo) .form-checkbox-item:not(#foo) .form-checkbox-other-input {
+  margin-left: 0;
+}
+.form-checkbox-item:not(#foo) .form-checkbox-other.form-checkbox {
+  display: none !important;
+}
+.form-checkbox-item:not(#foo) input[type="checkbox"],
+.form-checkbox-item:not(#foo) input[type="radio"] {
+  opacity: 0;
+  width: 0;
+  margin: 0;
+  padding: 0;
+}
+.form-checkbox-item:not(#foo) .form-radio-other,
+.form-checkbox-item:not(#foo) .form-checkbox-other {
+  display: inline-block !important;
+  margin-left: 17px;
+  margin-right: 13px;
+  margin-top: 0px;
+}
+.form-checkbox-item:not(#foo) .form-checkbox-other-input,
+.form-checkbox-item:not(#foo) .form-radio-other-input {
+  margin: 0;
+}
+.form-checkbox-item:not(#foo) label {
+  line-height: 18px;
+  float: left;
+  margin-left: 37px;
+  outline: none !important;
+}
+.form-checkbox-item:not(#foo) label:before {
+  content: '';
+  position: absolute;
+  display: inline-block;
+  vertical-align: baseline;
+  margin-right: 4px;
+  box-sizing: border-box;
+  border-radius: 50%;
+  left: 4px;
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+.form-checkbox-item:not(#foo) label:after {
+  content: '';
+  position: absolute;
+  z-index: 10;
+  display: inline-block;
+  opacity: 0;
+  top: 8px;
+  left: 9px;
+  width: 3px;
+  height: 3px;
+}
+.form-checkbox-item:not(#foo) input:checked + label:after {
+  opacity: 1;
+}
+.form-checkbox-item:not(#foo) label:before {
+  border: 2px solid #be6a15;
+}
+.form-checkbox-item:not(#foo) label:after {
+  background-color: #be6a15;
+  box-shadow: 0 2px 0 0 #be6a15, 2px 2px 0 0 #be6a15, 4px 2px 0 0 #be6a15, 6px 2px 0 0 #be6a15;
+  transform: rotate(-45deg);
+}
+.form-checkbox-item:not(#foo) .editor-container div:before {
+  content: '';
+  border: 2px solid #be6a15;
+  border-radius: 50%;
+  margin: 0 4px 0 -6px;
+}
+.supernova {
+  height: 100%;
+  background-repeat: no-repeat;
+  background-attachment: scroll;
+  background-position: center top;
+  background-repeat: repeat;
+}
+.supernova {
+  background-image: none;
+}
+#stage {
+  background-image: none;
+}
+/* | */
+.form-all {
+  background-repeat: no-repeat;
+  background-attachment: scroll;
+  background-position: center top;
+  background-repeat: repeat;
+}
+.form-header-group {
+  background-repeat: no-repeat;
+  background-attachment: scroll;
+  background-position: center top;
+}
+.form-line {
+  margin-top: 12px;
+  margin-bottom: 12px;
+}
+.form-line {
+  padding: 12px 36px;
+}
+.form-all .qq-upload-button,
+.form-all .form-submit-button,
+.form-all .form-submit-reset,
+.form-all .form-submit-print {
+  font-size: 1em;
+  padding: 9px 15px;
+  font-family: "Open Sans", sans-serif;
+  font-size: 14px;
+  font-weight: normal;
+}
+.form-all .form-pagebreak-back,
+.form-all .form-pagebreak-next {
+  font-size: 1em;
+  padding: 9px 15px;
+  font-family: "Open Sans", sans-serif;
+  font-size: 14px;
+  font-weight: normal;
+}
+/*
+& when ( @buttonFontType = google ) {
+	@import (css) "@{buttonFontLink}";
+}
+*/
+h2.form-header {
+  line-height: 1.618em;
+  font-size: 1.714em;
+}
+h2 ~ .form-subHeader {
+  line-height: 1.5em;
+  font-size: 1.071em;
+}
+.form-header-group {
+  text-align: left;
+}
+/*.form-dropdown,
+.form-radio-item,
+.form-checkbox-item,
+.form-radio-other-input,
+.form-checkbox-other-input,*/
+.form-captcha input,
+.form-spinner input,
+.form-error-message {
+  padding: 4px 3px 2px 3px;
+}
+.form-header-group {
+  font-family: "Open Sans", sans-serif;
+}
+.form-section {
+  padding: 0px 0px 0px 0px;
+}
+.form-header-group {
+  margin: 12px 36px 12px 36px;
+}
+.form-header-group {
+  padding: 24px 0px 24px 0px;
+}
+.form-textbox,
+.form-textarea {
+  border-color: #be6a15;
+  padding: 4px 3px 2px 3px;
+}
+.form-textbox,
+.form-textarea,
+.form-radio-other-input,
+.form-checkbox-other-input,
+.form-captcha input,
+.form-spinner input {
+  background-color: #ffffff;
+}
+.form-textbox {
+  height: 22px;
+}
+.form-matrix-row-headers,
+.form-matrix-column-headers,
+.form-matrix-values {
+  padding: 4px;
+}
+[data-type="control_dropdown"] .form-input,
+[data-type="control_dropdown"] .form-input-wide {
+  width: 150px;
+}
+.form-label {
+  font-family: "Open Sans", sans-serif;
+}
+li[data-type="control_image"] div {
+  text-align: left;
+}
+li[data-type="control_image"] img {
+  border: none;
+  border-width: 0px !important;
+  border-style: solid !important;
+  border-color: false !important;
+}
+.form-line-column {
+  width: auto;
+}
+.form-line-error {
+  overflow: hidden;
+  -webkit-transition-property: none;
+  -moz-transition-property: none;
+  -ms-transition-property: none;
+  -o-transition-property: none;
+  transition-property: none;
+  -webkit-transition-duration: 0.3s;
+  -moz-transition-duration: 0.3s;
+  -ms-transition-duration: 0.3s;
+  -o-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  -webkit-transition-timing-function: ease;
+  -moz-transition-timing-function: ease;
+  -ms-transition-timing-function: ease;
+  -o-transition-timing-function: ease;
+  transition-timing-function: ease;
+  background-color: #fff4f4;
+}
+.form-line-error .form-error-message {
+  background-color: #ff3200;
+  clear: both;
+  float: none;
+}
+.form-line-error .form-error-message .form-error-arrow {
+  border-bottom-color: #ff3200;
+}
+.form-line-error input:not(#coupon-input),
+.form-line-error textarea,
+.form-line-error .form-validation-error {
+  border: 1px solid #ff3200;
+  box-shadow: 0 0 3px #ff3200;
+}
+.ie-8 .form-all {
+  margin-top: auto;
+  margin-top: initial;
+}
+.ie-8 .form-all:before {
+  display: none;
+}
+[data-type="control_clear"] {
+  display: none;
+}
+/* | */
+@media screen and (max-width: 480px), screen and (max-device-width: 767px) and (orientation: portrait), screen and (max-device-width: 415px) and (orientation: landscape) {
+  .testOne {
+    letter-spacing: 0;
+  }
+  .form-all {
+    border: 0;
+    max-width: initial;
+  }
+  .form-sub-label-container {
+    width: 100%;
+    margin: 0;
+    margin-right: 0;
+    float: left;
+    box-sizing: border-box;
+  }
+  span.form-sub-label-container + span.form-sub-label-container {
+    margin-right: 0;
+  }
+  .form-sub-label {
+    white-space: normal;
+  }
+  .form-address-table td,
+  .form-address-table th {
+    padding: 0 1px 10px;
+  }
+  .form-submit-button,
+  .form-submit-print,
+  .form-submit-reset {
+    width: 100%;
+    margin-left: 0!important;
+  }
+  div[id*=at_] {
+    font-size: 14px;
+    font-weight: 700;
+    height: 8px;
+    margin-top: 6px;
+  }
+  .showAutoCalendar {
+    width: 20px;
+  }
+  img.form-image {
+    max-width: 100%;
+    height: auto;
+  }
+  .form-matrix-row-headers {
+    width: 100%;
+    word-break: break-all;
+    min-width: 80px;
+  }
+  .form-collapse-table,
+  .form-header-group {
+    margin: 0;
+  }
+  .form-collapse-table {
+    height: 100%;
+    display: inline-block;
+    width: 100%;
+  }
+  .form-collapse-hidden {
+    display: none !important;
+  }
+  .form-input {
+    width: 100%;
+  }
+  .form-label {
+    width: 100% !important;
+  }
+  .form-label-left,
+  .form-label-right {
+    display: block;
+    float: none;
+    text-align: left;
+    width: auto!important;
+  }
+  .form-line,
+  .form-line.form-line-column {
+    padding: 2% 5%;
+    box-sizing: border-box;
+  }
+  input[type=text],
+  input[type=email],
+  input[type=tel],
+  textarea {
+    width: 100%;
+    box-sizing: border-box;
+    max-width: initial !important;
+  }
+  .form-radio-other-input,
+  .form-checkbox-other-input {
+    max-width: 55% !important;
+  }
+  .form-dropdown,
+  .form-textarea,
+  .form-textbox {
+    width: 100%!important;
+    box-sizing: border-box;
+  }
+  .form-input,
+  .form-input-wide,
+  .form-textarea,
+  .form-textbox,
+  .form-dropdown {
+    max-width: initial!important;
+  }
+  .form-checkbox-item:not(#foo),
+  .form-radio-item:not(#foo) {
+    width: 100%;
+  }
+  .form-address-city,
+  .form-address-line,
+  .form-address-postal,
+  .form-address-state,
+  .form-address-table,
+  .form-address-table .form-sub-label-container,
+  .form-address-table select,
+  .form-input {
+    width: 100%;
+  }
+  div.form-header-group {
+    padding: 24px 0px !important;
+    margin: 0 12px 2% !important;
+    margin-left: 5%!important;
+    margin-right: 5%!important;
+    box-sizing: border-box;
+  }
+  div.form-header-group.hasImage img {
+    max-width: 100%;
+  }
+  [data-type="control_button"] {
+    margin-bottom: 0 !important;
+  }
+  [data-type=control_fullname] .form-sub-label-container {
+    width: 48%;
+  }
+  [data-type=control_fullname] .form-sub-label-container:first-child {
+    margin-right: 4%;
+  }
+  [data-type=control_phone] .form-sub-label-container {
+    width: 65%;
+    margin-right: 0;
+    margin-left: 0;
+    float: left;
+  }
+  [data-type=control_phone] .form-sub-label-container:first-child {
+    width: 31%;
+    margin-right: 4%;
+  }
+  [data-type=control_datetime] .allowTime-container {
+    width: 100%;
+  }
+  [data-type=control_datetime] .allowTime-container .form-sub-label-container {
+    width: 24%!important;
+    margin-left: 6%;
+    margin-right: 0;
+  }
+  [data-type=control_datetime] .allowTime-container .form-sub-label-container:first-child {
+    margin-left: 0;
+  }
+  [data-type=control_datetime] span + span + span > span:first-child {
+    display: block;
+    width: 100% !important;
+  }
+  [data-type=control_birthdate] .form-sub-label-container,
+  [data-type=control_time] .form-sub-label-container {
+    width: 27.3%!important;
+    margin-right: 6% !important;
+  }
+  [data-type=control_time] .form-sub-label-container:last-child {
+    width: 33.3%!important;
+    margin-right: 0 !important;
+  }
+  .form-pagebreak-back-container,
+  .form-pagebreak-next-container {
+    min-height: 1px;
+    width: 50% !important;
+  }
+  .form-pagebreak-back,
+  .form-pagebreak-next,
+  .form-product-item.hover-product-item {
+    width: 100%;
+  }
+  .form-pagebreak-back-container {
+    padding: 0;
+    text-align: right;
+  }
+  .form-pagebreak-next-container {
+    padding: 0;
+    text-align: left;
+  }
+  .form-pagebreak {
+    margin: 0 auto;
+  }
+  .form-buttons-wrapper {
+    margin: 0!important;
+    margin-left: 0!important;
+  }
+  .form-buttons-wrapper button {
+    width: 100%;
+  }
+  .form-buttons-wrapper .form-submit-print {
+    margin: 0 !important;
+  }
+  table {
+    width: 100%!important;
+    max-width: initial!important;
+  }
+  table td + td {
+    padding-left: 3%;
+  }
+  .form-checkbox-item,
+  .form-radio-item {
+    white-space: normal!important;
+  }
+  .form-checkbox-item input,
+  .form-radio-item input {
+    width: auto;
+  }
+  .form-collapse-table {
+    margin: 0 5%;
+    display: block;
+    zoom: 1;
+    width: auto;
+  }
+  .form-collapse-table:before,
+  .form-collapse-table:after {
+    display: table;
+    content: '';
+    line-height: 0;
+  }
+  .form-collapse-table:after {
+    clear: both;
+  }
+  .fb-like-box {
+    width: 98% !important;
+  }
+  .form-error-message {
+    clear: both;
+    bottom: -10px;
+  }
+  .date-separate,
+  .phone-separate {
+    display: none;
+  }
+  .custom-field-frame,
+  .direct-embed-widgets,
+  .signature-pad-wrapper {
+    width: 100% !important;
+  }
+}
+/* | */
+
+/*__INSPECT_SEPERATOR__*/
+.form-label.form-label-auto {
+
+      display: block;
+      float: none;
+      text-align: left;
+      width: 100%;
+
+      }
+    /* Injected CSS Code */
+</style>
+
+<form class="jotform-form" action="https://submit.jotform.com/submit/213283659168465/" method="post" name="form_213283659168465" id="213283659168465" accept-charset="utf-8" autocomplete="on">
+  <input type="hidden" name="formID" value="213283659168465" />
+  <input type="hidden" id="JWTContainer" value="" />
+  <input type="hidden" id="cardinalOrderNumber" value="" />
+  <div role="main" class="form-all">
+    <ul class="form-section page-section">
+      <li id="cid_1" class="form-input-wide" data-type="control_head">
+        <div class="form-header-group  header-large">
+          <div class="header-text httac htvam">
+            <h1 id="header_1" class="form-header" data-component="header">
+              Vendor Information Form
+            </h1>
+            <div id="subHeader_1" class="form-subHeader">
+              Request form
+            </div>
+          </div>
+        </div>
+      </li>
+      <li id="cid_10" class="form-input-wide" data-type="control_head">
+        <div class="form-header-group  header-default">
+          <div class="header-text httal htvam">
+            <h2 id="header_10" class="form-header" data-component="header">
+              Vendor Details
+            </h2>
+          </div>
+        </div>
+      </li>
+      <li class="form-line jf-required" data-type="control_textbox" id="id_11">
+        <label class="form-label form-label-top form-label-auto" id="label_11" for="input_11">
+          Company name
+          <span class="form-required">
+            *
+          </span>
+        </label>
+        <div id="cid_11" class="form-input-wide jf-required">
+          <input type="text" id="input_11" name="q11_companyName" data-type="input-textbox" class="form-textbox validate[required]" data-defaultvalue="" size="20" value="" data-component="textbox" aria-labelledby="label_11" required="" />
+        </div>
+      </li>
+      <li class="form-line jf-required" data-type="control_phone" id="id_12">
+        <label class="form-label form-label-top form-label-auto" id="label_12" for="input_12_area">
+          Contact Number
+          <span class="form-required">
+            *
+          </span>
+        </label>
+        <div id="cid_12" class="form-input-wide jf-required">
+          <div data-wrapper-react="true">
+            <span class="form-sub-label-container" style="vertical-align:top" data-input-type="areaCode">
+              <input type="tel" id="input_12_area" name="q12_contactNumber[area]" class="form-textbox validate[required]" data-defaultvalue="" autoComplete="section-input_12 tel-area-code" value="" data-component="areaCode" aria-labelledby="label_12 sublabel_12_area" required="" />
+              <span class="phone-separate" aria-hidden="true">
+                 -
+              </span>
+              <label class="form-sub-label" for="input_12_area" id="sublabel_12_area" style="min-height:13px" aria-hidden="false"> Area Code </label>
+            </span>
+            <span class="form-sub-label-container" style="vertical-align:top" data-input-type="phone">
+              <input type="tel" id="input_12_phone" name="q12_contactNumber[phone]" class="form-textbox validate[required]" data-defaultvalue="" autoComplete="section-input_12 tel-local" value="" data-component="phone" aria-labelledby="label_12 sublabel_12_phone" required="" />
+              <label class="form-sub-label" for="input_12_phone" id="sublabel_12_phone" style="min-height:13px" aria-hidden="false"> Phone Number </label>
+            </span>
+          </div>
+        </div>
+      </li>
+      <li class="form-line" data-type="control_email" id="id_14">
+        <label class="form-label form-label-top form-label-auto" id="label_14" for="input_14"> Company Email </label>
+        <div id="cid_14" class="form-input-wide">
+          <span class="form-sub-label-container" style="vertical-align:top">
+            <input type="email" id="input_14" name="q14_companyEmail" class="form-textbox validate[Email]" data-defaultvalue="" size="30" value="" data-component="email" aria-labelledby="label_14 sublabel_input_14" />
+            <label class="form-sub-label" for="input_14" id="sublabel_input_14" style="min-height:13px" aria-hidden="false"> example@example.com </label>
+          </span>
+        </div>
+      </li>
+      <li class="form-line" data-type="control_textbox" id="id_29">
+        <label class="form-label form-label-top form-label-auto" id="label_29" for="input_29"> Website URL </label>
+        <div id="cid_29" class="form-input-wide">
+          <span class="form-sub-label-container" style="vertical-align:top">
+            <input type="text" id="input_29" name="q29_websiteUrl" data-type="input-textbox" class="form-textbox" data-defaultvalue="" size="20" value="" data-component="textbox" aria-labelledby="label_29 sublabel_input_29" />
+            <label class="form-sub-label" for="input_29" id="sublabel_input_29" style="min-height:13px" aria-hidden="false"> www.example.com </label>
+          </span>
+        </div>
+      </li>
+      <li class="form-line" data-type="control_textbox" id="id_32">
+        <label class="form-label form-label-top form-label-auto" id="label_32" for="input_32"> Facebook/IG/Youtube </label>
+        <div id="cid_32" class="form-input-wide">
+          <span class="form-sub-label-container" style="vertical-align:top">
+            <input type="text" id="input_32" name="q32_facebookigyoutube" data-type="input-textbox" class="form-textbox" data-defaultvalue="" size="20" value="" data-component="textbox" aria-labelledby="label_32 sublabel_input_32" />
+            <label class="form-sub-label" for="input_32" id="sublabel_input_32" style="min-height:13px" aria-hidden="false"> www.facebook.com/example.com </label>
+          </span>
+        </div>
+      </li>
+      <li class="form-line" data-type="control_address" id="id_13">
+        <label class="form-label form-label-top form-label-auto" id="label_13" for="input_13_addr_line1"> Office Address </label>
+        <div id="cid_13" class="form-input-wide">
+          <div summary="" class="form-address-table jsTest-addressField">
+            <div class="form-address-line-wrapper jsTest-address-line-wrapperField">
+              <span class="form-address-line form-address-street-line jsTest-address-lineField">
+                <span class="form-sub-label-container" style="vertical-align:top">
+                  <input type="text" id="input_13_addr_line1" name="q13_officeAddress[addr_line1]" class="form-textbox form-address-line" data-defaultvalue="" autoComplete="section-input_13 address-line1" value="" data-component="address_line_1" aria-labelledby="label_13 sublabel_13_addr_line1" required="" />
+                  <label class="form-sub-label" for="input_13_addr_line1" id="sublabel_13_addr_line1" style="min-height:13px" aria-hidden="false"> Street Address </label>
+                </span>
+              </span>
+            </div>
+            <div class="form-address-line-wrapper jsTest-address-line-wrapperField">
+              <span class="form-address-line form-address-street-line jsTest-address-lineField">
+                <span class="form-sub-label-container" style="vertical-align:top">
+                  <input type="text" id="input_13_addr_line2" name="q13_officeAddress[addr_line2]" class="form-textbox form-address-line" data-defaultvalue="" autoComplete="section-input_13 address-line2" value="" data-component="address_line_2" aria-labelledby="label_13 sublabel_13_addr_line2" />
+                  <label class="form-sub-label" for="input_13_addr_line2" id="sublabel_13_addr_line2" style="min-height:13px" aria-hidden="false"> Street Address Line 2 </label>
+                </span>
+              </span>
+            </div>
+            <div class="form-address-line-wrapper jsTest-address-line-wrapperField">
+              <span class="form-address-line form-address-city-line jsTest-address-lineField ">
+                <span class="form-sub-label-container" style="vertical-align:top">
+                  <input type="text" id="input_13_city" name="q13_officeAddress[city]" class="form-textbox form-address-city" data-defaultvalue="" autoComplete="section-input_13 address-level2" value="" data-component="city" aria-labelledby="label_13 sublabel_13_city" required="" />
+                  <label class="form-sub-label" for="input_13_city" id="sublabel_13_city" style="min-height:13px" aria-hidden="false"> City </label>
+                </span>
+              </span>
+              <span class="form-address-line form-address-state-line jsTest-address-lineField ">
+                <span class="form-sub-label-container" style="vertical-align:top">
+                  <input type="text" id="input_13_state" name="q13_officeAddress[state]" class="form-textbox form-address-state" data-defaultvalue="" autoComplete="section-input_13 address-level1" value="" data-component="state" aria-labelledby="label_13 sublabel_13_state" required="" />
+                  <label class="form-sub-label" for="input_13_state" id="sublabel_13_state" style="min-height:13px" aria-hidden="false"> State / Province </label>
+                </span>
+              </span>
+            </div>
+            <div class="form-address-line-wrapper jsTest-address-line-wrapperField">
+              <span class="form-address-line form-address-zip-line jsTest-address-lineField ">
+                <span class="form-sub-label-container" style="vertical-align:top">
+                  <input type="text" id="input_13_postal" name="q13_officeAddress[postal]" class="form-textbox form-address-postal" data-defaultvalue="" autoComplete="section-input_13 postal-code" value="" data-component="zip" aria-labelledby="label_13 sublabel_13_postal" required="" />
+                  <label class="form-sub-label" for="input_13_postal" id="sublabel_13_postal" style="min-height:13px" aria-hidden="false"> Postal / Zip Code </label>
+                </span>
+              </span>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li class="form-line" data-type="control_radio" id="id_18">
+        <label class="form-label form-label-top form-label-auto" id="label_18" for="input_18"> Business Organization Type </label>
+        <div id="cid_18" class="form-input-wide">
+          <div class="form-multiple-column" data-columncount="2" role="group" aria-labelledby="label_18" data-component="radio">
+            <span class="form-radio-item">
+              <span class="dragger-item">
+              </span>
+              <input type="radio" aria-describedby="label_18" class="form-radio" id="input_18_0" name="q18_businessOrganization" value="Corporation" />
+              <label id="label_input_18_0" for="input_18_0"> Corporation </label>
+            </span>
+            <span class="form-radio-item">
+              <span class="dragger-item">
+              </span>
+              <input type="radio" aria-describedby="label_18" class="form-radio" id="input_18_1" name="q18_businessOrganization" value="Partnership" />
+              <label id="label_input_18_1" for="input_18_1"> Partnership </label>
+            </span>
+            <span class="form-radio-item" style="clear:left">
+              <span class="dragger-item">
+              </span>
+              <input type="radio" aria-describedby="label_18" class="form-radio" id="input_18_2" name="q18_businessOrganization" value="Sole Proprietorship" />
+              <label id="label_input_18_2" for="input_18_2"> Sole Proprietorship </label>
+            </span>
+          </div>
+        </div>
+      </li>
+      <li class="form-line" data-type="control_number" id="id_20">
+        <label class="form-label form-label-top form-label-auto" id="label_20" for="input_20"> Year the Company was founded (since) </label>
+        <div id="cid_20" class="form-input-wide">
+          <span class="form-sub-label-container" style="vertical-align:top">
+            <input type="number" id="input_20" name="q20_yearThe20" data-type="input-number" class=" form-number-input form-textbox" data-defaultvalue="" style="width:172px" size="19" value="" placeholder="ex: 23" data-component="number" aria-labelledby="label_20 sublabel_input_20" step="any" />
+            <label class="form-sub-label" for="input_20" id="sublabel_input_20" style="min-height:13px" aria-hidden="false"> e.g since 2003 </label>
+          </span>
+        </div>
+      </li>
+      <li class="form-line" data-type="control_number" id="id_28">
+        <label class="form-label form-label-top form-label-auto" id="label_28" for="input_28"> Number of Employees </label>
+        <div id="cid_28" class="form-input-wide">
+          <input type="number" id="input_28" name="q28_numberOf" data-type="input-number" class=" form-number-input form-textbox" data-defaultvalue="" style="width:172px" size="19" value="" placeholder="ex: 23" data-component="number" aria-labelledby="label_28" step="any" />
+        </div>
+      </li>
+      <li class="form-line" data-type="control_radio" id="id_22">
+        <label class="form-label form-label-top form-label-auto" id="label_22" for="input_22"> Vendor Type </label>
+        <div id="cid_22" class="form-input-wide">
+          <div class="form-multiple-column" data-columncount="2" role="group" aria-labelledby="label_22" data-component="radio">
+            <span class="form-radio-item">
+              <span class="dragger-item">
+              </span>
+              <input type="radio" aria-describedby="label_22" class="form-radio" id="input_22_0" name="q22_vendorType" value="International" />
+              <label id="label_input_22_0" for="input_22_0"> International </label>
+            </span>
+            <span class="form-radio-item">
+              <span class="dragger-item">
+              </span>
+              <input type="radio" aria-describedby="label_22" class="form-radio" id="input_22_1" name="q22_vendorType" value="Local" />
+              <label id="label_input_22_1" for="input_22_1"> Local </label>
+            </span>
+            <span class="form-radio-item">
+              <input type="radio" class="form-radio-other form-radio" name="q22_vendorType" id="other_22" value="other" tabindex="0" aria-label="Other" />
+              <label id="label_other_22" style="text-indent:0" for="other_22">  </label>
+              <input type="text" class="form-radio-other-input form-textbox" name="q22_vendorType[other]" data-otherhint="Other" size="15" id="input_22" placeholder="Other" />
+              <br/>
+            </span>
+          </div>
+        </div>
+      </li>
+      <li class="form-line" data-type="control_checkbox" id="id_19">
+        <label class="form-label form-label-top form-label-auto" id="label_19" for="input_19"> Nature of Business/Trade </label>
+        <div id="cid_19" class="form-input-wide">
+          <div class="form-multiple-column" data-columncount="2" role="group" aria-labelledby="label_19" data-component="checkbox">
+            <span class="form-checkbox-item">
+              <span class="dragger-item">
+              </span>
+              <input type="checkbox" aria-describedby="label_19" class="form-checkbox" id="input_19_0" name="q19_name19[]" value="Manufacturer" />
+              <label id="label_input_19_0" for="input_19_0"> Manufacturer </label>
+            </span>
+            <span class="form-checkbox-item">
+              <span class="dragger-item">
+              </span>
+              <input type="checkbox" aria-describedby="label_19" class="form-checkbox" id="input_19_1" name="q19_name19[]" value="Authorized Dealer" />
+              <label id="label_input_19_1" for="input_19_1"> Authorized Dealer </label>
+            </span>
+            <span class="form-checkbox-item" style="clear:left">
+              <span class="dragger-item">
+              </span>
+              <input type="checkbox" aria-describedby="label_19" class="form-checkbox" id="input_19_2" name="q19_name19[]" value="Information Services" />
+              <label id="label_input_19_2" for="input_19_2"> Information Services </label>
+            </span>
+            <span class="form-checkbox-item">
+              <span class="dragger-item">
+              </span>
+              <input type="checkbox" aria-describedby="label_19" class="form-checkbox" id="input_19_3" name="q19_name19[]" value="Wholesaler" />
+              <label id="label_input_19_3" for="input_19_3"> Wholesaler </label>
+            </span>
+            <span class="form-checkbox-item" style="clear:left">
+              <span class="dragger-item">
+              </span>
+              <input type="checkbox" aria-describedby="label_19" class="form-checkbox" id="input_19_4" name="q19_name19[]" value="Retailer" />
+              <label id="label_input_19_4" for="input_19_4"> Retailer </label>
+            </span>
+            <span class="form-checkbox-item">
+              <span class="dragger-item">
+              </span>
+              <input type="checkbox" aria-describedby="label_19" class="form-checkbox" id="input_19_5" name="q19_name19[]" value="Products &amp; Services" />
+              <label id="label_input_19_5" for="input_19_5"> Products & Services </label>
+            </span>
+            <span class="form-checkbox-item" style="clear:left">
+              <span class="dragger-item">
+              </span>
+              <input type="checkbox" aria-describedby="label_19" class="form-checkbox" id="input_19_6" name="q19_name19[]" value="Trader" />
+              <label id="label_input_19_6" for="input_19_6"> Trader </label>
+            </span>
+            <span class="form-checkbox-item">
+              <span class="dragger-item">
+              </span>
+              <input type="checkbox" aria-describedby="label_19" class="form-checkbox" id="input_19_7" name="q19_name19[]" value="Importer" />
+              <label id="label_input_19_7" for="input_19_7"> Importer </label>
+            </span>
+            <span class="form-checkbox-item" style="clear:left">
+              <span class="dragger-item">
+              </span>
+              <input type="checkbox" aria-describedby="label_19" class="form-checkbox" id="input_19_8" name="q19_name19[]" value="Services" />
+              <label id="label_input_19_8" for="input_19_8"> Services </label>
+            </span>
+            <span class="form-checkbox-item">
+              <span class="dragger-item">
+              </span>
+              <input type="checkbox" aria-describedby="label_19" class="form-checkbox" id="input_19_9" name="q19_name19[]" value="Products" />
+              <label id="label_input_19_9" for="input_19_9"> Products </label>
+            </span>
+            <span class="form-checkbox-item" style="clear:left">
+              <span class="dragger-item">
+              </span>
+              <input type="checkbox" aria-describedby="label_19" class="form-checkbox" id="input_19_10" name="q19_name19[]" value="Consultancy" />
+              <label id="label_input_19_10" for="input_19_10"> Consultancy </label>
+            </span>
+            <span class="form-checkbox-item">
+              <input type="checkbox" class="form-checkbox-other form-checkbox" name="q19_name19[other]" id="other_19" value="other" tabindex="0" aria-label="Other" />
+              <label id="label_other_19" style="text-indent:0" for="other_19">  </label>
+              <input type="text" class="form-checkbox-other-input form-textbox" name="q19_name19[other]" data-otherhint="Other" size="15" id="input_19" placeholder="Other" />
+              <br/>
+            </span>
+          </div>
+        </div>
+      </li>
+      <li class="form-line" data-type="control_textarea" id="id_16">
+        <label class="form-label form-label-top form-label-auto" id="label_16" for="input_16"> Company Description </label>
+        <div id="cid_16" class="form-input-wide">
+          <textarea id="input_16" class="form-textarea" name="q16_companyDescription" cols="60" rows="6" data-component="textarea" aria-labelledby="label_16"></textarea>
+        </div>
+      </li>
+      <li class="form-line" data-type="control_textbox" id="id_27">
+        <label class="form-label form-label-top form-label-auto" id="label_27" for="input_27"> Accepted Payment Method </label>
+        <div id="cid_27" class="form-input-wide">
+          <span class="form-sub-label-container" style="vertical-align:top">
+            <input type="text" id="input_27" name="q27_acceptedPayment" data-type="input-textbox" class="form-textbox" data-defaultvalue="" size="20" value="" data-component="textbox" aria-labelledby="label_27 sublabel_input_27" />
+            <label class="form-sub-label" for="input_27" id="sublabel_input_27" style="min-height:13px" aria-hidden="false"> Check, bank transfer, purchase order, credit card </label>
+          </span>
+        </div>
+      </li>
+      <li id="cid_34" class="form-input-wide" data-type="control_head">
+        <div class="form-header-group  header-default">
+          <div class="header-text httal htvam">
+            <h2 id="header_34" class="form-header" data-component="header">
+              Contact Person Details
+            </h2>
+            <div id="subHeader_34" class="form-subHeader">
+              Vendor&#x27;s Representative
+            </div>
+          </div>
+        </div>
+      </li>
+      <li class="form-line jf-required" data-type="control_fullname" id="id_26">
+        <label class="form-label form-label-top form-label-auto" id="label_26" for="first_26">
+          Vendor's Representative Name
+          <span class="form-required">
+            *
+          </span>
+        </label>
+        <div id="cid_26" class="form-input-wide jf-required">
+          <div data-wrapper-react="true">
+            <span class="form-sub-label-container" style="vertical-align:top" data-input-type="first">
+              <input type="text" id="first_26" name="q26_vendorsRepresentative26[first]" class="form-textbox validate[required]" data-defaultvalue="" autoComplete="section-input_26 given-name" size="10" value="" data-component="first" aria-labelledby="label_26 sublabel_26_first" required="" />
+              <label class="form-sub-label" for="first_26" id="sublabel_26_first" style="min-height:13px" aria-hidden="false"> First Name </label>
+            </span>
+            <span class="form-sub-label-container" style="vertical-align:top" data-input-type="last">
+              <input type="text" id="last_26" name="q26_vendorsRepresentative26[last]" class="form-textbox validate[required]" data-defaultvalue="" autoComplete="section-input_26 family-name" size="15" value="" data-component="last" aria-labelledby="label_26 sublabel_26_last" required="" />
+              <label class="form-sub-label" for="last_26" id="sublabel_26_last" style="min-height:13px" aria-hidden="false"> Last Name </label>
+            </span>
+          </div>
+        </div>
+      </li>
+      <li class="form-line jf-required" data-type="control_phone" id="id_33">
+        <label class="form-label form-label-top form-label-auto" id="label_33" for="input_33_area">
+          Phone1 Number (Vendor's Representative)
+          <span class="form-required">
+            *
+          </span>
+        </label>
+        <div id="cid_33" class="form-input-wide jf-required">
+          <div data-wrapper-react="true">
+            <span class="form-sub-label-container" style="vertical-align:top" data-input-type="areaCode">
+              <input type="tel" id="input_33_area" name="q33_phone1Number[area]" class="form-textbox validate[required]" data-defaultvalue="" autoComplete="section-input_33 tel-area-code" value="" data-component="areaCode" aria-labelledby="label_33 sublabel_33_area" required="" />
+              <span class="phone-separate" aria-hidden="true">
+                 -
+              </span>
+              <label class="form-sub-label" for="input_33_area" id="sublabel_33_area" style="min-height:13px" aria-hidden="false"> Area Code </label>
+            </span>
+            <span class="form-sub-label-container" style="vertical-align:top" data-input-type="phone">
+              <input type="tel" id="input_33_phone" name="q33_phone1Number[phone]" class="form-textbox validate[required]" data-defaultvalue="" autoComplete="section-input_33 tel-local" value="" data-component="phone" aria-labelledby="label_33 sublabel_33_phone" required="" />
+              <label class="form-sub-label" for="input_33_phone" id="sublabel_33_phone" style="min-height:13px" aria-hidden="false"> Phone Number </label>
+            </span>
+          </div>
+        </div>
+      </li>
+      <li class="form-line" data-type="control_phone" id="id_35">
+        <label class="form-label form-label-top form-label-auto" id="label_35" for="input_35_area"> Phone2 Number </label>
+        <div id="cid_35" class="form-input-wide">
+          <div data-wrapper-react="true">
+            <span class="form-sub-label-container" style="vertical-align:top" data-input-type="areaCode">
+              <input type="tel" id="input_35_area" name="q35_phone2Number[area]" class="form-textbox" data-defaultvalue="" autoComplete="section-input_35 tel-area-code" value="" data-component="areaCode" aria-labelledby="label_35 sublabel_35_area" />
+              <span class="phone-separate" aria-hidden="true">
+                 -
+              </span>
+              <label class="form-sub-label" for="input_35_area" id="sublabel_35_area" style="min-height:13px" aria-hidden="false"> Area Code </label>
+            </span>
+            <span class="form-sub-label-container" style="vertical-align:top" data-input-type="phone">
+              <input type="tel" id="input_35_phone" name="q35_phone2Number[phone]" class="form-textbox" data-defaultvalue="" autoComplete="section-input_35 tel-local" value="" data-component="phone" aria-labelledby="label_35 sublabel_35_phone" />
+              <label class="form-sub-label" for="input_35_phone" id="sublabel_35_phone" style="min-height:13px" aria-hidden="false"> Phone Number </label>
+            </span>
+          </div>
+        </div>
+      </li>
+      <li class="form-line" data-type="control_email" id="id_30">
+        <label class="form-label form-label-top form-label-auto" id="label_30" for="input_30"> Vendor's Representative Email </label>
+        <div id="cid_30" class="form-input-wide">
+          <span class="form-sub-label-container" style="vertical-align:top">
+            <input type="email" id="input_30" name="q30_vendorsRepresentative30" class="form-textbox validate[Email]" data-defaultvalue="" size="30" value="" data-component="email" aria-labelledby="label_30 sublabel_input_30" />
+            <label class="form-sub-label" for="input_30" id="sublabel_input_30" style="min-height:13px" aria-hidden="false"> example@example.com </label>
+          </span>
+        </div>
+      </li>
+      <li class="form-line" data-type="control_signature" id="id_24">
+        <label class="form-label form-label-top form-label-auto" id="label_24" for="input_24"> Vendor's Representative Signature </label>
+        <div id="cid_24" class="form-input-wide">
+          <div data-wrapper-react="true">
+            <div id="signature_pad_24" class="signature-pad-wrapper" style="width:402px;height:202px">
+              <span class="form-sub-label-container" style="vertical-align:top">
+                <div data-wrapper-react="true">
+                  <!--[if IE 7]>
+                    <script type="text/javascript" src="/js/vendor/json2.js"></script>
+                  <![endif]-->
+                </div>
+                <div class="signature-line signature-wrapper signature-placeholder" data-component="signature" style="width:402px;height:202px">
+                  <div id="sig_pad_24" data-width="400" data-height="200" data-id="24" data-required="false" class="pad " aria-labelledby="label_24">
+                  </div>
+                  <input type="hidden" name="q24_vendorsRepresentative" class="output4" id="input_24" />
+                </div>
+                <label class="form-sub-label" for="sig_pad_24" style="min-height:13px" aria-hidden="false"> Touch the screen or mobile pen to sign </label>
+              </span>
+              <span class="clear-pad-btn clear-pad" role="button" tabindex="0">
+                Clear
+              </span>
+            </div>
+            <div data-wrapper-react="true">
+              <script type="text/javascript">
+              window.signatureForm = true
+              </script>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li class="form-line" data-type="control_datetime" id="id_25">
+        <label class="form-label form-label-top form-label-auto" id="label_25" for="lite_mode_25"> Date Signed </label>
+        <div id="cid_25" class="form-input-wide">
+          <div data-wrapper-react="true">
+            <div style="display:none">
+              <span class="form-sub-label-container" style="vertical-align:top">
+                <input type="tel" readonly="" class="currentDate form-textbox validate[limitDate]" id="day_25" name="q25_dateSigned[day]" size="2" data-maxlength="2" data-age="" maxLength="2" value="06" autoComplete="section-input_25 off" aria-labelledby="label_25 sublabel_25_day" />
+                <span class="date-separate" aria-hidden="true">
+                   -
+                </span>
+                <label class="form-sub-label" for="day_25" id="sublabel_25_day" style="min-height:13px" aria-hidden="false"> Day </label>
+              </span>
+              <span class="form-sub-label-container" style="vertical-align:top">
+                <input type="tel" readonly="" class="form-textbox validate[limitDate]" id="month_25" name="q25_dateSigned[month]" size="2" data-maxlength="2" data-age="" maxLength="2" value="04" autoComplete="section-input_25 off" aria-labelledby="label_25 sublabel_25_month" />
+                <span class="date-separate" aria-hidden="true">
+                   -
+                </span>
+                <label class="form-sub-label" for="month_25" id="sublabel_25_month" style="min-height:13px" aria-hidden="false"> Month </label>
+              </span>
+              <span class="form-sub-label-container" style="vertical-align:top">
+                <input type="tel" readonly="" class="form-textbox validate[limitDate]" id="year_25" name="q25_dateSigned[year]" size="4" data-maxlength="4" data-age="" maxLength="4" value="2022" autoComplete="section-input_25 off" aria-labelledby="label_25 sublabel_25_year" />
+                <label class="form-sub-label" for="year_25" id="sublabel_25_year" style="min-height:13px" aria-hidden="false"> Year </label>
+              </span>
+            </div>
+            <span class="form-sub-label-container" style="vertical-align:top">
+              <input type="text" class="form-textbox validate[limitDate, validateLiteDate]" id="lite_mode_25" size="12" data-maxlength="12" maxLength="12" data-age="" value="06-04-2022" readonly="" data-format="ddmmyyyy" data-seperator="-" placeholder="dd-mm-yyyy" autoComplete="section-input_25 off" aria-labelledby="label_25 sublabel_25_litemode" />
+              <img class=" newDefaultTheme-dateIcon icon-liteMode" alt="Pick a Date" id="input_25_pick" src="https://cdn.jotfor.ms/images/calendar.png" data-component="datetime" aria-hidden="true" data-allow-time="No" data-version="v1" />
+              <label class="form-sub-label" for="lite_mode_25" id="sublabel_25_litemode" style="min-height:13px" aria-hidden="false"> Current Date </label>
+            </span>
+          </div>
+        </div>
+      </li>
+      <li class="form-line" data-type="control_button" id="id_2">
+        <div id="cid_2" class="form-input-wide">
+          <div style="margin-left:156px" data-align="auto" class="form-buttons-wrapper form-buttons-auto   jsTest-button-wrapperField">
+            <button id="input_2" type="submit" class="form-submit-button submit-button jf-form-buttons jsTest-submitField" data-component="button" data-content="">
+              Submit
+            </button>
+            <span>
+
+            </span>
+            <button id="input_print_2" type="button" class="form-submit-print jf-form-buttons" data-component="button">
+              <img src="https://cdn.jotfor.ms/images/printer.png" style="vertical-align:middle" />
+              <span id="span_print_2" class="span_print">
+                Print Form
+              </span>
+            </button>
+          </div>
+        </div>
+      </li>
+      <li class="form-line" data-type="control_text" id="id_38">
+        <div id="cid_38" class="form-input-wide">
+          <div id="text_38" class="form-html" data-component="text">
+            <p style="text-align: center;">Thank you for your information. we will contact you via phone number or email soon.</p>
+          </div>
+        </div>
+      </li>
+      <li style="display:none">
+        Should be Empty:
+        <input type="text" name="website" value="" />
+      </li>
+    </ul>
+  </div>
+  <script>
+  JotForm.showJotFormPowered = "new_footer";
+  </script>
+  <script>
+  JotForm.poweredByText = "Powered by Jotform";
+  </script>
+  <input type="hidden" class="simple_spc" id="simple_spc" name="simple_spc" value="213283659168465" />
+  <script type="text/javascript">
+  var all_spc = document.querySelectorAll("form[id='213283659168465'] .si" + "mple" + "_spc");
+for (var i = 0; i < all_spc.length; i++)
+{
+  all_spc[i].value = "213283659168465-213283659168465";
+}
+  </script>
+  <div class="formFooter-heightMask">
+  </div>
+  <div class="formFooter f6 branding21">
+    <div class="formFooter-wrapper formFooter-leftSide">
+      <a href="https://www.jotform.com/?utm_source=formfooter&utm_medium=banner&utm_term=213283659168465&utm_content=jotform_logo&utm_campaign=powered_by_jotform_le" target="_blank" class="formFooter-logoLink"><img class="formFooter-logo" src="https://cdn.jotfor.ms/assets/img/logo2021/jotform-logo-white.svg" alt="Jotform Logo" style="height: 44px;"></a>
+    </div>
+    <div class="formFooter-wrapper formFooter-rightSide">
+      <span class="formFooter-text">
+        Now create your own Jotform - It's free!
+      </span>
+      <a class="formFooter-button" href="https://www.jotform.com/?utm_source=formfooter&utm_medium=banner&utm_term=213283659168465&utm_content=jotform_button&utm_campaign=powered_by_jotform_le" target="_blank">Create your own Jotform</a>
+    </div>
+  </div>
+</form>

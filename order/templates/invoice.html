@@ -1,0 +1,393 @@
+
+{% load static %}
+
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        @page{
+        size:"A4";
+        margin:1.5cm 1.5cm 0.5cm 0.5cm;
+        }
+        @top-center{
+        content:"COMPANY NAME";
+        }
+        @bottom-left {
+        content:"Page" counter(page) " of " counter(pages);
+        }
+    </style>
+
+
+<!--Test category menus every pages-->
+
+<style type="text/css">
+#orderhead{
+  background-color:rgb(59, 100, 230);
+  color:white;
+  height:50px;
+  padding-top: 15px;
+  }
+#headtext{
+  text-align: center;
+  font-size: 1em;
+  color: #0087C3;
+  font-weight: bold;
+  text-transform: uppercase;
+
+}
+/*copy from invoice*/
+      table {
+  width: auto;
+  border-collapse: collapse;
+  border-spacing: 0;
+  margin-bottom: 5px;
+}
+
+table th,
+table td {
+  padding: 5px;
+  background: #EEEEEE;
+  text-align: center;
+  border-bottom: 1px solid #FFFFFF;
+}
+
+table th {
+  white-space: nowrap;
+  font-weight: normal;
+}
+
+table td {
+  text-align: right;
+}
+
+table td h3{
+  color: #57B223;
+  font-size: 1em;
+  font-weight: normal;
+  margin: 0 0 0.2em 0;
+}
+
+table .no {
+  color: #FFFFFF;
+  font-size: 1em;
+  background: #57B223;
+}
+
+table .desc {
+  text-align: left;
+}
+
+table .unit {
+  background: #DDDDDD;
+}
+
+table .qty {
+}
+
+table .total {
+  background: #57B223;
+  color: #FFFFFF;
+}
+
+table td.unit,
+table td.qty,
+table td.total {
+  font-size: 1em;
+}
+
+table tbody tr:last-child td {
+  border: none;
+}
+
+table tfoot td {
+  padding: 10px 20px;
+  background: #FFFFFF;
+  border-bottom: none;
+  font-size: 1em;
+  white-space: nowrap;
+  border-top: 1px solid #AAAAAA;
+}
+
+table tfoot tr:first-child td {
+  border-top: none;
+}
+
+table tfoot tr:last-child td {
+  color: #57B223;
+  font-size: 1em;
+  border-top: 1px solid #57B223;
+
+}
+
+table tfoot tr td:first-child {
+  border: none;
+}
+.clearfix:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+a {
+  color: #0087C3;
+  text-decoration: none;
+}
+/*
+body {
+  position: relative;
+  width: 100%;
+  height:auto ;
+
+  margin: 0 auto;
+  color: #555555;
+  background: #FFFFFF;
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+  font-family: SourceSansPro;
+}
+*/
+header {
+  padding: 10px 0;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #AAAAAA;
+}
+
+#logo {
+  float: left;
+  margin-top: 8px;
+}
+
+#logo img {
+  height: 70px;
+}
+
+#company {
+  float: right;
+  text-align: right;
+}
+
+
+#details {
+  margin-bottom: 50px;
+}
+
+#client {
+  padding-left: 6px;
+  border-left: 6px solid #0087C3;
+  float: left;
+}
+
+#client .to {
+  color: #0087C3;
+}
+
+h2.name {
+  font-size: 1em;
+  font-weight: normal;
+  margin: 0;
+}
+#thanks h2{
+  font-size: 1em;
+  font-weight: normal;
+  margin: 0;
+  text-align:center;
+}
+
+#invoice {
+  float: right;
+  text-align: right;
+}
+
+#invoice h1 {
+  color: #0087C3;
+  font-size: 1em;
+  line-height: 1em;
+  font-weight: normal;
+  margin: 0  0 10px 0;
+}
+
+#invoice .date {
+  font-size: 1em;
+  color: #777777;
+}
+
+
+</style>
+</head>
+
+<body>
+
+
+<div class="ps-content pt-80 pb-80" style="padding-top:0px;">
+  <div class="ps-container">
+    <div class="row">
+<!--        <div style="text-align:center;padding-bottom: 40px;">-->
+<!--             <a href="/" ><button type="button" class="btn btn-primary">Continue Shopping</button></a>-->
+<!--             <a href="{% url 'userprofile' %}" ><button type="button" class="btn btn-success">Check your order</button></a>-->
+<!--             <a href="{% url 'userprofile' %}" ><button type="button" class="btn btn-info">PDF Preview</button></a>-->
+
+<!--        </div>-->
+      <div id="headtext">YOUR ORDER COMPLETED</div>
+    </div>
+    <div class="row" style="padding-left: 50px; padding-right: 50px;">
+ <header class="clearfix">
+      <div id="logo">
+        <img src="{{setting.icon.url}}" style="height: 70px"alt="Company Logo">
+      </div>
+      <div id="company">
+        <h2 class="name">{{ setting.title}}</h2>
+        <div>{{ setting.address}}</div>
+        <div>{{ setting.phone}}</div>
+        <div><a href="mailto:{{ setting.email}}">{{ setting.email}}</a></div>
+      </div>
+
+  </header>
+
+<!--    <main style="padding:30px 30px 30px 30px;">-->
+      <div id="details" class="clearfix">
+        <div id="client">
+          <div class="to">INVOICE TO:</div>
+          <h2 class="name">{{ user.first_name }} {{  user.last_name }}</h2>
+          <div class="address">{{profile.address}}</div>
+          <div class="email"><a href="{{profile.email}}">{{profile.email}}</a></div>
+        </div>
+
+
+        <div id="invoice">
+            <h1>INVOICE: #{{ ordercode }}</h1>
+          <div class="date">Date of Invoice: {{dateinvoice| date:"SHORT_DATE_FORMAT"}}</div>
+          <div class="date">Due Date: 1 day</div>
+        </div>
+
+      </div>
+      <hr />
+      <div id="details" class="clearfix">
+
+        <div id="client">
+          <div class="to">Ship TO:</div>
+            {% for rs in orderinfo %}
+          <h2 class="name">Name:{{rs.first_name}}{{rs.last_name}}</h2>
+          <div class="address">Phone:{{rs.phone}}</div>
+          <div class="address">Address:{{rs.address}}</div>
+          <div class="address">Location:{{rs.adminnote}}</div>
+          <div class="address">UserNoted:{{rs.userordernote}}</div>
+            {% endfor %}
+<!--          <div class="email"><a href="mailto:john@example.com">john@example.com</a></div>-->
+        </div>
+          <div id="client">
+          <div class="to">Bill TO:</div>
+          <h2 class="name">Name:{{ user.first_name }} {{  user.last_name }}</h2>
+          <div class="address">Address:{{profile.address}}</div>
+<!--          <div class="email"><a href="mailto:john@example.com">john@example.com</a></div>-->
+        </div>
+        <div id="invoice">
+          <h1>Payment Info:</h1>
+            {% for rs in orderinfo %}
+          <div class="date" style="color:red;">{{rs.paymentstatus}}</div>
+          <div class="date">Paid by:{{rs.paymentinfo}} </div>
+            {% endfor %}
+          <div class="date">Paid Date: .../.../...</div>
+        </div>
+      </div>
+
+
+
+
+      <div class="ps-cart-listing">
+        <table class="table ps-cart__table">
+                          <thead style="background-color:rgba(188, 232, 241, 1);">
+                            <tr>
+                                <th class="no">Id </th>
+                                <th class="desc">Image </th>
+                                <th class="desc">Product Name </th>
+                                <th class="desc">Size/Color </th>
+                                <th class="unit">Price </th>
+                                <th class="qty">Qty </th>
+                                <th class="total">Amount </th>
+                                <th class="desc">Note </th>
+<!--                                <th class="desc">Date </th>-->
+<!--                                <th class="desc">Detail </th>-->
+                            </tr>
+                          </thead>
+                            <tbody>
+                            {% for rs in order_product %}
+
+                                <tr>
+                                  <td class="no">{{ forloop.counter }} </td>
+                                    <td class="desc">
+                                        <a href="/product/{{ rs.product_id }}/{{ rs.product.slug }}">
+                                            {% if rs.variant.image_id > 0 %}
+                                                <img src="{{rs.variant.image }}" alt="" style="height: 70px">
+                                            {% else %}
+                                                <img src="{{rs.product.image.url}}" alt="" style="height: 70px">
+                                            {% endif %}
+                                        </a>
+                                    </td>
+                                    <td class="desc"><a class="ps-product__preview" href="/product/{{ rs.product_id }}/{{ rs.product.slug }}">{{ rs.product.title}}</a></td>
+                                   <td class="desc"> {{ rs.variant.size }}   {{ rs.variant.color }}</td>
+                                    <td class="unit">{{ rs.price}} $ </td>
+                                    <td class="qty">{{ rs.quantity}} </td>
+                                    <td class="total">{{ rs.amount}} $</td>
+                                    <td class="desc"> </td>
+<!--                                    <td class="desc">{{ rs.create_at}} </td>-->
+<!--                                    <td class="desc"><a href="/user/order_product_detail/{{rs.id}}/{{rs.order.id}}"> <button type="button" class="btn btn-success">Detail</button></a></td>-->
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+            <tfoot>
+          <tr>
+            <td colspan="3"></td>
+            <td colspan="3">SUBTOTAL</td>
+            <td>{%for rs in orderinfo %}{{rs.total}}{%endfor%} $</td>
+          </tr>
+          <tr>
+            <td colspan="3"></td>
+            <td colspan="3">VAT 10%</td>
+            <td>{%for rs in orderinfo %}{{rs.vat10|floatformat:2}}{%endfor%} $</td>
+          </tr>
+          <tr>
+            <td colspan="3"></td>
+            <td colspan="3">GRAND TOTAL</td>
+            <td>{%for rs in orderinfo %}{{rs.grandtotal|floatformat:2}}{%endfor%} $</td>
+          </tr>
+        </tfoot>
+
+                        </table>
+
+      </div>
+<!--      endtest-->
+<!--        <div id="thanks"><h2>Thank you! For your order</h2></div>-->
+      <div id="notices">
+        <div>NOTICE:</div>
+        <div class="notice">We will call back to you now !</div>
+      </div>
+<!--    </main>-->
+    <div>
+      Invoice was created on a computer and is valid without the signature and seal.
+    </div>
+<!--         <div class="form-group">-->
+<!--                 <a href="/"> <button class="ps-btn ps-btn&#45;&#45;gray">Continue Shopping</button></a>-->
+<!--                <a href="/"> <button class="ps-btn ps-btn&#45;&#45;gray">Continue Shopping</button></a>-->
+<!--         </div>-->
+<!--  </div>-->
+    <div class="row">
+      <div> <img src="{% static '' %}images/thankyou1.png" class="rounded mx-auto d-block" alt="..." style="display: block; margin-left: auto;margin-right: auto; width: 50%;"></div>
+        <div style="text-align:center;padding-top: 40px;">
+             <a href="/" ><button class="ps-btn ps-btn--gray">Continue Shopping</button></a>
+             <a href="{% url 'userprofile' %}" ><button class="ps-btn ps-btn--gray">Check your order</button></a>
+        </div>
+    </div>
+    </div>
+
+    </div>
+
+
+
+
+  </div>
+</div>
+
+</body>
+</html>

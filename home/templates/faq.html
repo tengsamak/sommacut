@@ -1,0 +1,38 @@
+{% extends 'homebase.html' %}
+{% load static %}
+{% block author %} SOMMA{% endblock %}
+{% block title %} F A Q {{ setting.title }} {% endblock %}
+{% block keywords %} {{ setting.keywords }} {% endblock %}
+{% block description %} {{ setting.description }} {% endblock %}
+{% block head %}
+    <script>
+        $( function() {
+            $( "#accordion" ).accordion();
+        } );
+    </script>
+{% endblock %}
+{% block about %}
+<div class="section">
+        <!-- container -->
+        <div class="container">
+            <!-- row -->
+            <div class="row">
+<h1>FAQ</h1>
+                <div id="accordion">
+                    {% for rs in faq %}
+                        <h3>{{ rs.question }}</h3>
+                        <div>
+                            <p>
+                                {{ rs.answer | safe }}
+                            </p>
+                        </div>
+                    {% endfor %}
+                </div>
+
+            </div>
+            <!-- /row -->
+        </div>
+        <!-- /container -->
+    </div>
+
+{% endblock %}

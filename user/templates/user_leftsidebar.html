@@ -1,0 +1,27 @@
+<div class="list-group">
+   <div >
+       {% if profile.usertype == "VENDOR" %}
+    <p>Hello {{profile.usertype}}/{{user}}/{{usersocial.username}}</p>
+
+       <div class="inline">  <div><a href="/user" class="list-group-item list-group-item-info"><i class="fa fa-info" aria-hidden="true"></i></a></div><div><a href="/user" class="list-group-item list-group-item-info">Vendor Profile</a></div></div>
+
+    <a href="{% url "vendor_product_list" %}" class="list-group-item list-group-item-info"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i>Vendor Products</a>
+    <a href="{% url "vendorproductinvoice" %}" class="list-group-item list-group-item-info"><i class="fa fa-product-hunt" aria-hidden="true"></i>Vendor Products Invoice Code</a>
+    <a href="{% url "vendorstatistic" %}" class="list-group-item list-group-item-info"><i class="fa fa-comment" aria-hidden="true"></i> Vendor Statistic</a>
+    <a href="/user/favorits" class="list-group-item list-group-item-info"><i class="fa fa-home"></i> Vendor Summary Report</a>
+
+        {% endif %}
+   </div>
+
+    <div>
+        <a href="/user" class="list-group-item list-group-item-info"><i class="fa fa-info" aria-hidden="true"></i> User Profile</a>
+        <a href="/user/orders" class="list-group-item list-group-item-info"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i> My Orders</a>
+        <a href="/user/orders_product" class="list-group-item list-group-item-info"><i class="fa fa-product-hunt" aria-hidden="true"></i> My Order Product</a>
+        <a href="/user/comments" class="list-group-item list-group-item-info"><i class="fa fa-comment" aria-hidden="true"></i> My Comments</a>
+        <a href="/user/favorits" class="list-group-item list-group-item-info"><i class="fa fa-home"></i> My Favorits</a>
+        <a href="/user/products" class="list-group-item list-group-item-info"><i class="fa fa-home"></i> My Products</a>
+        <a href="/user/indextest" class="list-group-item list-group-item-info"><i class="fa fa-home"></i> Mytest</a>
+        <a href="/logout" class="list-group-item list-group-item-info">Logout</a>
+    </div>
+
+</div>

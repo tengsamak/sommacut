@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vendors list</title>
+</head>
+<body>
+{% for vlist in vendorslist %}
+{{vlist.companyname}}
+{{vlist.user_id}}
+<br>
+{%endfor%}
+<br>
+<hr>
+<h1>Products Detail</h1>
+    {% for rs in productlist %}
+      PID:  {{rs.id}} <br>
+        {% for cp in category %}
+            {% if rs.category_id == cp.id %}
+    Category:{{cp}}<br>
+            {%endif%}
+        {%endfor%}
+      Category:{{rs.category_id}}<br>
+      VID: {{ vendorvendor}} <br>
+      Title:  {{rs.title}} <br>
+      Keyword:  {{rs.keywords}}<br>
+      Description:  {{rs.description}}<br>
+      Image:  <img src="{{rs.image.url }}" alt="" style="height: 50px"><br>
+      Price:  {{rs.price}}<br>
+      Amount:  {{rs.amount}}<br>
+      Variant:  {{rs.variant}}<br>
+      Detail:  {{rs.detail|safe}}<br>
+      Status: {{rs.status}}<br>
+      Slug:{{rs.slug}}<br>
+
+    {% endfor %}
+<hr>
+<h1>Images</h1>
+
+    <table>
+        <tr>
+            <td>Title</td>
+            <td>Image</td>
+            <td>ID</td>
+            <td>ImagePreview</td>
+
+        </tr>
+        {% for rs in productimage %}
+        <tr>
+            <td>
+                {{rs.title}}
+            </td>
+            <td>
+                <img src="{{rs.image.url }}" alt="" style="height: 50px">
+            </td>
+            <td>
+                {{rs.id}}
+            </td>
+        </tr>
+        {%endfor%}
+    </table>
+<hr>
+<h1>Variants</h1>
+    <table>
+        <tr>
+            <td>Title</td>
+            <td>Color</td>
+            <td>Size</td>
+            <td>ImageID</td>
+            <td>Quantities</td>
+            <td>Price</td>
+            <td>ImageTage</td>
+
+        </tr>
+        {% for rs in productvariant %}
+        <tr>
+            <td>{{rs.title}}</td>
+                {% for pvc in productcolor%}
+                    {% if rs.color_id == pvc.id %}
+                     colorName:  <td>{{pvc.name}}</td>
+                    {%endif%}
+                {%endfor%}
+            {% for pvs in productsize %}
+                    {% if rs.size_id == pvs.id %}
+                     SizeName:  <td>{{pvs.name}}</td>
+                    {%endif%}
+            {%endfor%}
+
+
+            <td>{{rs.image.url}}</td>
+            <td>{{rs.quantity}}</td>
+            <td>{{rs.price}}</td>
+            <td>ImageTage</td>
+        </tr>
+        {%endfor%}
+
+    </table>
+<hr>
+<h1> test product orderproduct with product_id</h1>
+{% if product_orderproduct %}
+    <h2>Your company have the orderproduct:</h2>
+ {% for rs in product_orderproduct %}<br>
+    st:{{forloop.counter}}<br>
+    amount: {{rs.amount}}<br>
+    price:{{rs.price}}<br>
+    quantities:{{rs.quantity}}<br>
+    status:{{rs.status}}<br>
+    create_at:{{rs.create_at}}<br>
+    product_id:{{rs.product_id}}<br>
+    order_id:{{rs.order.code}}<br>
+    <h2>Order:</h2>
+
+
+{%endfor%}
+{%else%}
+    <h2>your company don't have orderproduct:</h2>
+{%endif%}
+
+<h1>test Union tables</h1>
+{% for i in orderproducttest1 %}
+ {{forloop.counter}}<br>
+{{i.code}}---{{i.title}}----{{i.companyname}}
+{%endfor%}
+
+</body>
+</html>

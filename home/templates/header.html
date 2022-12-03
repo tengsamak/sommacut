@@ -1,0 +1,230 @@
+{% load static %}
+<!--for multi languages-->
+{% load i18n %}
+{% load mptt_tags %}
+
+<!--*******load category tage as defined in templatetag **********-->
+
+<!--*****************-->
+
+<!--(1)-->
+{% block header %}
+    <div class="header--sidebar"></div>
+<header class="header">
+    <div class="header__top">
+        <div class="container-fluid">
+            <div class="row" style="position:relative;">
+                {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert {{message.tags}} " id="msg" role="alert">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                    <script>
+                        setTimeout(function(){
+                            if($('#msg').length>0){
+                                $('#msg').remove();
+                            }
+                        },500000)
+                    </script>
+
+            </div>
+
+
+            <div class="row">
+                <div class="col-lg-6 col-md-8 col-sm-6 col-xs-12 ">
+                    <p>{% trans "460 #123,Phnom Penh, Cambodia" %}  - {% trans "Hotline: (+855)012 424881 - 097 253 8888"%}</p>
+
+                </div>
+                <div class="col-lg-6 col-md-4 col-sm-6 col-xs-12 ">
+
+                    <div class="header__actions">
+
+                        {% if user.id is not None %}
+                        <img src="{{ request.session.userimage }}" style="height: 40px; border-radius: 30%">
+                   <div class="btn-group ps-dropdown">
+                    <a class="dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >Hello {{user.username}}<i class="fa fa-angle-down"></i> </a>
+                      <ul class="dropdown-menu">
+                        <li><a href="{% url 'userprofile' %}"><i class="ps-icon-money"></i> My Account</a></li>
+                        <li><a href="#"><i class="ps-icon-heart"></i> My Favorits </a></li>
+                        <li><a href="#"><i class="ps-icon-share"></i> My order</a></li>
+                        <li><a href="#"><i class="ps-icon-customer-service"></i> My Comments</a></li>
+                      </ul>
+                   </div>
+                    <a href="{% url 'logout_func'%}">LogOUT </a>
+                    {% else %}
+                                                <a href="{% url 'login_form' %}">{% trans "Login" %} </a> &
+                                                <a href="{% url 'signup_form' %}">{% trans "Regiser" %}</a>
+                    {% endif %}
+                    <div class="btn-group ps-dropdown">
+                      <a href="{% url 'faq' %}" >FAQ<i class="fa fa-angle-down"></i></a>
+                      <a class="dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">USD<i class="fa fa-angle-down"></i></a>
+                      <ul class="dropdown-menu">
+                          <form action="#" method="POST">
+                              {% csrf_token %}
+                        <li><a href="#"><img src="{% static ''%}images/flag/usa.svg" alt=""> USD</a></li>
+                        <li><a href="#"><img src="{% static ''%}images/flag/singapore.svg" alt=""> SGD</a></li>
+                        <li><a href="#"><img src="{% static ''%}images/flag/japan.svg" alt=""> JPN</a></li>
+                          </form>
+                      </ul>
+                    </div>
+                    <div class="btn-group ps-dropdown"><a class="dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Language<i class="fa fa-angle-down"></i></a>
+                      <ul class="dropdown-menu">
+                          <form action="{% url 'selectlanguage' %}" method="POST" >
+                              {% csrf_token %}
+<!--                              <ul class="dropdown-menu" name="language">-->
+<!--                                <input name="next" type="hidden" value="{{ redirect_to }}">-->
+<!--                                <select name="language" onclick="submit()" >-->
+
+                                {% get_current_language as LANGUAGE_CODE %}
+                                {% get_available_languages as LANGUAGES %}
+                                {% get_language_info_list for LANGUAGES as languages %}
+<!--                                {% for language in languages %}-->
+<!--                                    <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected{% endif %}>-->
+<!--                                        {{ language.name_local }} ({{ language.code }})-->
+<!--                                    </option>-->
+<!--                                {% endfor %}-->
+
+<!--                            </select>-->
+
+
+<!--                            {% for language in languages %}-->
+                              <!--                              <li {% if language.code == LANGUAGE_CODE %} selected{% endif %} onclick="submit">&lt;!&ndash;img src="{% static ''%}images/flag/usa.svg" alt=""&ndash;&gt;{{ language.name_local }} ({{ language.code }})</li>-->
+                              <!--                             {% endfor %}-->
+                               {% if languages.0.code != LANGUAGE_CODE %}
+                              <li value="{{languages.0.code}}" name="language1"><a href="{{ languages.0.code }}"><img src="{% static ''%}images/flag/cambodia.svg" alt=""> ({{ languages.0.code }})</a></li>
+                              {% else %}
+                              <li value="{{languages.1.code}}" name="language2" ><a href="/"><img src="{% static ''%}images/flag/usa.svg" alt=""> ({{ languages.1.code }})</a></li>
+                              {% endif %}
+                              <!--                                    <noscript>-->
+                              <!--                                        <input type="submit" value="Set" /> >-->
+                              <!--                                    </noscript>-->
+                              <!--                            </ul>-->
+                          </form>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+          </div>
+        </div>
+      </div>
+      <nav class="navigation">
+        <div class="container-fluid">
+          <div class="navigation__column left">
+            <div class="header__logo"><a class="ps-logo" href="/"><img src="{% static ''%}images/logo.png" alt=""></a></div>
+          </div>
+          <div class="navigation__column center">
+            <!--សាកល្បង JQuery JS autocomplete script -->
+            <script>
+
+                $(function() {
+                  $("#query").autocomplete({
+                    source: "/search_auto/",
+                    select: function (event, ui) { //item selected
+                      AutoCompleteSelectHandler(event, ui)
+                    },
+                    minLength: 2,
+                  });
+                });
+
+                function AutoCompleteSelectHandler(event, ui)
+                {
+                  var selectedObj = ui.item;
+                }
+
+            </script>
+            <!--            end autocomplete-->
+            <!-- input center with form search self edit -->
+            <form action="/search/" class="form-inline" style="margin-top:20px;" method="post">
+              {% csrf_token %}
+              <select name="catid" class="form-control" aria-label=".form-select-lg example" style="width:20%;">
+                <option value="0">All </option>
+                 <!-- ******add templatetags********-->
+               {% load myapptags %}
+               {% categorylist as category %}
+               <!--*******end templatetags******-->
+                {% load mptt_tags %}
+
+                {% recursetree category %}
+                {% if node.is_leaf_node %}
+                <option value="{{ node.id }}">{{ node.title }}</option>
+                {% endif %}
+                {% if not node.is_leaf_node %}
+                <optgroup label="{{ node.title }}">
+                  {{ children }}
+                </optgroup>
+                {% endif %}
+                  {% endrecursetree %}
+              </select>
+                <input id="query" name="query" class="form-control" type="text" style="width:70%;"
+                       placeholder="Please search what you want…">
+                <button style="padding-top: 11px;padding-bottom: 14px;background:gray;"><i class="ps-icon-search"></i></button>
+                <!--                test-->
+
+                <!--                endtest-->
+
+            </form>
+        <!-- end search self edit -->
+          </div>
+
+
+          <div class="navigation__column right">
+            <!--សាកល្បងដាក់ category-->
+
+            <!--បញ្ចប់សាក់ល្បង Category-->
+
+                                {% shopcartcount user.id as count %}
+            <div class="ps-cart"><a class="ps-cart__toggle" href="{% url 'shopcart'%}"><span><i>{{ count }}</i></span><i class="ps-icon-shopping-cart"></i></a>
+              <div class="ps-cart__listing">
+                <div class="ps-cart__content">
+                    {% if user.id is not None %}
+                {% shopcartlist request as shopcart %}
+                    {% for rs in shopcart %}
+                  <div class="ps-cart-item"><a class="ps-cart-item__close" href="/order/deletefromcart/{{rs.id}}" onclick="return confirm('delete this product? ! Are you sure?'"></a>
+                      {% if rs.variant.image_id  > 0 %}
+                    <div class="ps-cart-item__thumbnail"><a href="/product/{{rs.product.id}}/{{rs.product.slug}}"></a><img src="{{rs.variant.image }}" alt=""></div>
+                        {% else %}
+                    <div class="ps-cart-item__thumbnail"><a href="/product/{{rs.product.id}}/{{rs.product.slug}}"></a><img src="{{rs.product.image.url}}" alt=""></div>
+                      {% endif %}
+                    <div class="ps-cart-item__content"><a class="ps-cart-item__title" href="/product/{{rs.product.id}}/{{rs.product.slug}}">{{product.title}}</a>
+                      <p><span>Quantity:<i>{{rs.quantity}}</i></span>
+                          <span>Total:<i>$
+                          {% if rs.product.variant == 'None' %}
+                            {{ rs.product.price }}
+                          {% else %}
+                            {{ rs.variant.price }}
+                          {% endif %}
+                      </i></span></p>
+                    </div>
+
+                  </div>
+                     {% endfor %}
+                    {% endif %}
+<!--                  <div class="ps-cart-item"><a class="ps-cart-item__close" href="#"></a>-->
+<!--                    <div class="ps-cart-item__thumbnail"><a href="product-detail.html"></a><img src="{% static ''%}images/cart-preview/2.jpg" alt=""></div>-->
+<!--                    <div class="ps-cart-item__content"><a class="ps-cart-item__title" href="product-detail.html">The Crusty Croissant</a>-->
+<!--                      <p><span>Quantity:<i>12</i></span><span>Total:<i>£176</i></span></p>-->
+<!--                    </div>-->
+<!--                  </div>-->
+<!--                  <div class="ps-cart-item"><a class="ps-cart-item__close" href="#"></a>-->
+<!--                    <div class="ps-cart-item__thumbnail"><a href="product-detail.html"></a><img src="{% static ''%}images/cart-preview/3.jpg" alt=""></div>-->
+<!--                    <div class="ps-cart-item__content"><a class="ps-cart-item__title" href="product-detail.html">The Rolling Pin</a>-->
+<!--                      <p><span>Quantity:<i>12</i></span><span>Total:<i>£176</i></span></p>-->
+<!--                    </div>-->
+<!--                  </div>-->
+                </div>
+                <div class="ps-cart__total">
+                  <p>Number of items:<span>{{ count }}</span></p>
+                  <p>Item Total:<span>${{ total }}</span></p>
+                </div>
+                <div class="ps-cart__footer"><a class="ps-btn" href="{% url 'shopcart'%}">Check out<i class="ps-icon-arrow-left"></i></a></div>
+              </div>
+            </div>
+
+            <div class="menu-toggle"><span></span></div>
+          </div>
+        </div>
+      </nav>
+    </header>
+{% endblock %}

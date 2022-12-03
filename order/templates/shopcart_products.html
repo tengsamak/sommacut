@@ -1,0 +1,342 @@
+{% extends 'homebase.html' %}
+{% load static %}
+
+{% block author %} SOMMA{% endblock %}
+{% block title %} Shop Cart List {{ setting.title }} {% endblock %}
+{% block keywords %} {{ setting.keywords }} {% endblock %}
+{% block description %} {{ setting.description }} {% endblock %}
+
+{% block head %}
+<!--boostrap new version from shopcart-->
+    <!--link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.css"-->
+    <!--link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous"-->
+    <!--/boostrap new version from shopcart-->
+    <!--link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.css"-->
+{% endblock %}
+  {% block breadcrumb %}
+<!-- for everypage excepte index page-->
+<nav aria-label="breadcrumb ">
+    <ol class="breadcrumb"
+        style="background-color:#8bc343;height: 55px;margin-bottom: 0px;padding-top: 15px;border-radius: 0px;">
+        <li class="breadcrumb-item"><a href="/">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Products Shop Cart</li>
+    </ol>
+</nav>
+<!-- end for page -->
+{% endblock %}
+{% block shopcart %}
+
+<!--script of cart Increase Decrease and subtotal and totals-->
+    <!--script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script-->
+    <!--script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/js/bootstrap.min.js" integrity="sha384-vZ2WRJMwsjRMW/8U7i6PWi6AlO1L79snBrmgiDpgIWJ82z8eA5lenwvxbMV1PAh7" crossorigin="anonymous"></script-->
+    <!--script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script-->
+
+    <script>
+      $(document).ready(function() {
+
+        /* Set rates + misc */
+        var taxRate = 0.05;
+        var fadeTime = 300;
+
+        $('.pass-quantity input').change(function() {
+          updateQuantity(this);
+        });
+
+        $('.remove-item button').click(function() {
+          removeItem(this);
+        });
+
+
+        /* Recalculate cart */
+        function recalculateCart() {
+          var subtotal = 0;
+
+          /* Sum up row totals */
+          $('.item').each(function() {
+            subtotal += parseFloat($(this).children('.product-line-price').text());
+          });
+
+          /* Calculate totals */
+          var tax = subtotal * taxRate;
+          var total = subtotal + tax;
+
+          /* Update totals display */
+          $('.totals-value').fadeOut(fadeTime, function() {
+            $('#cart-subtotal').html(subtotal.toFixed(2));
+            $('#cart-tax').html(tax.toFixed(2));
+            $('.cart-total').html(total.toFixed(2));
+            if (total == 0) {
+              $('.checkout').fadeOut(fadeTime);
+            } else {
+              $('.checkout').fadeIn(fadeTime);
+            }
+            $('.totals-value').fadeIn(fadeTime);
+          });
+        }
+
+        /* Update quantity */
+        function updateQuantity(quantityInput) {
+          /* Calculate line price */
+          var productRow = $(quantityInput).parent().parent();
+          var price = parseFloat(productRow.children('.product-price').text());
+          var quantity = $(quantityInput).val();
+          var linePrice = price * quantity;
+
+          /* Update line price display and recalc cart totals */
+          productRow.children('.product-line-price').each(function() {
+            $(this).fadeOut(fadeTime, function() {
+              $(this).text(linePrice.toFixed(2));
+              recalculateCart();
+              $(this).fadeIn(fadeTime);
+            });
+          });
+        }
+
+        /* Remove item from cart */
+        function removeItem(removeButton) {
+          /* Remove row from DOM and recalc cart total */
+          var productRow = $(removeButton).parent().parent();
+          productRow.slideUp(fadeTime, function() {
+            productRow.remove();
+            recalculateCart();
+          });
+        }
+
+      });
+
+    </script>
+    <!--/<script -->
+
+<!--Test Increase Decrease button-->
+<!--script>
+  $(document).ready(function(){
+	   $('.minus').click(function(){
+		   var qty_val1 = $(this).next().val();
+		   if(qty_val1>1){
+			   $('#qty').val(parseInt(qty_val1)-1);
+		   }
+	   });
+	   $('.plus').click(function(){
+		   if($("#qty").val()!=""){
+			   var qty_val1 = $(this).prev().val();
+			   $('#qty').val(parseInt(qty_val1)+1);
+		   }
+	   });
+  });
+
+</script-->
+<!--EndTest-->
+<!--div class="row">
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert {{message.tags}}" role="alert">
+        <p> {{message.tags}}</p>
+        <p>{{ message }}</p>
+    </div>
+    {% endfor %}
+    {% endif %}
+</div-->
+
+
+      <div class="ps-content pt-80 pb-80">
+        <div class="ps-container">
+          <div class="ps-cart-listing">
+
+
+            <!--Header-->
+                  <div class="border border-gainsboro p-3 mt-3 clearfix " style="display: flex;align-items: center;flex-wrap: wrap;" >
+                    <div class="col-lg-1 col-1 text-lg-left">
+                      <h3 class="h6 mb-0"># </h3>
+                    </div>
+                    <!--image-->
+
+                    <div class="col-lg-1 col-1 text-lg-left">
+                      <h3 class="h6 mb-0">Image</h3>
+
+                    </div>
+
+
+                    <div class="col-lg-3 col-1 text-lg-left p-4">
+                      Description
+
+
+                    </div>
+                    <!--add unit cost-->
+                    <div class="col-lg-1 col-1 text-lg-left">
+                      Unit Cost$
+
+
+                    </div>
+
+                    <div class="col-lg-2 col-2 text-lg-left" >
+                      Quantity
+
+                    </div>
+                    <div>
+                      <span>$</span>
+                    </div>
+                    <div class="col-lg-2 col-md-1 col-sm-2 p-4 ">
+                      <span >Subtotal
+                      </span>
+                    </div>
+                    <div class="col-lg-1 col-1 text-lg-left">
+                      Remove Item
+                    </div>
+                  </div>
+            <!--/Header-->
+<!--test div outside the table-->
+<!--div class="container mt-5 mb-5"-->
+  <!--div class="row justify-content-center"-->
+    <!--div class="col-xl-7 col-lg-8 col-md-7"-->
+<form>{% for rs in shopcart %}
+            <!--*****ចាំបាច់*******-->
+              <!--style="display: flex;align-items: center;flex-wrap: wrap;"-->
+            <!--********-->
+
+<!--ទី១-->
+      <div class="border border-gainsboro p-3 mt-3 clearfix item" style="display: flex;align-items: center;flex-wrap: wrap;">
+        <div class="col-lg-1 col-1 text-lg-left">
+          <h3 class="h6 mb-0">{{ forloop.counter }} </h3>
+        </div>
+        <!--image-->
+        {% if rs.variant.image_id > 0 %}
+        <div class="col-lg-1 col-1 text-lg-left">
+          <a class="ps-product__preview" href="/product/{{rs.product.id}}/{{rs.product.slug}}"><img class="mr-15" src="{{rs.variant.image }}" style="height: 100px" alt=""> </a>
+
+        </div>
+
+        <!--/image-->
+        <!--
+        <div class="text-lg-left">
+          <i class="fa fa-ticket fa-2x text-center" aria-hidden="true"></i>
+        </div>
+      -->
+        <div class="col-lg-3 col-2 text-lg-left">
+          <h3 class="h6 mb-0">{{product.title}}{{rs.product}}{{ rs.variant.size }} {{ rs.variant.color }}<br>
+            <!--small>Cost: $50.00/ea</small-->
+          </h3>
+        </div>
+        {% else %}
+        <div class="col-lg-1 col-1 text-lg-left">
+          <a class="ps-product__preview" href="/product/{{rs.product.id}}/{{rs.product.slug}}"><img class="mr-15" src="{{rs.product.image.url}}" style="height: 70px" alt=""> </a>
+
+        </div>
+
+        <!--/image-->
+        <!--
+        <div class="text-lg-left">
+          <i class="fa fa-ticket fa-2x text-center" aria-hidden="true"></i>
+        </div>
+      -->
+        <div class="col-lg-3 col-2 text-lg-left">
+          <h3 class="h6 mb-0">{{product.title}}{{rs.product}}<br>
+            <!--small>Cost: $50.00/ea</small-->
+          </h3>
+        </div>
+        {% endif %}
+        <!--add unit cost-->
+        <div class="col-lg-1 col-1 text-lg-left">
+          <h3 class="h6 mb-0">$
+                      {% if rs.product.variant == 'None' %}
+                        {{ rs.product.price }}
+                      {% else %}
+                        {{ rs.variant.price }}
+                      {% endif %}<br>
+          </h3>
+
+        </div>
+        <!--/add unit cost-->
+
+        <div class="product-price d-none">
+          {% if rs.product.variant == 'None' %}
+            {{ rs.product.price }}
+          {% else %}
+            {{ rs.variant.price }}
+          {% endif %}
+        </div>
+        <div class="pass-quantity col-lg-2 col-md-3 col-sm-2" style="padding-bottom: 25px;">
+          <label for="pass-quantity" class="pass-quantity"></label>
+          <input class="form-control p-1" type="number" value="{{rs.quantity}}" min="1">
+        </div>
+        <div >
+          <span>$</span>
+        </div>
+        <div class="col-lg-2 col-md-1 col-sm-2 product-line-price p-4 ">
+          <span class="product-line-price">
+                    {% if rs.product.variant == 'None' %}
+                        {{ rs.amount}}
+                    {% else %}
+                        {{ rs.varamount }}
+                    {% endif %}
+          </span>
+        </div>
+        <div class="remove-item ">
+          <button class="ps-remove">
+
+          </button>
+        </div>
+      </div>
+<!--/ទ៊ី១-->
+
+
+ {% endfor %}</form>
+
+<div class="border border-gainsboro p-3">
+
+  <h2 class="h6 text-uppercase mb-0">Cart Total ({{shopcart.count}} Items): <strong class="cart-total"></strong></h2>
+</div>
+
+      <!-- item -->
+
+            <div class="ps-cart__actions">
+
+              <div class="ps-cart__promotion">
+
+                <div class="form-group">
+                  <div class="ps-form--icon"><i class="fa fa-angle-right"></i>
+                    <input class="form-control" type="text" placeholder="Promo Code">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <button class="ps-btn ps-btn--gray">Continue Shopping</button>
+                </div>
+              </div>
+
+
+              <div class="ps-cart__total">
+                <!--add Summary Cart-->
+                <div class="col-xl-12 col-lg-12 col-md-5 totals">
+                  <div class="border border-gainsboro px-3">
+                    <div class="border-bottom border-gainsboro">
+                      <p class="text-uppercase mb-0 py-3" style="color:#303030;"><strong>Order Summary</strong></p>
+                    </div>
+                    <div class="totals-item d-flex align-items-center justify-content-between mt-3">
+                      <p class="text-uppercase" style="color:#303030;">Subtotal</p>
+                      <p class="totals-value" id="cart-subtotal" style="color:#303030;">${{total}}</p>
+                    </div>
+                    <div class="totals-item d-flex align-items-center justify-content-between">
+                      <p class="text-uppercase" style="color:#303030;">VAT 5%</p>
+                      <p class="totals-value" id="cart-tax" style="color:#303030;">${{vat10|floatformat:2}}</p>
+                    </div>
+                    <div class="totals-item totals-item-total d-flex align-items-center justify-content-between mt-3 pt-3 border-top border-gainsboro">
+                      <p class="text-uppercase" style="color:#303030;"><strong>Total</strong></p>
+                      <p class="totals-value font-weight-bold cart-total" style="color:#303030;">${{grandtotal|floatformat:2}}</p>
+                    </div>
+                  </div>
+                  <!--a href="#" class="mt-3 btn btn-pay w-100 d-flex justify-content-between btn-lg rounded-0">Update Cart Now <span class="totals-value cart-total"></span></a-->
+                </div>
+                <!--/add Summary Cart-->
+                <!--h3>Total Price: <span> 2599.00 $</span></h3-->
+                <!--div class="totals-item totals-item-total d-flex align-items-center justify-content-between mt-3 pt-3 border-top border-gainsboro">
+                  <p class="text-uppercase" style="color:#303030;"><strong>Total</strong></p>
+                  <p class="totals-value font-weight-bold cart-total" style="color:#303030;">{{grandtotal|floatformat:2}}</p>
+                </div--><a class="ps-btn" href="{% url 'orderproduct' %}">Process to checkout<i class="ps-icon-next"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+{% endblock %}
+
+

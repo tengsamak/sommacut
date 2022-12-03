@@ -1,0 +1,148 @@
+
+{% block vendorstatistic %}
+
+
+					<table>
+						<tr><td>
+							<p>ID</p>
+							</td>
+							<td>
+							<p>Image</p>
+							</td>
+							<td>
+							<p>Code</p>
+							</td>
+							<td>
+							<p>total</p>
+							</td>
+							<td>
+							<p>QTY</p>
+							</td>
+							<td>
+							<p>Amout</p>
+							</td>
+						</tr>
+
+						{% for op in userorderproducts %}
+								{% for o in userordercodeinvoice %}
+									{% if o.id == op.order_id %}
+										{% for rs in productlist %}
+											{% if rs.id == op.product_id %}
+												{% if forloop.counter %}
+
+
+
+
+
+
+
+
+						<tr>
+							<td> {{forloop.counter}}</td>{%endif%}
+						</tr>
+						<tr>
+
+							<td><img src="{{rs.image.url}}" alt="" style="height: 50px"></td>
+							<td>{{o.code}}</td>
+							<td>{{op.total}}</td>
+							<td>{{op.quantity}}</td>
+							<td>{{op.amount}}</td>
+						</tr>
+											{%endif%}
+										{%endfor%}
+									{%endif%}
+								{%endfor%}
+							{%endfor%}
+
+					</table>
+<div style="poisition:inline;">
+<div >
+<table style="position:relative;float:left;border:solid 1px green;width:45%;">
+	<thead>
+		<tr><td>STT</td>
+			<td>
+							<p>Image</p>
+							</td>
+							<td>
+							<p>Code</p>
+							</td>
+							<td>
+							<p>total</p>
+							</td>
+							<td>
+							<p>QTY</p>
+							</td>
+							<td>
+							<p>Amout</p>
+							</td>
+
+		</tr>
+	</thead>
+	<tbody>
+	{% for i in stt %}
+		<tr><td>{{i}}</td>
+			<td></td>
+			<td>2</td>
+			<td>3</td>
+			<td>4</td>
+			<td>5</td>
+
+		</tr>
+	{%endfor%}
+	</tbody>
+</table>
+	</div>
+<div style="position:relative;float:right;border:solid 1px red;width:45%;">
+<table>
+	<thead>
+		<tr>
+							<td>STT</td>
+							<td>
+							<p>Image</p>
+							</td>
+							<td>
+							<p>Code</p>
+							</td>
+							<td>
+							<p>total</p>
+							</td>
+							<td>
+							<p>QTY</p>
+							</td>
+							<td>
+							<p>Amout</p>
+							</td>
+						</tr>
+	</thead>
+
+						{% for op in userorderproducts %}
+
+								{% for o in userordercodeinvoice %}
+
+									{% if o.id == op.order_id %}
+										{% for rs in productlist %}
+											{% if rs.id == op.product_id %}
+
+						<tr>
+							<td></td>
+							<td><img src="{{rs.image.url}}" alt="" style="height: 50px"></td>
+							<td>{{o.code}}</td>
+							<td>{{op.total}}</td>
+							<td>{{op.quantity}}</td>
+							<td>{{op.amount}}</td>
+						</tr>
+											{%endif%}
+										{%endfor%}
+									{%endif%}
+								{%endfor%}
+							{%endfor%}
+
+
+
+	</tbody>
+</table>
+</div>
+	</div>
+{{test}}
+
+{% endblock %}

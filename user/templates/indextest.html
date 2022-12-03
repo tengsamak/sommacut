@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+{% extends 'adminbase.html' %}
+{% load static %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% block adminstatisticbar %} {% include 'adminstatisticbar.html' %}{% endblock %}
+{% block userprofile %} {% include 'adminuserprofile.html' %}{% endblock %}
+</body>
+</html>

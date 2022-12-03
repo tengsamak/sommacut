@@ -1,0 +1,122 @@
+{% extends 'homebase.html' %}
+{% load static %}
+
+{% block author %} SOMMA{% endblock %}
+{% block title %} User profile {{ setting.title }} {% endblock %}
+{% block keywords %} {{ setting.keywords }} {% endblock %}
+{% block description %} {{ setting.description }} {% endblock %}
+
+<!--Test category menus every pages-->
+
+<!--end test category-->
+
+{% block breadcrumb %}
+<!-- for everypage excepte index page-->
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Welcome {{user}} update profile</li>
+    </ol>
+</nav>
+<!-- end for page -->
+{% endblock%}
+{% block login %}
+
+<html lang="en">
+<head>
+<!--  <title>Bootstrap Example</title>-->
+<!--  <meta charset="utf-8">-->
+<!--  <meta name="viewport" content="width=device-width, initial-scale=1">-->
+<!--  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">-->
+<!--  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">-->
+<!--  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>-->
+<!--  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>-->
+  <style>
+  /* Remove the navbar's default margin-bottom and rounded borders */
+  .navbar {
+    margin-bottom: 0;
+    border-radius: 0;
+  }
+
+  /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+  .row.content {height: 450px}
+
+  /* Set gray background color and 100% height */
+  .sidenav {
+    padding-top: 20px;
+    background-color: #f1f1f1;
+    height: 100%;
+  }
+
+  /* Set black background color, white text and some padding */
+<!--  footer {-->
+<!--    background-color: #555;-->
+<!--    color: white;-->
+<!--    padding: 15px;-->
+<!--  }-->
+
+  /* On small screens, set height to 'auto' for sidenav and grid */
+  @media screen and (max-width: 767px) {
+    .sidenav {
+      height: auto;
+      padding: 15px;
+    }
+    .row.content {height:auto;}
+  }
+  </style>
+</head>
+<body>
+
+
+
+<div class="container-fluid text-center">
+  <div class="row content">
+    <div class="col-sm-3 sidenav" style="text-align:left;">
+      {% include "user_leftsidebar.html" %}
+    </div>
+    <!-- </div> -->
+    <div class="col-sm-6 text-left">
+      <h1>Welcome {{user}} profile update</h1>
+                    <form method="POST" enctype = "multipart/form-data">
+                        {% csrf_token %}
+                        <fieldset class="form-group">
+                            {{ vendor_user_form.as_p  }}
+                            {{ vendor_profile_form.as_p  }}
+                        </fieldset>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-info">Update</button>
+                            <a href="/user" class=""><button type="button" class="btn btn-info">Cancel</button></a>
+                        </div>
+                    </form>
+
+
+        <hr>
+        <h3>Info..</h3>
+        <p>
+            {% if messages %}
+            {% for message in messages %}
+        <div style="color: #d43f3a; font-size: medium">
+            {{ message|safe }}
+        </div>
+            {% endfor %}
+            {% endif %}
+        </p>
+    </div>
+      <div class="col-sm-2 sidenav">
+          <div class="well">
+              <p>Your Favorits Products</p>
+      </div>
+      <div class="well">
+        <p>Your White List Products</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <footer class="container-fluid text-center">
+<p>Footer Text</p>
+</footer> -->
+
+</body>
+</html>
+{% endblock %}

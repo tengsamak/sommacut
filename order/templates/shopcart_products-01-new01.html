@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+{% load static %}
+<!--[if IE 7]><html class="ie ie7"><![endif]-->
+<!--[if IE 8]><html class="ie ie8"><![endif]-->
+<!--[if IE 9]><html class="ie ie9"><![endif]-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link href="apple-touch-icon.png" rel="apple-touch-icon">
+    <link href="favicon.png" rel="icon">
+    <meta name="author" content="Nghia Minh Luong">
+    <meta name="keywords" content="Default Description">
+    <meta name="description" content="Default keyword">
+    <title>Sky - Cart test</title>
+
+    <!-- Bootstrap CSS Cart Increase Decrease -->
+ <!--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.css"  />  -->
+
+    <!--link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.css" -->
+    <!--link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.css"-->
+
+      <!-- /Bootstrap CSS Cart Increase Decrease -->
+
+    <!-- Fonts-->
+    <!--
+    <link href="https://fonts.googleapis.com/css?family=Archivo+Narrow:300,400,700%7CMontserrat:300,400,500,600,700,800,900" rel="stylesheet">
+    <link rel="stylesheet" href="plugins/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="plugins/ps-icon/style.css">  -->
+    <!-- CSS Library-->
+
+    <!--link rel="stylesheet" href="{% static ''%}plugins/bootstrap/dist/css/bootstrap.min.css"-->
+   <!-- <link rel="stylesheet" href="plugins/owl-carousel/assets/owl.carousel.css">
+    <link rel="stylesheet" href="plugins/jquery-bar-rating/dist/themes/fontawesome-stars.css">
+    <link rel="stylesheet" href="plugins/slick/slick/slick.css">
+    <link rel="stylesheet" href="plugins/bootstrap-select/dist/css/bootstrap-select.min.css">
+    <link rel="stylesheet" href="plugins/Magnific-Popup/dist/magnific-popup.css">
+    <link rel="stylesheet" href="plugins/jquery-ui/jquery-ui.min.css">
+    <link rel="stylesheet" href="plugins/revolution/css/settings.css">
+    <link rel="stylesheet" href="plugins/revolution/css/layers.css">
+    <link rel="stylesheet" href="plugins/revolution/css/navigation.css">  -->
+    <!-- Custom-->
+    <!--link rel="stylesheet" href="{% static ''%} css/style.css"-->
+    <!--HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries-->
+    <!--WARNING: Respond.js doesn't work if you view the page via file://-->
+    <!--[if lt IE 9]><!--script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script><script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script><![endif]-->
+<!--add cart -->
+<style>
+.item {
+display: flex;
+align-items: center;
+flex-wrap: wrap;
+}
+
+.btn-pay {
+background-color: #C800Da;
+border: 0;
+color: #fff;
+font-weight: 600;
+}
+
+.fa-ticket {
+color: #0e1fa1;
+}
+
+</style>
+<!--/add cart -->
+
+</style>
+  </head>
+  <!--[if IE 7]><body class="ie7 lt-ie8 lt-ie9 lt-ie10"><![endif]-->
+  <!--[if IE 8]><body class="ie8 lt-ie9 lt-ie10"><![endif]-->
+  <!--[if IE 9]><body class="ie9 lt-ie10"><![endif]-->
+  <body class="ps-loading">
+    <div class="header--sidebar"></div>
+    <header class="header">
+      <div class="header__top">
+        <div class="container-fluid">
+          <div class="row">
+                <div class="col-lg-6 col-md-8 col-sm-6 col-xs-12 ">
+                  <p>460 West 34th Street, 15th floor, New York  -  Hotline: 804-377-3580 - 804-399-3580</p>
+                </div>
+                <div class="col-lg-6 col-md-4 col-sm-6 col-xs-12 ">
+                  <div class="header__actions"><a href="#">Login & Regiser</a>
+                    <div class="btn-group ps-dropdown"><a class="dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">USD<i class="fa fa-angle-down"></i></a>
+                      <ul class="dropdown-menu">
+                        <li><a href="#"><img src="images/flag/usa.svg" alt=""> USD</a></li>
+                        <li><a href="#"><img src="images/flag/singapore.svg" alt=""> SGD</a></li>
+                        <li><a href="#"><img src="images/flag/japan.svg" alt=""> JPN</a></li>
+                      </ul>
+                    </div>
+                    <div class="btn-group ps-dropdown"><a class="dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Language<i class="fa fa-angle-down"></i></a>
+                      <ul class="dropdown-menu">
+                        <li><a href="#">English</a></li>
+                        <li><a href="#">Japanese</a></li>
+                        <li><a href="#">Chinese</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+          </div>
+        </div>
+      </div>
+      <nav class="navigation">
+        <div class="container-fluid">
+          <div class="navigation__column left">
+            <div class="header__logo"><a class="ps-logo" href="index.html"><img src="images/logo.png" alt=""></a></div>
+          </div>
+          <div class="navigation__column center">
+                <ul class="main-menu menu">
+                  <li class="menu-item menu-item-has-children dropdown"><a href="index.html">Home</a>
+                        <ul class="sub-menu">
+                          <li class="menu-item"><a href="index.html">Homepage #1</a></li>
+                          <li class="menu-item"><a href="#">Homepage #2</a></li>
+                          <li class="menu-item"><a href="#">Homepage #3</a></li>
+                        </ul>
+                  </li>
+                  <li class="menu-item menu-item-has-children has-mega-menu"><a href="#">Men</a>
+                    <div class="mega-menu">
+                      <div class="mega-wrap">
+                        <div class="mega-column">
+                          <ul class="mega-item mega-features">
+                            <li><a href="product-listing.html">NEW RELEASES</a></li>
+                            <li><a href="product-listing.html">FEATURES SHOES</a></li>
+                            <li><a href="product-listing.html">BEST SELLERS</a></li>
+                            <li><a href="product-listing.html">NOW TRENDING</a></li>
+                            <li><a href="product-listing.html">SUMMER ESSENTIALS</a></li>
+                            <li><a href="product-listing.html">MOTHER'S DAY COLLECTION</a></li>
+                            <li><a href="product-listing.html">FAN GEAR</a></li>
+                          </ul>
+                        </div>
+                        <div class="mega-column">
+                          <h4 class="mega-heading">Shoes</h4>
+                          <ul class="mega-item">
+                            <li><a href="product-listing.html">All Shoes</a></li>
+                            <li><a href="product-listing.html">Running</a></li>
+                            <li><a href="product-listing.html">Training & Gym</a></li>
+                            <li><a href="product-listing.html">Basketball</a></li>
+                            <li><a href="product-listing.html">Football</a></li>
+                            <li><a href="product-listing.html">Soccer</a></li>
+                            <li><a href="product-listing.html">Baseball</a></li>
+                          </ul>
+                        </div>
+                        <div class="mega-column">
+                          <h4 class="mega-heading">CLOTHING</h4>
+                          <ul class="mega-item">
+                            <li><a href="product-listing.html">Compression & Nike Pro</a></li>
+                            <li><a href="product-listing.html">Tops & T-Shirts</a></li>
+                            <li><a href="product-listing.html">Polos</a></li>
+                            <li><a href="product-listing.html">Hoodies & Sweatshirts</a></li>
+                            <li><a href="product-listing.html">Jackets & Vests</a></li>
+                            <li><a href="product-listing.html">Pants & Tights</a></li>
+                            <li><a href="product-listing.html">Shorts</a></li>
+                          </ul>
+                        </div>
+                        <div class="mega-column">
+                          <h4 class="mega-heading">Accessories</h4>
+                          <ul class="mega-item">
+                            <li><a href="product-listing.html">Compression & Nike Pro</a></li>
+                            <li><a href="product-listing.html">Tops & T-Shirts</a></li>
+                            <li><a href="product-listing.html">Polos</a></li>
+                            <li><a href="product-listing.html">Hoodies & Sweatshirts</a></li>
+                            <li><a href="product-listing.html">Jackets & Vests</a></li>
+                            <li><a href="product-listing.html">Pants & Tights</a></li>
+                            <li><a href="product-listing.html">Shorts</a></li>
+                          </ul>
+                        </div>
+                        <div class="mega-column">
+                          <h4 class="mega-heading">BRAND</h4>
+                          <ul class="mega-item">
+                            <li><a href="product-listing.html">NIKE</a></li>
+                            <li><a href="product-listing.html">Adidas</a></li>
+                            <li><a href="product-listing.html">Dior</a></li>
+                            <li><a href="product-listing.html">B&G</a></li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="menu-item"><a href="#">Women</a></li>
+                  <li class="menu-item"><a href="#">Kids</a></li>
+                  <li class="menu-item menu-item-has-children dropdown"><a href="#">News</a>
+                        <ul class="sub-menu">
+                          <li class="menu-item menu-item-has-children dropdown"><a href="blog-grid.html">Blog-grid</a>
+                                <ul class="sub-menu">
+                                  <li class="menu-item"><a href="blog-grid.html">Blog Grid 1</a></li>
+                                  <li class="menu-item"><a href="blog-grid-2.html">Blog Grid 2</a></li>
+                                </ul>
+                          </li>
+                          <li class="menu-item"><a href="blog-list.html">Blog List</a></li>
+                        </ul>
+                  </li>
+                  <li class="menu-item menu-item-has-children dropdown"><a href="#">Contact</a>
+                        <ul class="sub-menu">
+                          <li class="menu-item"><a href="contact-us.html">Contact Us #1</a></li>
+                          <li class="menu-item"><a href="contact-us.html">Contact Us #2</a></li>
+                        </ul>
+                  </li>
+                </ul>
+          </div>
+          <div class="navigation__column right">
+            <form class="ps-search--header" action="do_action" method="post">
+              <input class="form-control" type="text" placeholder="Search Product…">
+              <button><i class="ps-icon-search"></i></button>
+            </form>
+            <div class="ps-cart"><a class="ps-cart__toggle" href="#"><span><i>20</i></span><i class="ps-icon-shopping-cart"></i></a>
+              <div class="ps-cart__listing">
+                <div class="ps-cart__content">
+                  <div class="ps-cart-item"><a class="ps-cart-item__close" href="#"></a>
+                    <div class="ps-cart-item__thumbnail"><a href="product-detail.html"></a><img src="images/cart-preview/1.jpg" alt=""></div>
+                    <div class="ps-cart-item__content"><a class="ps-cart-item__title" href="product-detail.html">Amazin’ Glazin’</a>
+                      <p><span>Quantity:<i>12</i></span><span>Total:<i>£176</i></span></p>
+                    </div>
+                  </div>
+                  <div class="ps-cart-item"><a class="ps-cart-item__close" href="#"></a>
+                    <div class="ps-cart-item__thumbnail"><a href="product-detail.html"></a><img src="images/cart-preview/2.jpg" alt=""></div>
+                    <div class="ps-cart-item__content"><a class="ps-cart-item__title" href="product-detail.html">The Crusty Croissant</a>
+                      <p><span>Quantity:<i>12</i></span><span>Total:<i>£176</i></span></p>
+                    </div>
+                  </div>
+                  <div class="ps-cart-item"><a class="ps-cart-item__close" href="#"></a>
+                    <div class="ps-cart-item__thumbnail"><a href="product-detail.html"></a><img src="images/cart-preview/3.jpg" alt=""></div>
+                    <div class="ps-cart-item__content"><a class="ps-cart-item__title" href="product-detail.html">The Rolling Pin</a>
+                      <p><span>Quantity:<i>12</i></span><span>Total:<i>£176</i></span></p>
+                    </div>
+                  </div>
+                </div>
+                <div class="ps-cart__total">
+                  <p>Number of items:<span>36</span></p>
+                  <p>Item Total:<span>£528.00</span></p>
+                </div>
+                <div class="ps-cart__footer"><a class="ps-btn" href="cart.html">Check out<i class="ps-icon-arrow-left"></i></a></div>
+              </div>
+            </div>
+            <div class="menu-toggle"><span></span></div>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <div class="header-services">
+      <div class="ps-services owl-slider" data-owl-auto="true" data-owl-loop="true" data-owl-speed="7000" data-owl-gap="0" data-owl-nav="true" data-owl-dots="false" data-owl-item="1" data-owl-item-xs="1" data-owl-item-sm="1" data-owl-item-md="1" data-owl-item-lg="1" data-owl-duration="1000" data-owl-mousedrag="on">
+        <p class="ps-service"><i class="ps-icon-delivery"></i><strong>Free delivery</strong>: Get free standard delivery on every order with Sky Store</p>
+        <p class="ps-service"><i class="ps-icon-delivery"></i><strong>Free delivery</strong>: Get free standard delivery on every order with Sky Store</p>
+        <p class="ps-service"><i class="ps-icon-delivery"></i><strong>Free delivery</strong>: Get free standard delivery on every order with Sky Store</p>
+      </div>
+    </div>
+    <main class="ps-main">
+      <div class="ps-content pt-80 pb-80">
+        <div class="ps-container">
+          <div class="ps-cart-listing">
+
+
+            <!--Header-->
+                  <div class="border border-gainsboro p-3 mt-3 clearfix " style="display: flex;align-items: center;flex-wrap: wrap;" >
+                    <div class="col-lg-1 col-1 text-lg-left">
+                      <h3 class="h6 mb-0"># </h3>
+                    </div>
+                    <!--image-->
+
+                    <div class="col-lg-1 col-1 text-lg-left">
+                      <h3 class="h6 mb-0">Image</h3>
+
+                    </div>
+
+                    <!--/image-->
+                    <!--
+                    <div class="text-lg-left">
+                      <i class="fa fa-ticket fa-2x text-center" aria-hidden="true"></i>
+                    </div>
+                  -->
+                    <div class="col-lg-3 col-1 text-lg-left p-4">
+                      Description
+
+
+                    </div>
+                    <!--add unit cost-->
+                    <div class="col-lg-1 col-1 text-lg-left">
+                      Unit Cost$
+
+
+                    </div>
+                    <!--/add unit cost-->
+                    <!--div class="product-price d-none">50</div-->
+                    <div class="col-lg-2 col-2 text-lg-left" >
+                      Quantity
+
+                    </div>
+                    <div>
+                      <span>$</span>
+                    </div>
+                    <div class="col-lg-2 col-md-1 col-sm-2 p-4 ">
+                      <span >Subtotal
+                      </span>
+                    </div>
+                    <div class="col-lg-1 col-1 text-lg-left">
+                      accepted
+                    </div>
+                  </div>
+            <!--/Header-->
+<!--test div outside the table-->
+<!--div class="container mt-5 mb-5"-->
+  <!--div class="row justify-content-center"-->
+    <!--div class="col-xl-7 col-lg-8 col-md-7"-->
+
+<!--ទី១-->
+      <div class="border border-gainsboro p-3 mt-3 clearfix item">
+        <div class="col-lg-1 col-1 text-lg-left">
+          <h3 class="h6 mb-0">1 </h3>
+        </div>
+        <!--image-->
+
+        <div>
+          <a class="ps-product__preview" href="product-detail.html"><img class="mr-15" src="images/product/cart-preview/2.jpg" alt="The Crusty Croissant"> </a>
+
+        </div>
+
+        <!--/image-->
+        <!--
+        <div class="text-lg-left">
+          <i class="fa fa-ticket fa-2x text-center" aria-hidden="true"></i>
+        </div>
+      -->
+        <div class="col-lg-3 col-2 text-lg-left">
+          <h3 class="h6 mb-0">The Crusty CroissantThe Crusty CroissantThe Crusty Croissant<br>
+            <!--small>Cost: $50.00/ea</small-->
+          </h3>
+        </div>
+        <!--add unit cost-->
+        <div class="col-lg-1 col-1 text-lg-left">
+          <h3 class="h6 mb-0">$50<br>
+          </h3>
+
+        </div>
+        <!--/add unit cost-->
+        <div class="product-price d-none">50</div>
+        <div class="pass-quantity col-lg-2 col-md-3 col-sm-2" style="padding-bottom: 25px;">
+          <label for="pass-quantity" class="pass-quantity"></label>
+          <input class="form-control p-1" type="number" value="1" min="1">
+        </div>
+        <!--div>
+          <span>$</span>
+        </div-->
+        <div class="col-lg-2 col-md-1 col-sm-2 product-line-price p-4 ">
+          <span class="product-line-price">50
+          </span>
+        </div>
+        <div class="remove-item ">
+          <button class="ps-remove">
+
+          </button>
+        </div>
+      </div>
+<!--/ទ៊ី១-->
+
+<!--ទី២-->
+      <div class="border border-gainsboro p-3 mt-3 clearfix item">
+        <div class="col-lg-1 col-1 text-lg-left">
+          <h3 class="h6 mb-0">2 </h3>
+        </div>
+        <!--image-->
+
+        <div>
+          <a class="ps-product__preview" href="product-detail.html"><img class="mr-15" src="images/product/cart-preview/2.jpg" alt="The Crusty Croissant"> </a>
+
+        </div>
+
+        <!--/image-->
+        <!--
+        <div class="text-lg-left">
+          <i class="fa fa-ticket fa-2x text-center" aria-hidden="true"></i>
+        </div>
+      -->
+        <div class="col-lg-3 col-2 text-lg-left">
+          <h3 class="h6 mb-0">The Crusty CroissantThe Crusty CroissantThe Crusty Croissant<br>
+            <!--small>Cost: $50.00/ea</small-->
+          </h3>
+        </div>
+        <!--add unit cost-->
+        <div class="col-lg-1 col-1 text-lg-left">
+          <h3 class="h6 mb-0">$30<br>
+          </h3>
+
+        </div>
+        <!--/add unit cost-->
+        <div class="product-price d-none">30</div>
+        <div class="pass-quantity col-lg-2 col-md-3 col-sm-2" style="padding-bottom: 25px;">
+          <label for="pass-quantity" class="pass-quantity"></label>
+          <input class="form-control p-1" type="number" value="1" min="1">
+        </div>
+        <!--div>
+          <span>$</span>
+        </div-->
+        <div class="col-lg-2 col-md-1 col-sm-2 product-line-price p-4 ">
+          <span class="product-line-price">30
+          </span>
+        </div>
+        <div class="remove-item ">
+          <button class="ps-remove">
+
+          </button>
+        </div>
+      </div>
+<!--/ទ៊ី២-->
+<div class="border border-gainsboro p-3">
+
+  <h2 class="h6 text-uppercase mb-0">Cart Total (2 Items): <strong class="cart-total"></strong></h2>
+</div>
+<!--
+      <div class="border border-gainsboro p-3 mt-3 clearfix item">
+        <div class="text-lg-left">
+          <i class="fa fa-ticket fa-2x text-center" aria-hidden="true"></i>
+        </div>
+        <div class="col-lg-5 col-5 text-lg-left">
+          <h3 class="h6 mb-0">SpaceJet Flex ticket 2<br><small><small>Cost: $45.00/ea</small></small></h3>
+        </div>
+        <div class="product-price d-none">45.00</div>
+        <div class="pass-quantity col-lg-3 col-md-4 col-sm-3">
+          <label for="pass-quantity" class="pass-quantity">Quantity</label>
+          <input class="form-control" type="number" value="1" min="1">
+        </div>
+        <div class="col-lg-2 col-md-1 col-sm-2 product-line-price pt-4">
+          <span class="product-line-price">45.00</span>
+        </div>
+        <div class="remove-item pt-4">
+          <button class="remove-product btn-light">
+            Delete
+          </button>
+        </div>
+      </div>
+-->
+      <!-- item -->
+<!--
+      <div class="border border-gainsboro p-3 mt-3 clearfix item">
+        <div class="text-lg-left">
+          <i class="fa fa-ticket fa-2x text-center" aria-hidden="true"></i>
+        </div>
+        <div class="col-lg-5 col-5 text-lg-left">
+          <h3 class="h6 mb-0">SpaceJet Flex ticket<br>
+            <small>Cost: $40.00/ea</small>
+          </h3>
+        </div>
+
+        <div class="pass-quantity col-lg-3 col-md-4 col-sm-3">
+          <label for="pass-quantity" class="pass-quantity">Quantity</label>
+          <input class="form-control" type="number" value="1" min="1">
+        </div>
+        <div class="product-price d-none">40</div>
+        <div class="col-lg-2 col-md-1 col-sm-2 product-line-price pt-4">
+          <span class="product-line-price">40
+          </span>
+        </div>
+        <div class="remove-item pt-4">
+          <button class="ps-remove">
+
+          </button>
+        </div>
+      </div>  -->
+    <!--/div-->
+
+<!-- correct summary
+    <div class="col-xl-3 col-lg-4 col-md-5 totals">
+      <div class="border border-gainsboro px-3">
+        <div class="border-bottom border-gainsboro">
+          <p class="text-uppercase mb-0 py-3"><strong>Order Summary</strong></p>
+        </div>
+        <div class="totals-item d-flex align-items-center justify-content-between mt-3">
+          <p class="text-uppercase">Subtotal</p>
+          <p class="totals-value" id="cart-subtotal"></p>
+        </div>
+        <div class="totals-item d-flex align-items-center justify-content-between">
+          <p class="text-uppercase">Estimated Tax</p>
+          <p class="totals-value" id="cart-tax"></p>
+        </div>
+        <div class="totals-item totals-item-total d-flex align-items-center justify-content-between mt-3 pt-3 border-top border-gainsboro">
+          <p class="text-uppercase"><strong>Total</strong></p>
+          <p class="totals-value font-weight-bold cart-total"></p>
+        </div>
+      </div>
+      <a href="#" class="mt-3 btn btn-pay w-100 d-flex justify-content-between btn-lg rounded-0">Pay Now <span class="totals-value cart-total"></span></a>
+    </div>
+-->
+
+  <!--/div-->
+<!--/div--><!-- container -->
+<!--/test-->
+<!--
+            <table class="table ps-cart__table">
+              <thead>
+                <tr>
+                  <th>All Products</th>
+                  <th>Unit Cost</th>
+                  <th>Quantity</th>
+                  <th>Total</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+
+                <tr>
+                  <td><a class="ps-product__preview" href="product-detail.html"><img class="mr-15" src="images/product/cart-preview/1.jpg" alt=""> air jordan One mid</a></td>
+                  <td>
+                    <div class="col-lg-5 col-5 text-lg-left">
+                      <div class="product-price d-none">10</div>
+                      <!--h3 class="h6 mb-0">$10.00<br>
+                        <small>Cost: $10.00/ea</small>
+                      </h3-->
+<!--                    </div>
+                  </td>
+                  <td>
+                    <div class="pass-quantity col-lg-4 col-md-4 col-sm-3">
+                      <!--label for="pass-quantity" class="pass-quantity">Quantity</label-->
+<!--                      <input class="form-control" type="number" value="1" min="1">
+                    </div>
+                    <!--div class="form-group--number">
+                      <button class="minus"><span>-</span></button>
+                      <input class="form-control" type="text" value="2">
+                      <button class="plus"><span>+</span></button>
+                    </div-->
+  <!--                </td>
+                  <td>
+
+                    <div class="col-lg-2 col-md-1 col-sm-2 product-line-price pt-4">
+                      <span class="product-line-price">10
+                      </span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="ps-remove"></div>
+                  </td>
+                </tr>
+                <tr>
+                  <td><a class="ps-product__preview" href="product-detail.html"><img class="mr-15" src="images/product/cart-preview/2.jpg" alt=""> The Crusty Croissant</a></td>
+                  <td>$150</td>
+                  <td>
+                    <div class="pass-quantity col-lg-4 col-md-4 col-sm-3">
+                      <!--label for="pass-quantity" class="pass-quantity">Quantity</label-->
+<!--                      <input class="form-control" type="number" value="1" min="1">
+                    </div>
+                    <!--div class="form-group--number">
+                      <button class="minus"><span>-</span></button>
+                      <input class="form-control" type="text" value="2">
+                      <button class="plus"><span>+</span></button>
+                    </div-->
+<!--                  </td>
+                  <td>$300</td>
+                  <td>
+                    <div class="ps-remove"></div>
+                  </td>
+                </tr>
+                <tr ​​>
+                  <td><a class="ps-product__preview" href="product-detail.html"><img class="mr-15" src="images/product/cart-preview/3.jpg" alt="">The Rolling Pin</a></td>
+                  <td>$​​​50</td>
+                  <td>
+                    <div class="product-price d-none">50</div>
+                    <div class="pass-quantity col-lg-3 col-md-4 col-sm-3">
+                      <!--label for="pass-quantity" class="pass-quantity">Quantity</label-->
+<!--                      <input class="form-control" type="number" value="1" min="1">
+                    </div>
+                    <!--div class="form-group--number">
+                      <button class="minus"><span>-</span></button>
+                      <input class="form-control" type="text" value="2">
+                      <button class="plus"><span>+</span></button>
+                    </div-->
+  <!--                </td>
+                  <td><div class="col-lg-2 col-md-1 col-sm-2 product-line-price pt-4">
+                    <span class="product-line-price">50
+                    </span>
+                  </div></td>
+                  <td>
+                    <div class="ps-remove"></div>
+                  </td>
+                </tr>
+                <!--test-->
+  <!--              <tr>
+                  <td colspan="6">
+                    <!--div class="border border-gainsboro p-3 mt-3 clearfix item"-->
+                      <!--div class="text-lg-left">
+                        <i class="fa fa-ticket fa-2x text-center" aria-hidden="true"></i>
+                      </div-->
+                      <!--div class="col-lg-5 col-5 text-lg-left">
+                        <h3 class="h6 mb-0">SpaceJet Flex ticket<br>
+                          <small>Cost: $50.00/ea</small>
+                        </h3>
+                      </div-->
+  <!--                    <div class="product-price d-none">50</div>
+                      <div class="pass-quantity col-lg-3 col-md-4 col-sm-3">
+                        <!--label for="pass-quantity" class="pass-quantity">Quantity</label-->
+  <!--                      <input class="form-control" type="number" value="1" min="1">
+                      </div>
+                      <div class="col-lg-2 col-md-1 col-sm-2 product-line-price pt-4">
+                        <span class="product-line-price">50
+                        </span>
+                      </div>
+                      <!--div class="remove-item pt-4">
+                        <button class="remove-product btn-light">
+                          Delete
+                        </button>
+                      </div-->
+                    <!--/div-->
+  <!--                </td>
+
+                </tr>
+                <!--/test-->
+<!--              </tbody>
+            </table>
+-->
+            <div class="ps-cart__actions">
+
+              <div class="ps-cart__promotion">
+
+                <div class="form-group">
+                  <div class="ps-form--icon"><i class="fa fa-angle-right"></i>
+                    <input class="form-control" type="text" placeholder="Promo Code">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <button class="ps-btn ps-btn--gray">Continue Shopping</button>
+                </div>
+              </div>
+
+
+              <div class="ps-cart__total">
+                <!--add Summary Cart-->
+                <div class="col-xl-12 col-lg-4 col-md-5 totals">
+                  <div class="border border-gainsboro px-3">
+                    <div class="border-bottom border-gainsboro">
+                      <p class="text-uppercase mb-0 py-3" style="color:#303030;"><strong>Order Summary</strong></p>
+                    </div>
+                    <div class="totals-item d-flex align-items-center justify-content-between mt-3">
+                      <p class="text-uppercase" style="color:#303030;">Subtotal</p>
+                      <p class="totals-value" id="cart-subtotal" style="color:#303030;"></p>
+                    </div>
+                    <div class="totals-item d-flex align-items-center justify-content-between">
+                      <p class="text-uppercase" style="color:#303030;">VAT 5%</p>
+                      <p class="totals-value" id="cart-tax" style="color:#303030;"></p>
+                    </div>
+                    <!--div class="totals-item totals-item-total d-flex align-items-center justify-content-between mt-3 pt-3 border-top border-gainsboro">
+                      <p class="text-uppercase" style="color:#303030;"><strong>Total(+VAT)</strong></p>
+                      <p class="totals-value font-weight-bold cart-total" style="color:#303030;"></p>
+                    </div-->
+                  </div>
+                  <!--a href="#" class="mt-3 btn btn-pay w-100 d-flex justify-content-between btn-lg rounded-0">Update Cart Now <span class="totals-value cart-total"></span></a-->
+                </div>
+                <!--/add Summary Cart-->
+                <!--h3>Total Price: <span> 2599.00 $</span></h3-->
+                <div class="totals-item totals-item-total d-flex align-items-center justify-content-between mt-3 pt-3 border-top border-gainsboro">
+                  <p class="text-uppercase" style="color:#303030;"><strong>Total</strong></p>
+                  <p class="totals-value font-weight-bold cart-total" style="color:#303030;"></p>
+                </div><a class="ps-btn" href="checkout.html">Process to checkout<i class="ps-icon-next"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="ps-subscribe">
+        <div class="ps-container">
+          <div class="row">
+                <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12 ">
+                  <h3><i class="fa fa-envelope"></i>Sign up to Newsletter</h3>
+                </div>
+                <div class="col-lg-5 col-md-7 col-sm-12 col-xs-12 ">
+                  <form class="ps-subscribe__form" action="do_action" method="post">
+                    <input class="form-control" type="text" placeholder="">
+                    <button>Sign up now</button>
+                  </form>
+                </div>
+                <div class="col-lg-4 col-md-5 col-sm-12 col-xs-12 ">
+                  <p>...and receive  <span>$20</span>  coupon for first shopping.</p>
+                </div>
+          </div>
+        </div>
+      </div>
+      <div class="ps-footer bg--cover" data-background="images/background/parallax.jpg">
+        <div class="ps-footer__content">
+          <div class="ps-container">
+            <div class="row">
+                  <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 ">
+                    <aside class="ps-widget--footer ps-widget--info">
+                      <header><a class="ps-logo" href="index.html"><img src="images/logo-white.png" alt=""></a>
+                        <h3 class="ps-widget__title">Address Office 1</h3>
+                      </header>
+                      <footer>
+                        <p><strong>460 West 34th Street, 15th floor, New York</strong></p>
+                        <p>Email: <a href='mailto:support@store.com'>support@store.com</a></p>
+                        <p>Phone: +323 32434 5334</p>
+                        <p>Fax: ++323 32434 5333</p>
+                      </footer>
+                    </aside>
+                  </div>
+                  <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 ">
+                    <aside class="ps-widget--footer ps-widget--info second">
+                      <header>
+                        <h3 class="ps-widget__title">Address Office 2</h3>
+                      </header>
+                      <footer>
+                        <p><strong>PO Box 16122 Collins  Victoria 3000 Australia</strong></p>
+                        <p>Email: <a href='mailto:support@store.com'>support@store.com</a></p>
+                        <p>Phone: +323 32434 5334</p>
+                        <p>Fax: ++323 32434 5333</p>
+                      </footer>
+                    </aside>
+                  </div>
+                  <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12 ">
+                    <aside class="ps-widget--footer ps-widget--link">
+                      <header>
+                        <h3 class="ps-widget__title">Find Our store</h3>
+                      </header>
+                      <footer>
+                        <ul class="ps-list--link">
+                          <li><a href="#">Coupon Code</a></li>
+                          <li><a href="#">SignUp For Email</a></li>
+                          <li><a href="#">Site Feedback</a></li>
+                          <li><a href="#">Careers</a></li>
+                        </ul>
+                      </footer>
+                    </aside>
+                  </div>
+                  <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12 ">
+                    <aside class="ps-widget--footer ps-widget--link">
+                      <header>
+                        <h3 class="ps-widget__title">Get Help</h3>
+                      </header>
+                      <footer>
+                        <ul class="ps-list--line">
+                          <li><a href="#">Order Status</a></li>
+                          <li><a href="#">Shipping and Delivery</a></li>
+                          <li><a href="#">Returns</a></li>
+                          <li><a href="#">Payment Options</a></li>
+                          <li><a href="#">Contact Us</a></li>
+                        </ul>
+                      </footer>
+                    </aside>
+                  </div>
+                  <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12 ">
+                    <aside class="ps-widget--footer ps-widget--link">
+                      <header>
+                        <h3 class="ps-widget__title">Products</h3>
+                      </header>
+                      <footer>
+                        <ul class="ps-list--line">
+                          <li><a href="#">Shoes</a></li>
+                          <li><a href="#">Clothing</a></li>
+                          <li><a href="#">Accessries</a></li>
+                          <li><a href="#">Football Boots</a></li>
+                        </ul>
+                      </footer>
+                    </aside>
+                  </div>
+            </div>
+          </div>
+        </div>
+        <div class="ps-footer__copyright">
+          <div class="ps-container">
+            <div class="row">
+                  <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
+                    <p>&copy; <a href="#">SKYTHEMES</a>, Inc. All rights Resevered. Design by <a href="#"> Alena Studio</a></p>
+                  </div>
+                  <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
+                    <ul class="ps-social">
+                      <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                      <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                      <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                      <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+                    </ul>
+                  </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!--script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script-->
+    <!--script of cart Increase Decrease and subtotal and totals-->
+    <!--script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"> </script>
+    <!--script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/js/bootstrap.min.js" integrity="sha384-vZ2WRJMwsjRMW/8U7i6PWi6AlO1L79snBrmgiDpgIWJ82z8eA5lenwvxbMV1PAh7" crossorigin="anonymous"></script-->
+    <!--script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script-->
+
+    <script>
+      $(document).ready(function() {
+
+        /* Set rates + misc */
+        var taxRate = 0.05;
+        var fadeTime = 300;
+
+        $('.pass-quantity input').change(function() {
+          updateQuantity(this);
+        });
+
+        $('.remove-item button').click(function() {
+          removeItem(this);
+        });
+
+
+        /* Recalculate cart */
+        function recalculateCart() {
+          var subtotal = 0;
+
+          /* Sum up row totals */
+          $('.item').each(function() {
+            subtotal += parseFloat($(this).children('.product-line-price').text());
+          });
+
+          /* Calculate totals */
+          var tax = subtotal * taxRate;
+          var total = subtotal + tax;
+
+          /* Update totals display */
+          $('.totals-value').fadeOut(fadeTime, function() {
+            $('#cart-subtotal').html(subtotal.toFixed(2));
+            $('#cart-tax').html(tax.toFixed(2));
+            $('.cart-total').html(total.toFixed(2));
+            if (total == 0) {
+              $('.checkout').fadeOut(fadeTime);
+            } else {
+              $('.checkout').fadeIn(fadeTime);
+            }
+            $('.totals-value').fadeIn(fadeTime);
+          });
+        }
+
+        /* Update quantity */
+        function updateQuantity(quantityInput) {
+          /* Calculate line price */
+          var productRow = $(quantityInput).parent().parent();
+          var price = parseFloat(productRow.children('.product-price').text());
+          var quantity = $(quantityInput).val();
+          var linePrice = price * quantity;
+
+          /* Update line price display and recalc cart totals */
+          productRow.children('.product-line-price').each(function() {
+            $(this).fadeOut(fadeTime, function() {
+              $(this).text(linePrice.toFixed(2));
+              recalculateCart();
+              $(this).fadeIn(fadeTime);
+            });
+          });
+        }
+
+        /* Remove item from cart */
+        function removeItem(removeButton) {
+          /* Remove row from DOM and recalc cart total */
+          var productRow = $(removeButton).parent().parent();
+          productRow.slideUp(fadeTime, function() {
+            productRow.remove();
+            recalculateCart();
+          });
+        }
+
+      });
+
+    </script>
+    <!--/<script -->
+
+    <!-- JS Library-->
+   <!-- <script type="text/javascript" src="{% static ''%}plugins/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="{% static ''%}plugins/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="{% static ''%}plugins/jquery-bar-rating/dist/jquery.barrating.min.js"></script>
+    <script type="text/javascript" src="plugins/owl-carousel/owl.carousel.min.js"></script>
+    <script type="text/javascript" src="plugins/gmap3.min.js"></script>
+    <script type="text/javascript" src="plugins/imagesloaded.pkgd.js"></script>
+    <script type="text/javascript" src="plugins/isotope.pkgd.min.js"></script>
+    <script type="text/javascript" src="plugins/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+    <script type="text/javascript" src="{% static ''%}plugins/jquery.matchHeight-min.js"></script>
+    <script type="text/javascript" src="plugins/slick/slick/slick.min.js"></script>
+    <script type="text/javascript" src="plugins/elevatezoom/jquery.elevatezoom.js"></script>
+    <script type="text/javascript" src="plugins/Magnific-Popup/dist/jquery.magnific-popup.min.js"></script>
+    <script type="text/javascript" src="{% static ''%}plugins/jquery-ui/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAx39JFH5nhxze1ZydH-Kl8xXM3OK4fvcg&amp;region=GB"></script><script type="text/javascript" src="plugins/revolution/js/jquery.themepunch.tools.min.js"></script>
+<script type="text/javascript" src="plugins/revolution/js/jquery.themepunch.revolution.min.js"></script>
+<script type="text/javascript" src="plugins/revolution/js/extensions/revolution.extension.video.min.js"></script>
+<script type="text/javascript" src="plugins/revolution/js/extensions/revolution.extension.slideanims.min.js"></script>
+<script type="text/javascript" src="plugins/revolution/js/extensions/revolution.extension.layeranimation.min.js"></script>
+<script type="text/javascript" src="plugins/revolution/js/extensions/revolution.extension.navigation.min.js"></script>
+<script type="text/javascript" src="plugins/revolution/js/extensions/revolution.extension.parallax.min.js"></script>
+<script type="text/javascript" src="plugins/revolution/js/extensions/revolution.extension.actions.min.js"></script>-->
+
+<!-- Custom scripts-->
+<script type="text/javascript" src="{% static ''%}js/main.js"></script>
+
+
+
+  </body>
+</html>

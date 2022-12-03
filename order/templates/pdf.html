@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        @page{
+        size:"A4";
+        margin:1.5cm 1.5cm 0.5cm 0.5cm;
+        }
+        @top-center{
+        content:"COMPANY NAME";
+        }
+        @bottom-left {
+        content:"Page" counter(page) " of " counter(pages);
+        }
+    </style>
+</head>
+<body>
+
+<div class="ps-content pt-80 pb-80" style="padding-top:0px;">
+  <div class="ps-container">
+    <div class="row">
+<!--        <div style="text-align:center;padding-bottom: 40px;">-->
+<!--             <a href="/" ><button type="button" class="btn btn-primary">Continue Shopping</button></a>-->
+<!--             <a href="{% url 'userprofile' %}" ><button type="button" class="btn btn-success">Check your order</button></a>-->
+<!--        </div>-->
+      <div id="headtext">YOUR ORDER COMPLETED</div>
+    </div>
+    <div class="row" style="padding-left: 50px; padding-right: 50px;">
+ <header class="clearfix">
+      <div id="logo">
+        <img src="{{setting.icon.url}}" style="height: 70px"alt="Company Logo">
+      </div>
+      <div id="company">
+        <h2 class="name">{{ setting.title}}</h2>
+        <div>{{ setting.address}}</div>
+        <div>{{ setting.phone}}</div>
+        <div><a href="mailto:{{ setting.email}}">{{ setting.email}}</a></div>
+      </div>
+
+  </header>
+
+<!--    <main style="padding:30px 30px 30px 30px;">-->
+      <div id="details" class="clearfix">
+        <div id="client">
+            <div class="to" style="color:#0087C3;font-weight: bold;">INVOICE TO:</div>
+          <h2 class="name">{{ order.first_name }} {{  order.last_name }}</h2>
+          <div class="address">{{order.address}}</div>
+          <div class="email"><a href="{{order.email}}">{{order.email}}</a></div>
+        </div>
+
+
+        <div id="invoice">
+            <h2 style="color:#0087C3;font-weight: bold;">INVOICE: #{{ order.code }}</h2>
+          <div class="date">Date of Invoice: {{order.create_at| date:"SHORT_DATE_FORMAT"}}</div>
+          <div class="date">Due Date: 1 day</div>
+        </div>
+
+      </div>
+      <hr />
+      <div id="details" class="clearfix">
+
+        <div id="client">
+          <div class="to" style="color:#0087C3;font-weight: bold;">Ship TO:</div>
+
+          <h2 class="name">Name:{{order.first_name}}{{order.last_name}}</h2>
+          <div class="address">Phone:{{order.phone}}</div>
+          <div class="address">Address:{{order.address}}</div>
+          <div class="address">Location:{{order.adminnote}}</div>
+          <div class="address">UserNoted:{{order.userordernote}}</div>
+
+<!--          <div class="email"><a href="mailto:john@example.com">john@example.com</a></div>-->
+        </div>
+          <div id="client">
+          <div class="to" style="color:#0087C3;font-weight: bold;">Bill TO:</div>
+          <h2 class="name">Name:{{ order.first_name }} {{  order.last_name }}</h2>
+          <div class="address">Address:{{order.address}}</div>
+<!--          <div class="email"><a href="mailto:john@example.com">john@example.com</a></div>-->
+        </div>
+        <div id="invoice">
+          <h1>Payment</h1>
+
+          <div class="date" style="color:red;">{{order.paymentstatus}}</div>
+          <div class="date">Paid by:{{order.paymentinfo}} </div>
+
+          <div class="date">Paid Date: .../.../...</div>
+        </div>
+      </div>
+
+
+
+<!--THIS STYLE WE USE DATA FROM SHOPCART TABLE-->
+<!--  <div class="ps-cart-listing">-->
+<!--&lt;!&ndash;      <table border="0" cellspacing="0" cellpadding="0">&ndash;&gt;-->
+<!--        <table class="table ps-cart__table" aria-readonly="true">-->
+
+<!--            <thead style="background-color:orange">-->
+<!--            <tr>-->
+<!--                <td class="no"> N#</td>-->
+<!--                <th class="desc">All Products</th>-->
+<!--                <th class="unit">Price</th>-->
+<!--                <th class="qty">Quantity</th>-->
+<!--                <th class="total">Total</th>-->
+<!--                <th class="desc">NOTE</th>-->
+<!--            </tr>-->
+<!--            </thead>-->
+
+<!--            <tbody>-->
+<!--            {% for rs in shopcart %}-->
+
+<!--            <tr>-->
+<!--                <td class="no">{{ forloop.counter }}</td>-->
+<!--                {% if rs.variant.image_id  > 0 %}-->
+
+<!--                <td class="desc"><a class="ps-product__preview" href="/product/{{rs.product.id}}/{{rs.product.slug}}"><img class="mr-15" src="{{rs.variant.image }}" style="height: 70px"alt="">{{product.title}}{{rs.product}} {{ rs.variant.size }} {{ rs.variant.color }}</a></td>-->
+<!--                {% else %}-->
+<!--                <td class="desc"> <a class="ps-product__preview" href="/product/{{rs.product.id}}/{{rs.product.slug}}"><img class="mr-15" src="{{rs.product.image.url}}"style="height: 70px" alt="">{{product.title}}{{rs.product}}</a></td>-->
+<!--                {% endif %}-->
+<!--                <td class="unit">$-->
+<!--                    {% if rs.product.variant == 'None' %}-->
+<!--                    {{ rs.product.price }}-->
+<!--                    {% else %}-->
+<!--                    {{ rs.variant.price }}-->
+<!--                    {% endif %}-->
+<!--                </td>-->
+<!--                <td class="qty">-->
+<!--                    <div class="form-group&#45;&#45;number">-->
+<!--&lt;!&ndash;                        <button class="minus"><span>-</span></button>&ndash;&gt;-->
+<!--                        <input class="form-control" type="text" value="{{rs.quantity}}" readonly>-->
+<!--&lt;!&ndash;                        <button class="plus"><span>+</span></button>&ndash;&gt;-->
+<!--                    </div>-->
+<!--                </td>-->
+<!--                <td class="total">$-->
+<!--                    {% if rs.product.variant == 'None' %}-->
+<!--                    {{ rs.amount}}-->
+<!--                    {% else %}-->
+<!--                    {{ rs.varamount }}-->
+<!--                    {% endif %}-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    &lt;!&ndash;                    <a href="/order/deletefromcart/{{rs.id}}" onclick="return confirm('delete this product? ! Are you sure?'" class="main-btn icon-btn"><div class="ps-remove">  </div></a>&ndash;&gt;-->
+<!--                </td>-->
+<!--            </tr>-->
+<!--            {% endfor %}-->
+<!--            </tbody>-->
+<!--                <tfoot>-->
+<!--          <tr>-->
+<!--            <td colspan="2"></td>-->
+<!--            <td colspan="2">SUBTOTAL</td>-->
+<!--            <td>${{total}}</td>-->
+<!--          </tr>-->
+<!--          <tr>-->
+<!--            <td colspan="2"></td>-->
+<!--            <td colspan="2">VAT 10%</td>-->
+<!--            <td>${{vat10|floatformat:2}}</td>-->
+<!--          </tr>-->
+<!--          <tr>-->
+<!--            <td colspan="2"></td>-->
+<!--            <td colspan="2">GRAND TOTAL</td>-->
+<!--            <td>${{grandtotal|floatformat:2}}</td>-->
+<!--          </tr>-->
+<!--        </tfoot>-->
+
+<!--      </table>-->
+<!--  </div>-->
+<!--    END STYLE FROM SHOPCART TABLE    -->
+
+<!--      WE USE STYLE FROM order_products TABLE-->
+      <div class="ps-cart-listing">
+        <table class="table ps-cart__table">
+                          <thead style="background-color:rgba(188, 232, 241, 1);">
+                            <tr>
+                                <th class="no">Id </th>
+                                <th class="desc">Image </th>
+                                <th class="desc">Product Name </th>
+                                <th class="desc">Size/Color </th>
+                                <th class="unit">Price </th>
+                                <th class="qty">Qty </th>
+                                <th class="total">Amount </th>
+<!--                                <th class="desc">Note </th>-->
+<!--                                <th class="desc">Date </th>-->
+<!--                                <th class="desc">Detail </th>-->
+                            </tr>
+                          </thead>
+                            <tbody>
+                            {% for rs in order_product %}
+
+                                <tr>
+                                  <td class="no">{{ forloop.counter }} </td>
+                                    <td class="desc">
+                                        <a href="/product/{{ rs.product_id }}/{{ rs.product.slug }}">
+                                            {% if rs.variant.image_id > 0 %}
+                                                <img src="{{rs.variant.image }}" alt="" style="height: 70px">
+                                            {% else %}
+                                                <img src="{{rs.product.image.url}}" alt="" style="height: 70px">
+                                            {% endif %}
+                                        </a>
+                                    </td>
+                                    <td class="desc"><a class="ps-product__preview" href="/product/{{ rs.product_id }}/{{ rs.product.slug }}">{{ rs.product.title}}</a></td>
+                                   <td class="desc"> {{ rs.variant.size }}   {{ rs.variant.color }}</td>
+                                    <td class="unit">${{ rs.price}} </td>
+                                    <td class="qty">{{ rs.quantity}} </td>
+                                    <td class="total">${{ rs.amount}} </td>
+                                    <td class="desc"> </td>
+<!--                                    <td class="desc">{{ rs.create_at}} </td>-->
+<!--                                    <td class="desc"><a href="/user/order_product_detail/{{rs.id}}/{{rs.order.id}}"> <button type="button" class="btn btn-success">Detail</button></a></td>-->
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+            <tfoot>
+          <tr>
+            <td colspan="3"></td>
+            <td colspan="3">SUBTOTAL</td>
+            <td>${{order.total}}</td>
+          </tr>
+          <tr>
+            <td colspan="3"></td>
+            <td colspan="3">VAT 10%</td>
+            <td>${{vat10|floatformat:2}}</td>
+          </tr>
+          <tr>
+            <td colspan="3"></td>
+            <td colspan="3">GRAND TOTAL</td>
+            <td>${{grandtotal|floatformat:2}}</td>
+          </tr>
+        </tfoot>
+
+                        </table>
+
+      </div>
+<!--      endtest-->
+<!--        <div id="thanks"><h2>Thank you! For your order</h2></div>-->
+      <div id="notices">
+        <div>NOTICE:</div>
+        <div class="notice">We will call back to you now !</div>
+      </div>
+<!--    </main>-->
+    <div>
+      Invoice was created on a computer and is valid without the signature and seal.
+    </div>
+<!--         <div class="form-group">-->
+<!--                 <a href="/"> <button class="ps-btn ps-btn&#45;&#45;gray">Continue Shopping</button></a>-->
+<!--                <a href="/"> <button class="ps-btn ps-btn&#45;&#45;gray">Continue Shopping</button></a>-->
+<!--         </div>-->
+<!--  </div>-->
+    <div class="row">
+<!--      <div> <img src="images/thankyou1.png" class="rounded mx-auto d-block" alt="..." style="display: block; margin-left: auto;margin-right: auto; width: 50%;"></div>-->
+        <div style="text-align:center;padding-top: 40px;">
+             <a href="/" ><button class="ps-btn ps-btn--gray">Continue Shopping</button></a>
+             <a href="{% url 'userprofile' %}" ><button class="ps-btn ps-btn--gray">Check your order</button></a>
+        </div>
+    </div>
+    </div>
+
+    </div>
+
+
+
+
+  </div>
+</div>
+
+</body>
+</html>
