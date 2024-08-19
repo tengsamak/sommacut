@@ -1,0 +1,170 @@
+{% extends 'homebase.html' %}
+{% load static %}
+
+{% block author %} SOMMA{% endblock %}
+{% block title %} Wish List {{ setting.title }} {% endblock %}
+{% block keywords %} {{ setting.keywords }} {% endblock %}
+{% block description %} {{ setting.description }} {% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+<!--boostrap new version from shopcart-->
+    <!--link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.css"-->
+    <!--link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous"-->
+    <!--/boostrap new version from shopcart-->
+    <!--link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.css"-->
+{% endblock %}
+  {% block breadcrumb %}
+<!-- for everypage excepte index page-->
+<nav aria-label="breadcrumb ">
+    <ol class="breadcrumb"
+        style="background-color:#8bc343;height: 55px;margin-bottom: 0px;padding-top: 15px;border-radius: 0px;">
+        <li class="breadcrumb-item"><a href="/">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Your Wish List</li>
+    </ol>
+</nav>
+<!-- end for page -->
+{% endblock %}
+{% block wish_list%}
+
+<div class="ps-content pt-80 pb-80 " id="wish_list_del_response" >
+    <div class="ps-container">
+            <div class="ps-cart-listing ps-table--whishlist">
+            <table class="table ps-cart__table">
+            <thead>
+                <tr>
+                <th style="width:30px;">#</th>
+                <th>All Products</th>
+                <th>Price</th>
+                <th>View</th>
+                <th>Add To Cart</th>
+                <th>Remove</th>
+                </tr>
+            </thead>
+            <tbody>
+               
+                {%for wl in wlist %}
+                
+                <tr>
+                <td style="width:30px;">{{forloop.counter}}</td>
+                <td><a class="ps-product__preview" href="/product/{{ wl.product.id}}/{{ wl.product.slug}}"><img class="mr-15" src="{{ wl.product.image.url }}" alt="{{wl.product.title}}"style="height:100px;width:100;">{{wl.product.title}}</a></td>
+                <td>${{wl.product.price}}</td>
+                <td><a class="ps-product-link" href="/product/{{ wl.product.id}}/{{ wl.product.slug}}">View Product</a></td>
+                
+                <td>
+                   
+                    {% comment %} {%if wl.product.id in incart %} {% endcomment %}
+                   
+                    <a type="button" class="ps-btn mb-10 1btndone disabled" href=""  style="background-color:#8bc343 " ><i class="bi bi-check-lg" style="font-size: 20px;" ></i></a>
+                    {% comment %} {%else%} {% endcomment %}
+                    <a type="button" class="ps-btn mb-10 btnaddcart" href="{% url 'order:shopcart' %}" data-card={{wl.product.id}} style="background-color:orange;" ><i class="ps-icon-shopping-cart " style="font-size: 2rem; "></i>
+                    <a type="button" class="ps-btn mb-10 btndone hidden"  href="" style="background-color:orange;font-size: 2rem; " ><i class="bi bi-check-lg"></i></a></a> 
+                    
+                    {% comment %} {%endif%} {% endcomment %}
+                    
+                    </td>
+                    
+                    <td>
+
+                    <div class="ps-remove delete-wishlist" data-wid={{wl.id}}></div>
+                </td>
+                </tr>
+                <tr>
+                  
+                {%endfor%}                  
+                {% comment %} <td><a class="ps-product__preview" href="product-detail.html"><img class="mr-15" src="{% static ''%}images/product/cart-preview/2.jpg" alt=""> The Crusty Croissant</a></td>
+                <td>$150</td>
+                <td><a class="ps-product-link" href="product-detail.html">View Product</a></td>
+                <td><button type="submit" class="ps-btn mb-10" style="background-color:orange;">Add to cart<i class="ps-icon-next"></i></button></td>
+                <td>
+                    <div class="ps-remove"></div>
+                </td>
+                </tr>
+                <tr>
+                <td><a class="ps-product__preview" href="product-detail.html"><img class="mr-15" src="{% static ''%}images/product/cart-preview/3.jpg" alt="">The Rolling Pin</a></td>
+                <td>$150</td>
+                <td><a class="ps-product-link" href="product-detail.html">View Product</a></td>
+                <td><button type="submit" class="ps-btn mb-10" style="background-color:orange;">Add to cart<i class="ps-icon-next"></i></button></td>
+                <td>
+                    <div class="ps-remove"></div>
+                </td> {% endcomment %}
+                </tr>
+            </tbody>
+            </table>
+            </div>
+        </div>
+    </div>  
+      
+    <script>
+// Delete item from wish list
+$(document).on('click','.delete-wishlist',function(){
+    var _wId=$(this).attr('data-wid');
+    var _vm=$(this);
+    console.log(_wId)
+    // Ajax
+    $.ajax({
+        url:'{% url 'wishlist:delete_from_wishlist' %}',
+        data:{
+            'wid':_wId,
+        },
+        dataType:'json',
+        beforeSend:function(){
+            _vm.attr('disabled',true);
+        },
+        success:function(res){
+            console.log(res);
+            if(res.status==1){
+                console.log("delete success");
+                console.log(res.wlcount);
+                $(".wlcount").text(res.wlcount);
+                $(_vm).closest("tr").fadeOut();
+                //$("#wish_list_del_response").html(res.data);
+         /*   $(".cart-list").text(res.totalitems);
+            _vm.attr('disabled',false);
+            $("#wish_list_del_response").html(res.data);
+
+            */
+        }
+    }     
+    });
+     // End
+});
+
+// wish list button click add to cart
+$(document).on('click','.btnaddcart',function(){
+    var _wId=$(this).attr('data-card');
+    var _vm=$(this);
+    console.log(_wId);
+    _vm.addClass("hidden");
+    $(".btndone").removeClass("hidden");
+
+
+
+    });
+​// add to cart test for Ajax
+
+$(document).on('click','#wlcart',function(){
+    var wlcart=$(this).attr('data-card');
+    var _vm=$(this);
+    console.log(wlcart);
+  /*  $.ajax({
+        url:'{% url 'order:addtoshopcart' wlcart %}',
+        data:{
+            'id':wlcart,
+        },
+        dataType:'json',
+        
+        success:function(res){
+            console.log(res);
+            console.log(res.dataajax);
+            
+        }
+    }) */ 
+});
+
+
+
+    </script>
+
+ <!--user authenthicate-->
+{%endblock%}

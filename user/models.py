@@ -19,11 +19,13 @@ class UserProfile(models.Model):
     address=models.CharField(blank=True,max_length=150)
     city=models.CharField(blank=True,max_length=20)
     country=models.CharField(blank=True,max_length=20)
-    image=models.ImageField(blank=True,upload_to='images/users/')
+    image=models.ImageField(blank=True,upload_to='media/uploads/user')
     usernote=models.TextField(blank=True,max_length=500) #add more samak
     usertype=models.CharField(max_length=20,choices=TYPE,default="Normal")
     # language = models.ForeignKey(Language, on_delete=models.CASCADE, null=True, blank=True) # multi language on userprofile
 
+    
+        
     def __str__(self):
         return self.user.username
 
@@ -35,4 +37,14 @@ class UserProfile(models.Model):
     image_tag.short_description = 'Image'
 
  #   def updateuserprofile(self):
+ 
+# Model for subcriber
+from django.utils import timezone
+class SubscribedUsers(models.Model):
+    #name = models.CharField(max_length=100)
+    email = models.EmailField(unique=True, max_length=100)
+    created_date = models.DateTimeField('Date created', default=timezone.now,blank=True)
+
+    def __str__(self):
+        return self.email
 

@@ -1,0 +1,412 @@
+{% extends 'homebase.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block author %} SOMMA{% endblock %}
+{% block title %} Wish List {{ setting.title }} {% endblock %}
+{% block keywords %} {{ setting.keywords }} {% endblock %}
+{% block description %} {{ setting.description }} {% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+<!--boostrap new version from shopcart-->
+    <!--link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.css"-->
+    <!--link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous"-->
+    <!--/boostrap new version from shopcart-->
+    <!--link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.css"-->
+<style>
+    .hidecol{
+        visibility:collapse;
+        display: none;
+  
+    }
+    .ftcolor{
+        color:#27b574;
+        font-weight: bolder;
+        /* font-size: 18px; */
+  
+    }
+    .breadcrumb>li+li::before {
+        content:"";
+    }
+</style>
+    {% endblock %}
+  {% block breadcrumb %}
+<!-- for everypage excepte index page-->
+<nav aria-label="breadcrumb ">
+    <!--ol class="breadcrumb"style="background-color:#e9ecef;color: #009c91;display: block;">
+        <li class="breadcrumb-item"><a href="/"><strong>Home</strong></a></li>
+        <li class="breadcrumb-item active" aria-current="page"><strong>Your Wish List</strong></li>
+        <ol style="float: right;"><strong style="font-family: monospace;">Today:&nbsp;{% now "jS F Y " %}</strong></ol> 
+    </ol-->
+    <ol class="breadcrumb" style="background-color:#e9ecef;color: #009c91;display: block;margin-bottom: 0px;padding-bottom: 0px;padding-top: 5px;">
+        <!--li class="breadcrumb-item" ><a href="/" style="text-transform: capitalize;"><strong>Home</strong></a></li-->
+        <li class="breadcrumb-item"><a href="/" class="ps-cart__toggle" style="background-color:#ce7dde;"><!--span><i class="wlcount_session">2</i></span--><i class="fa fa-home"></i></a></li>
+        <!--li class="breadcrumb-item"><a href="/searchcateid/{{ product.category.id }}/{{ product.category.slug }}"><strong>{{ product.category.title }}</strong></a></li-->
+        <!--li class="breadcrumb-item"><a class="ps-cart__toggle" href="/searchcateid/{{ product.category.id }}/{{ product.category.slug }}"  style="background-color:#ce7dde;"><i class="fa fa-users"></i></a></li-->
+        <!--li class="breadcrumb-item active" aria-current="page"><strong>{{ product.title }}</strong></li-->
+        <li class="processbar" style="float: right;"><a href="#"class="ps-cart__toggle" data-toggle="collapse" data-target="#demoprobar"class="ps-btn ps-btn--gray" style="padding: 4px 10px;font-size: 12px;background-color: #2AC37D;"><i class="fa fa-sitemap"></i></a></li> 
+        {% comment %} <ol style="float: right;"><strong style="font-family: monospace;">Today:&nbsp;{% now "jS F Y " %}</strong><a data-toggle="collapse" data-target="#demo">Process Step</a>{% include 'processstepbar.html' %}</ol>  {% endcomment %}
+        <ol>{% include 'processstepbar.html' %}</ol>
+      </ol>
+</nav>
+<!-- end for page -->
+{% endblock %}
+{% block wish_list%}
+
+<div class="ps-content pt-80 pb-80 " id="wish_list_del_response" style="padding-top: 0px;">
+    <div class="ps-container" >
+        
+        <header class="mb-50" style="float:right;">
+            <h1 style="font-size:48px;color: #ce7dde;"> Your Wishlist</h1>
+            {% if request.user.is_authenticated %}   
+            <h4 style="color:gray;">There are <b style="color:#2ac37d;"class="wlcount">{{wlistcount}}</b> products in this list</h4>
+            {%else%}
+            <h4 style="color:gray;">There are <b style="color:#2ac37d;"class="wlcount_session">{{wishsession | length}}</b> products in this list</h4>
+            {%endif%}
+        </header>
+            <div class="ps-cart-listing-1 ps-table--whishlist">
+                
+            <table class="table ps-cart__table">
+            <thead>
+                <tr style="background-color: #ececec;">
+                <th class="hidecol" >#</th>
+                <th>All Your Favorite Products</th>
+                <th>Unit Price</th>
+                <th>Stock Status</th>
+                <th>Created Date</th>
+                <th>Add To Cart</th>
+                <th></th>
+                </tr>
+            </thead>
+            <tbody>
+            {% if request.user.is_authenticated %}   
+                {%for wl in wlist %}
+                <tr>
+                <td class="hidecol" >{{forloop.counter}}</td>
+                <td><a class="ps-product__preview" href="/product/{{ wl.product.id}}/{{ wl.product.slug}}"><img class="mr-15" src="{{ wl.product.image.url }}" alt="{{wl.product.title}}"style="height:100px;width:100;">{{wl.product.title}}-<span class="ftcolor">DISC&nbsp;{{wl.product.discount_percentage}}</span></a></td>
+                <td style="color:#2ac37d;"><b>${{wl.product.price}}</b><br><del style="color:orange;">${{wl.product.m_price|intcomma}}</del></td>
+                
+                <td style="text-align: center;">{% if wl.product.amount <= 1 %} <b style="color:red;">Out Stock</b> {%else%}<b style="color:#2ac37d;"> In Stock</b> {%endif%}</td>
+                <td><!--a class="ps-product-link" href=""></a-->{{wl.created_at}}</td>
+                <td style="text-align: center;">
+                    
+                        {% if wl.product.amount <= 1 %}
+                        <a type="button" class="btn btn-info" href="{% url 'home:searchvendor' wl.product.vendor_id wl.product.category_id %}" data-card={{wl.product.id}} >Contact Us</a>
+                        {%else%}
+                            {% if wl.product.variant != 'None'%}
+                                <a type="button" class="ps-cart__toggle mb-10 btnaddcart" href="/product/{{ wl.product.id}}/{{ wl.product.slug}}" data-card={{wl.product.id}} style="background-color:orange;" ><i class="ps-icon-shopping-cart " style="font-size: 2rem; "></i></a>
+                            {% else %}
+                                <a type="button" class="ps-cart__toggle mb-10 add_tocart_no_variant"  pid="{{wl.product.id}}"  style="background-color:orange;font-size: 2rem; " ><i class="ps-icon-shopping-cart "style="font-size: 2rem; "></i><!--i class="bi bi-check-lg"></i--></a> 
+                                {% comment %} <a type="button" class="ps-cart__toggle mb-10 add_tocart_no_variant"  pid="{{wl.product.id}}" href="{% url 'order:addtoshopcart' wl.product.id %}" style="background-color:orange;font-size: 2rem; " ><i class="ps-icon-shopping-cart "style="font-size: 2rem; "></i><!--i class="bi bi-check-lg"></i--></a>  {% endcomment %}
+                            {%endif%} <!--end if variant-->
+                        {%endif%}<!--end if minamount-->    
+
+
+                 
+                    </td>
+                    
+                    <td style="text-align: center;">
+                        <a type="button" class="delete-wishlist" data-wid={{wl.id}}><i class="fa fa-trash-o" ></i></a>
+                        {% comment %} <i class="fa fa-trash-o" aria-hidden="true" data-wid={{wl.id}}></i> {% endcomment %}
+                        {% comment %} <div class="ps-remove delete-wishlist" data-wid={{wl.id}}><i class="fa fa-trash-o" ></i></div> {% endcomment %}
+                </td>
+                </tr>
+                {%endfor%} 
+
+                {% else%}<!--Not Login session view wishlist-->
+
+                {%for wl in wish_sess_products %}
+                <tr>
+                <td class="hidecol" >{{forloop.counter}}</td>
+                <td><a class="ps-product__preview" href="/product/{{ wl.id}}/{{ wl.slug}}"><img class="mr-15" src="{{ wl.image.url }}" alt="{{wl.title}}"style="height:100px;width:100;">{{wl.title}}-<span class="ftcolor">DISC&nbsp;{{wl.discount_percentage}}</span></a></td>
+                <td style="color:#2ac37d;"><b>${{wl.price}}</b><br><del style="color:orange;">${{wl.m_price|intcomma}}</del></td>
+                
+                <td style="text-align: center;">{% if wl.amount <= 1 %} <b style="color:red;">Out Stock</b> {%else%}<b style="color:#2ac37d;"> In Stock</b> {%endif%}</td>
+                <td><!--a class="ps-product-link" href=""></a-->{{wl.created_at}}</td>
+                <td style="text-align: center;">
+                    
+                        {% if wl.amount <= 1 %}
+                        <a type="button" class="btn btn-info" href="{% url 'home:searchvendor' wl.vendor_id wl.category_id %}" data-card={{wl.id}} >Contact Us</a>
+                        {%else%}
+                            {% if wl.variant != 'None'%}
+                                <a type="button" class="ps-cart__toggle mb-10 btnaddcart" href="/product/{{ wl.id}}/{{ wl.slug}}" data-card={{wl.id}} style="background-color:orange;" ><i class="ps-icon-shopping-cart " style="font-size: 2rem; "></i></a>
+                            {% else %}
+                                <a type="button" class="ps-cart__toggle mb-10 add_tocart_no_variant add_cart_sess_no_var"  pid="{{wl.id}}"  style="background-color:orange;font-size: 2rem; " ><i class="ps-icon-shopping-cart "style="font-size: 2rem; "></i><!--i class="bi bi-check-lg"></i--></a> 
+                                {% comment %} <a type="button" class="ps-cart__toggle mb-10 add_tocart_no_variant"  pid="{{wl.product.id}}" href="{% url 'order:addtoshopcart' wl.product.id %}" style="background-color:orange;font-size: 2rem; " ><i class="ps-icon-shopping-cart "style="font-size: 2rem; "></i><!--i class="bi bi-check-lg"></i--></a>  {% endcomment %}
+                            {%endif%} <!--end if variant-->
+                        {%endif%}<!--end if minamount-->    
+
+
+                 
+                    </td>
+                    
+                    <td style="text-align: center;">
+                        <a type="button" class="delete-wishlist-sess" data-wid={{wl.id}}><i class="fa fa-trash-o" ></i></a>
+                        {% comment %} <i class="fa fa-trash-o" aria-hidden="true" data-wid={{wl.id}}></i> {% endcomment %}
+                        {% comment %} <div class="ps-remove delete-wishlist" data-wid={{wl.id}}><i class="fa fa-trash-o" ></i></div> {% endcomment %}
+                </td>
+                </tr>
+                {%endfor%} 
+
+                {%endif%}   
+                {% comment %} <tr></tr> {% endcomment %}
+            </tbody>
+            </table>
+            </div>
+        </div>
+    </div>  
+      
+    <script>
+        // Delete item from wish list
+        $(document).on('click','.delete-wishlist',function(){
+            var _wId=$(this).attr('data-wid');
+            var _vm=$(this);
+            console.log(_wId)
+            // Ajax
+            $.ajax({
+                type:'POST',
+                url:'{% url 'wishlist:delete_from_wishlist' %}',
+                data:{
+                    'wid':_wId,
+                    csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+                    action: 'post',
+                },
+                dataType:'json',
+            /*    beforeSend:function(){
+                    _vm.attr('disabled',true);
+                },
+            */    
+                success:function(res){
+                    console.log(res);
+                    if(res.status==1){
+                        console.log("delete success");
+                        console.log(res.wlcount);
+                        $(".wlcount").text(res.wlcount);
+                        $(_vm).closest("tr").fadeOut();
+                        $('#md_head').html('<h4 class="modal-title" id="md_head">Your Favorite product list Deleted succeeded!</h4>');
+                        $('#md_body').html('<div class="modal-body" id="md_body">Succeeded ! Deleted From your favorite list</div>');
+                        $('#btn').addClass('btn-success');
+                        $('#myModal').modal('toggle');
+                        //$("#wish_list_del_response").html(res.data);
+                 /*   $(".cart-list").text(res.totalitems);
+                    _vm.attr('disabled',false);
+                    $("#wish_list_del_response").html(res.data);
+        
+                    */
+                    }
+                    else {
+                        //alert("The product Already in wish list");
+                        $('#md_head').html('<h4 class="modal-title" id="md_head">Your Deleted error! </h4>');
+                        $('#md_body').html('<div class="modal-body" id="md_body">Got Error : Please Contact Vendor</div>');
+                        $('#btn').addClass('btn-info');
+                        $('#myModal').modal('toggle');
+                    }
+            }     
+            });
+             // End
+        });
+
+// Delete item from wish list Session
+$(document).on('click','.delete-wishlist-sess',function(){
+    var _wId=$(this).attr('data-wid');
+    var _vm=$(this);
+    console.log(_wId)
+    // Ajax
+    $.ajax({
+        type:'POST',
+        url:'{% url 'wishlist:delete_from_wishlist_sess' %}',
+        data:{
+            'wid':_wId,
+            csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+            action: 'post',
+        },
+        dataType:'json',
+    /*    beforeSend:function(){
+            _vm.attr('disabled',true);
+        },
+    */    
+        success:function(res){
+            console.log(res);
+            if(res.status==1){
+                console.log("delete success");
+                console.log(res.wish_count);
+                $(".wlcount_session").text(res.wish_count);
+                $(_vm).closest("tr").fadeOut();
+                $('#md_head').html('<h4 class="modal-title" id="md_head">Your Favorite product list Deleted succeeded!</h4>');
+                $('#md_body').html('<div class="modal-body" id="md_body">Succeeded ! Deleted From your favorite list</div>');
+                $('#btn').addClass('btn-success');
+                $('#myModal').modal('toggle');
+                //$("#wish_list_del_response").html(res.data);
+         /*   $(".cart-list").text(res.totalitems);
+            _vm.attr('disabled',false);
+            $("#wish_list_del_response").html(res.data);
+
+            */
+            }
+            else {
+                //alert("The product Already in wish list");
+                $('#md_head').html('<h4 class="modal-title" id="md_head">Your Deleted error! </h4>');
+                $('#md_body').html('<div class="modal-body" id="md_body">Got Error : Please Contact Vendor</div>');
+                $('#btn').addClass('btn-info');
+                $('#myModal').modal('toggle');
+            }
+    }     
+    });
+     // End
+});
+
+
+        //add to cart ajax from wishlist with NO variant
+        $(document).on('click','.add_tocart_no_variant',function(){
+            var pid=$(this).attr('pid');
+            //var variantid=$(this).attr('variantid');
+            var qty = 1 ;
+            var _vm=$(this);
+            //console.log(variantid);
+            console.log(pid);
+            // Ajax
+            $.ajax({
+                type:'POST',
+                url:'{% url 'order:add_tocart_no_variant' %}',
+                data:{
+                    'product':pid,
+                    'qty':qty,
+                    csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+                    action: 'post',
+                },
+                dataType:'json',
+                success:function(res){
+                    console.log(res);
+                    if(res.status==true){
+                    //alert("Your product has been added to wish list");
+                        $(".cartlistcount").text(res.cartcount);
+                        //_vm.addClass('disabled').removeClass('add_wishlist');
+                        $('#md_head').html('<h4 class="modal-title" id="md_head">Your Product !</h4>');
+                        $('#md_body').html('<div class="modal-body" id="md_body">Have been Added to Cart List</div>');
+                        $('#btn').addClass('btn-success');
+                        $('#myModal').modal('toggle');
+                        $('#cartlistajax').html(res.rendered_table);
+
+                    } 
+                    else {
+                        //alert("The product Already in wish list");
+                        $('#md_head').html('<h4 class="modal-title" id="md_head">Your Product ! </h4>');
+                        $('#md_body').html('<div class="modal-body" id="md_body">Got Error : Please Contact Vendor</div>');
+                        $('#btn').addClass('btn-info');
+                        $('#myModal').modal('toggle');
+
+                    }
+                } //end success func    
+            });    
+        });    
+
+
+// add to cartlist by session not login Guesh user with NO Variant
+$(document).on('click',".add_cart_sess_no_var",function(){
+    var _pid=$(this).attr('pid');
+    //var _p_price=$('.ps-shoe__price').attr('data_price') ;
+    //var _p_title=$('.ps-shoe__name').attr('title');
+    //var _p_image=$('.imgpro').attr('src');
+    var _vm=$(this);
+    swal("Cart session"+_pid)
+    //+_p_price+_p_title+_p_image);
+    console.log("Cart session"+_pid)
+    //+_p_price+_p_title+_p_image);
+    //alert("hello session"+_pid);
+    // Ajax
+    $.ajax({
+      url:"{% url 'order:add_cart_session_no_var' %}",
+      data:{
+        'p_id':_pid,
+        'p_qty':1,
+        //'p_price':_p_price ,
+        //'p_title':_p_title,
+        //'p_image':_p_image,
+        //pvariant:_pvariant,
+      },
+      dataType:'json',
+      /*
+      beforeSend:function(){
+        _vm.attr('disabled',true);
+      },
+      */
+      success:function(res){
+  
+        //console.log(res.product_id);
+        //swal("Product_id"+res.product_id);
+        //swal("Total item"+res.totalitems);
+        //$('.wlcount_session').text(res.wish_count);
+        //_vm.attr('disabled',false);
+        //******
+        if(res.bool==true){
+          //alert("Your product has been added to wish list");
+          $('.cart_count_sess').text(res.cart_count);
+          _vm.addClass('disabled').removeClass('add_wishlist');
+          $('#md_head').html('<h4 class="modal-title" id="md_head">Your Cart </h4>');
+          $('#md_body').html('<div class="modal-body" id="md_body">Succeeded! Product Have been Added to Cart List</div>');
+          $('#btn').addClass('btn-success');
+          $('#myModal').modal('toggle');
+        } 
+        else {
+          //alert("The product Already in wish list");
+          $('#md_head').html('<h4 class="modal-title" id="md_head">Your Cart </h4>');
+          $('#md_body').html('<div class="modal-body" id="md_body">Succeeded! Product Already in the Cart List</div>');
+          $('#btn').addClass('btn-info');
+          $('#myModal').modal('toggle');
+  
+        }
+       
+      },//end success
+      
+    });
+    // EndAjax
+  });
+         
+        
+</script>  
+<!--script>
+    //add header request sess for show cartlist session NO need to alert      
+    $(document).ready(function() {
+            $.ajax({
+                    url:"{% url 'order:header_cartlist_sess' %}",
+                    type: "GET",
+                    dataType:'json',
+                    success:function(res){
+                        if(res.bool==true){
+                            $('.cartlistcount_sess').text(res.cartlistcount_sess);
+                            $('#cartlistajax').html(res.rendered_table);
+                            } 
+                    },//end success
+                    
+            });
+                    // EndAjax
+    });                  
+</script-->
+ <!--user authenthicate-->
+ <!-- The Modal -->
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+  
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title" id="md_head">Modal Heading</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+  
+        <!-- Modal body -->
+        <div class="modal-body" id="md_body">
+          Modal body..
+        </div>
+  
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn" id="btn" data-dismiss="modal">Close</button>
+        </div>
+  
+      </div>
+    </div>
+  </div>
+                  <!-- end test modals -->
+{%endblock%}

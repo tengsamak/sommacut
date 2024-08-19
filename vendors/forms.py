@@ -25,12 +25,12 @@ class VendorUserUpdateForm(UserChangeForm):
 class VendorProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = Vendor
-        fields = ('companyname', 'contactname', 'address', 'phone')
+        fields = ('companyname', 'contactname', 'address1', 'phone1')
         widgets = {
             'companyname': TextInput(attrs={'class': 'input', 'placeholder': 'companyname'}),
             'contactname': TextInput(attrs={'class': 'input', 'placeholder': 'contactname'}),
-            'address': TextInput(attrs={'class': 'input', 'placeholder': 'address'}),
-            'phone': TextInput(attrs={'class': 'input', 'placeholder': 'phone'}),
+            'address1': TextInput(attrs={'class': 'input', 'placeholder': 'address1'}),
+            'phone1': TextInput(attrs={'class': 'input', 'placeholder': 'phone1'}),
           #  'status': TextInput(attrs={'class': 'input', 'placeholder': 'status'}),
            # 'create_at': Text(attrs={'class': 'input', 'placeholder': 'create_at'}),
             #'update_at': TextInput(attrs={'class': 'input', 'placeholder': 'update_at'}),

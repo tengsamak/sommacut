@@ -7,11 +7,74 @@
 {% block keywords %} {{ setting.keywords }} {% endblock %}
 {% block description %} {{ setting.description }} {% endblock %}
 {% block head %}
+<link rel="stylesheet" href="{% static '' %}css/style_for_backtotop.css" >
+<style>
+    .selected_info{
+        border:solid orange 2px;
+        border-radius:10px;
+        margin-bottom: 10px;
+        padding-left: 10px;
+        padding-top: 10px;
+
+    }
+    .selected_pro,.selected_outstock,.selected_price{
+        background-color: #2AC37D;
+        color: white; 
+        padding: 5px 5px 5px 5px;
+        border-radius:10px;
+    }
+    .selected_outstock{
+        background-color:#ff1344;
+       
+    }
+    .selected_price {
+       
+        font-size: large; 
+        
+    }
+
+    {% comment %} for remove border on select size {% endcomment %}
+    .dropdown-toggle::after{
+        border-top:0;   
+    }
+    
+    .imglogo {
+        border-radius: 50%;
+        width:100px;
+    }
+    .price_sm {
+      font-family: "Archivo Narrow", sans-serif;
+      font-size: 30px;
+      color:#27b574;
+    }
+    .breadcrumb>li.processbar::before{
+      content:"";
+    }
+    .sm-p {
+      margin-bottom: 5px !important;
+    }
+</style>
+
+{% comment %} for remove class in button and div {% endcomment %}
+{% comment %} <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script> {% endcomment %}
+
+    <script>              
+      $(document).ready(function(){
+          //alert("hello document ready");
+          $("button.btn-primary.btn").removeClass("dropdown-toggle btn btn-primary").addClass("ps-btn");
+          $("div.bootstrap-select").removeClass("ps-select");
+         // $("button.btn-primary").addClass("ps-btn");
+      });
+      </script>
+{% comment %} end remove class {% endcomment %}
 <!--there are 2 jquery-->
 <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js" xmlns="http://www.w3.org/1999/html"-->
 <!--        xmlns="http://www.w3.org/1999/html"> </script>-->
 <style>
-    .color-option>li {
+.color-option {
+  display:inline-flex;
+}
+.color-option>li {
   display: inline-block;
   margin-right: 6px;
   margin-bottom: 6px;
@@ -43,6 +106,109 @@
   border-color: #F8694A;
 }
 
+{% comment %} *for customize ownstyle * {% endcomment %}
+.ps-contact__block > footer p i{
+    background-color:#27b574;
+
+}
+.ps-cart__toggle{
+    background-color:#c1c1c1;
+}
+
+.ownstyle {
+    color: #fff;
+  }
+  /***  
+.ownstyle.ps-select button.btn.dropdown-toggle.btn-primary{
+      position: relative;
+      display: inline-block;
+      padding: 15px 30px;
+      font-family: "Archivo Narrow", sans-serif;
+      font-weight: 300;
+      font-size: 18px;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      color: #fff;
+      background-color: #2AC37D !important;
+      line-height: 25px;
+      border: none;
+      -webkit-border-radius: 60px;
+      -moz-border-radius: 60px;
+      -ms-border-radius: 60px;
+      border-radius: 60px;
+      -webkit-transition: all 0.4s ease;
+      -moz-transition: all 0.4s ease;
+      transition: all 0.4s ease;
+     
+  }
+  
+.ownstyle.btn:before, button.btn:before{
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      -webkit-transform: translate(-50%, -50%);
+      -moz-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+      -o-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+      width: calc(100% + 12px);
+      height: calc(100% + 12px);
+      background-color: rgba(0, 0, 0, 0.07);
+      -webkit-border-radius: 60px;
+      -moz-border-radius: 60px;
+      -ms-border-radius: 60px;
+      border-radius: 60px;
+      -webkit-transition: all 0.4s ease;
+      -moz-transition: all 0.4s ease;
+      transition: all 0.4s ease;
+  
+  } 
+  :after, :before {
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box;
+  }  ***/
+
+  /*header vendor block*/
+  .ps-contact__block > header > h3 {
+    font-weight:bold;
+  }
+  .ps-select button.btn:after{
+    position: absolute;
+    top: 30%;
+    transform: translateY(-50%);
+    right: 30px;
+/*    content: "\f107";  */
+    font-family: FontAwesome;
+    background-color:#2ac37d;
+}
+.ps-select button.btn{
+    color:#f4efef;
+    background-color:#2ac37d !important;
+    border-radius:30px;
+
+}
+.fa.fa-twitter{
+  font-family:sans-serif;
+}
+.fa.fa-twitter::before{
+  content:"𝕏";
+  font-size:1.2em;
+}
+.breadcrumb-item + .breadcrumb-item::before{
+  content:"";
+}
+.form-control{
+  border-radius:25px;
+}
+.ps-review .ps-review__thumbnail img{
+  width:50px;
+}
+.ps-product--detail .ps-product__info h1 {
+  color:#5b5b5b;
+}
+{% comment %} *end for customize ownstyle * {% endcomment %}  
 </style>
 
 {% endblock %}
@@ -57,21 +223,26 @@
 {% endrecursetree %}
 
 
-
-
 {% block breadcrumb %}
 <!-- for everypage excepte index page-->
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb" style="background-color:#8bc343;height: 55px;margin-bottom: 0px;padding-top: 15px;border-radius: 0px;">
-        <li class="breadcrumb-item"><a href="/">Home</a></li>
-        <li class="breadcrumb-item"><a href="/category/{{ product.category.id }}/{{ product.category.slug }}">{{ product.category.title }}</a></li>
-        <li class="breadcrumb-item active" aria-current="page">{{ product.title }}</li>
-    </ol>
-</nav>
+{% include 'breadcrumb.html' %}
 <!-- end for page -->
 {% endblock %}
+
 <!--ថែម product_detail.html-->
 {% block product_detail %}
+<!-- BackToTop Button -->
+<a href="javascript:void(0);" id="backToTop" class="back-to-top" style="z-index:5000;">
+  <i class="arrow"></i><i class="arrow"></i>
+</a>
+<!-- End BackToTop Button -->
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert {{ message.tags }} m-2" id="msg" role="alert">
+            <div id="alertmsg" data_smg='{{message}}'>{{ message }} </div>
+        </div>
+    {% endfor %}
+{% endif %}  
 
 <div class="ps-product--detail pt-60">
     <div class="ps-container">
@@ -92,22 +263,33 @@
 
 <!--                            {% endif %}-->
 
+                                {% comment %} <div class="item"><img src="images/shoe-detail/1.jpg" alt=""></div> {% endcomment %}
 <!--                    test page in eshop-->
-                            {% if variant.image_id > 0 %}
-                                <div class="item "><p>variant images</p><img src="{{ variant.image }}" alt=""></div>
+                             {% if variant.image_id > 0 %}
+                               
+                                {% comment %} <div class="item "><!--p>variant images</p--><img src="{{ variant.image }}" alt=""></div> {% endcomment %}
+                                {% for rs in images %}
+                                <div class="item"  ><!--p>Product images</p--><img src="{{ rs.image.url }}" alt=""></div>
+                                {% endfor %} 
+                               
                             {% else %}
-                                <div class="item "><p>Product images</p><img src="{{ product.image.url }}" alt=""></div>
-                            {% endif %}
-                            {% for rs in images %}
-                                <div class="item "><p>Product images</p><img src="{{ rs.image.url }}" alt=""></div>
-                            {% endfor %}
+                                {% for rs in images %}
+                                <div class="item "><!--p>Product images</p--><img src="{{ rs.image.url }}" alt=""></div>
+                                {% endfor %} 
+                            {% endif %} 
+                              
+                             {% comment %} {% for rs in images %}
+                                <div class="item "  ><!--p>Product images</p--><img src="{{ rs.image.url }}" alt=""></div>
+                            {% endfor %}  {% endcomment %}
 
 <!--                    end test page eshop-->
 
 
 
 
-                        </div><a class="popup-youtube ps-product__video" href="http://www.youtube.com/watch?v=0O2aH4XLbto"><img src="{% static ''%}images/shoe-detail/1.jpg" alt=""><i class="fa fa-play"></i></a>
+                        </div>
+                       <a class="popup-youtube ps-product__video" style="padding-top: 50px;padding-left: 60px;background-color: orange;"> <i class="fa fa-hand-pointer-o" aria-hidden="true"></i></a>
+                        {% comment %} <a class="popup-youtube ps-product__video" href="http://www.youtube.com/watch?v=0O2aH4XLbto"><img src="{% static ''%}images/shoe-detail/1.jpg" alt=""><i class="fa fa-play"></i></a> {% endcomment %}
 
                     </div>
                     <div class="ps-product__image">
@@ -122,19 +304,48 @@
 <!--                      {% endif %}-->
 
 <!--                        test page eshop-->
-                            <div class="item "><img class="zoom" src="{{ product.image.url }}" alt="" data-zoom-image="{{ product.image.url }}"></div>
+                            {% comment %} <div class="item"><img class="zoom" src="images/shoe-detail/1.jpg" alt="" data-zoom-image="images/shoe-detail/1.jpg"></div> {% endcomment %}
+                       
+
+
+
+                            <!--tត្រូវជាមួយ Image click-->
+
+                            {% comment %} <div class="item "><img class="zoom" src="{{ product.image.url }}" alt="" data-zoom-image="{{ product.image.url }}"></div>
                         {% for rs in images %}
-                            <div class="item "><img class="zoom " src="{{ rs.image.url }}" alt="aa" data-zoom-image="{{ rs.image.url }}"></div>
-                        {% endfor %}
+                            <div class="item " id="item.{{rs}}"><img class="zoom " src="{{ rs.image.url }}" alt="" data-zoom-image="{{ rs.image.url }}"></div>
+                        {% endfor %} {% endcomment %}
+                        <!--end-->
+                        {% if variant.image_id > 0 %}
+                            {% for rs in images %}
+                            <div class="item " id="item.{{rs}}"><img class="zoom " src="{{ rs.image.url }}" alt="" data-zoom-image="{{ rs.image.url }}" ></div>
+                            {% endfor %}
+                        {% else %}
+                            {% for rs in images %}
+                            <div class="item " id="item.{{rs}}" ><img class="zoom" src="{{ rs.image.url }}" alt="" data-zoom-image="{{ rs.image.url }}" ></div>
+                            {% endfor %}
+                        {% endif %}
 <!--                        end test page eshop-->
 
 
                     </div>
                 </div>
+                {% comment %} for mobile display {% endcomment %}
                 <div class="ps-product__thumbnail--mobile">
-                    <div class="ps-product__main-img"><img src="{% static ''%}images/shoe-detail/1.jpg" alt=""></div>
-                    <div class="ps-product__preview owl-slider" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="20" data-owl-nav="true" data-owl-dots="false" data-owl-item="3" data-owl-item-xs="3" data-owl-item-sm="3" data-owl-item-md="3" data-owl-item-lg="3" data-owl-duration="1000" data-owl-mousedrag="on"><img src="{% static ''%}images/shoe-detail/1.jpg" alt=""><img src="{% static ''%}images/shoe-detail/2.jpg" alt=""><img src="{% static ''%}images/shoe-detail/3.jpg" alt=""></div>
+                    {% if variant.image_id > 0 %}
+                    <div class="ps-product__main-img"><img src="{{ variant.image }}" alt=""></div>
+                    {% else %}
+                    <div class="ps-product__main-img"><img src="{{ product.image.url }}" alt=""></div>
+                    {% endif %}
+                    
+                    <div class="ps-product__preview owl-slider" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="20" data-owl-nav="true" data-owl-dots="false" data-owl-item="3" data-owl-item-xs="3" data-owl-item-sm="3" data-owl-item-md="3" data-owl-item-lg="3" data-owl-duration="1000" data-owl-mousedrag="on">
+                        {% for rs in images %}
+                        <img src="{{ rs.image.url }}" alt="">
+                        {% endfor %}
+                    </div>
+                    
                 </div>
+                {% comment %} /for mobile display {% endcomment %}
                 <div class="ps-product__info">
                     <div class="ps-product__rating">
                         <select class="ps-rating">
@@ -144,14 +355,52 @@
                             <option value="{% if product.avaregereview >= 4 %}1{% endif %}">4</option>
                             <option value="{% if product.avaregereview >= 5 %}1{% endif %}">5</option>
                             {{ product.avaregereview |stringformat:".2f"}}
-                        </select><a href="#"> (Read all {{ product.countreview}} reviews)</a>
-                    </div>
+                        </select><a href="#reviewstab"> (Read all {{ product.countreview}} reviews and comments)</a>
+                    </div>{% event_timer_tag product.id as  eventtimer %}
+                    {% comment %} <h1>{{ product.title }}-{{eventtimer.end_date|date:'Y-m-d H:i'}}</h1> {% endcomment %}
                     <h1>{{ product.title }}</h1>
-                    <p class="ps-product__category"><a href="#"> {{ product.category }}</a>,<a href="#"> {{ product.category.title }}</a></p>
-                    <h3 class="ps-product__price">$ {{product.price}} <del>$ 33</del></h3>
+                    <p class="ps-product__category"><a href="/searchcateid/{{ product.category.id }}/{{ product.category.slug }}"> {{ product.category }}</a>,<a> {{ product.category.title }}</a></p>
+                    <h3 class="ps-product__price"><span class="price_sm">$ {{product.price}} </span>{%if product.price != product.m_price %}<del style="color:orange;">$ {{product.m_price}}</del>{%endif%}</h3>
+                    <!--event timer-->
+                    
+                    {%if eventtimer.status == "Active" %}
+                    <div class="ps-hot-deal"style="font-size:20px;">
+                      <h4 style="color:red;">Hurry up! Sale end in:</h4>
+                      <ul class="ps-countdown ps-tags" data-time="Dec 13, 2017 15:37:25">
+                        <li><span class="days" id="days"></span><p>Days</p></li>
+                        <li class="divider">:</li>
+                        <li><span class="hours" id="hours"></span><p>Hours</p></li>
+                        <li class="divider">:</li>
+                        <li><span class="minutes" id="minutes"></span><p>minutes</p></li>
+                        <li class="divider">:</li>
+                        <li><span class="seconds" id="seconds"></span><p>Seconds</p></li>
+                      </ul><p id="demotime_p" hidden></p><!--a class="ps-btn" href="#">Order Today<i class="ps-icon-next"></i></a-->
+                    </div>
+                    {%else%}
+                    {% comment %} {{eventtimer}} {% endcomment %}
+                    <p id="demotime_p" style="color:red;" hidden></p>
+                    {%endif%}
+                    <!--End event-->
                     <div class="ps-product__block ps-product__quickview">
                         <h4>QUICK REVIEW</h4>
-                        <p>{{product.description}} </p>
+                        <p>{{ product.title_kh }}/{{product.description}} </p>
+                    </div>
+                    <div class="ps-product__block ps-product__quickview">
+                      <h4>PRODUCT TAGS</h4>
+                      <div class="ps-widget__content">
+                        <ul class="ps-tags">
+                          {% for tag in product.tags.all %}
+                          <li><a href="{% url 'home:pro_filter_tag' tag %}">{{tag|capfirst}}</a></li>
+                          {%endfor%}
+                          {% comment %} <li><a href="product-listing.html">Female</a></li>
+                          <li><a href="product-listing.html">B&G</a></li>
+                          <li><a href="product-listing.html">ugly fashion</a></li>
+                          <li><a href="product-listing.html">Nike</a></li>
+                          <li><a href="product-listing.html">Dior</a></li>
+                          <li><a href="product-listing.html">Adidas</a></li>
+                          <li><a href="product-listing.html">Diour</a></li> {% endcomment %}
+                        </ul>
+                      </div>
                     </div>
 <!--add script ajax-->
                             <script>
@@ -168,30 +417,180 @@
                                         },
                                         data_type : 'html',
                                         success: function (data) {
-                                            console.log("success");
+                                            console.log("success form-post Ajaxcolor");
                                             $('#appendHere').html(data.rendered_table);
                                         },
                                         error: function (data) {
-                                            alert("Got an error dude " + data);
+                                            swal("Got an error dude " + data);
                                         }
                                     });
+                                });
+
+                                // test ajax show selected variants products
+                                /*
+                                $(document).on('change','form#post-form',function(){
+                                    var _proId=$("#productid").val();
+                                    var vartype = $("input#sizevariantid").val();
+                                    var _sizeId=$("#size").val();
+                                    var colorid = $("input[name='variantid']:checked").val();
+                                    //if (colorid).on('click') { 
+                                    //    alert("you select you color_id:"+colorid);
+                                    //}
+                                    
+                              
+                                    
+                                        console.log("product_variant_type",vartype);
+                                        console.log("productID (Size-color)",_proId);
+                                        console.log("Size ID (Size-color)",_sizeId);
+                                        console.log("Color ID (Size-color)",colorid);
+                                        console.log("************");
+                                    //console.log("variants id",_varId);
+
+                                        //alert("ProID:"+_proId+"Size ID:"+_sizeId);
+                           
+                                });
+                                    */
+                                $(document).on('change','form#post-color,form#post-form',function(){
+                                    //var varId = $("input#variant_id").val();
+                                    var proid = $("input#productid").val();
+                                    var sizeid = $("input#sizevariantid").val();
+                                    var colorid = $("input[name='variantid']:checked").val();
+                                    var varid = $("input[name='variant_id']:checked").val();
+                                    // the same qty var one is name one is id
+                                    //var q_ty = $("input[name=quantity]").val();
+                                    var q_ty = $('#qtyvar').val();
+                                    //alert(q_ty);
+                                    if (colorid) {
+                                    
+                                        //alert("Color_ID or Size_ID "+colorid);
+
+                                       // console.log("Color_ID or Size_ID"+colorid);
+                                        //console.log("product_ID"+proid);
+                                        //console.log("variant_id"+varid);
+                                        //console.log("product_variant_type"+sizeid);
+                                        //console.log("qty********"+q_ty);
+                                        //swal("តេស");
+
+                                        $.ajax({
+                                            type:'POST',
+                                            url:'{% url "selectedpro" %}',
+                                            data:{
+                                                proid : $("input#productid").val(),
+                                                sizeid : $("input#sizevariantid").val(),
+                                                colorid : $("input[name='variantid']:checked").val(),
+                                                'qty':q_ty,
+                                                csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+                                                action: 'post',
+                                            },
+                                            data_type : 'html',
+                                            success: function (data) {
+                                                //console.log("success selected products",data.proid);
+                                                //console.log(data);
+                                                $('#SelectedProduct').html(data.rendered_table);
+                                        },
+                                            error: function (data) {
+                                                swal("Got an error dude " + data);
+                                        }
+                                        }); //end ajax
+                                    }
+                                   // var proid = $("input#productid").val();
+                                   // var sizeid = $("input#size").val();
+                                    //console.log("Product Variant:",$("input#sizevariantid").val());
+                                    //console.log("productID (Color)",proid);
+
+                                    //console.log("Size ID (Color)",sizeid);
+                                });
+
+
+                                {% comment %} $(document).on('load','form#post-color form#post-form',function(){
+                                    alert("Hello");
+                                }); {% endcomment %}
+                                
+                            </script>
+                             {% comment %} for button btnaddcart click check {% endcomment %}
+                            <script>
+                                //$(document).on('change','form#post-color,form#post-form',function(){
+                                // check the selection product by ID
+                                $(document).ready(function(){ 
+                                  $("#btnaddcart").click(function(){
+                                    //alert("btnaddcart you have Click add to Cart");
+                                    var variant_id=$('#variant_id').val();
+                                    var colorid = $("input[name='variantid']:checked").val();
+                                    var varsize = $("#sizevariantid").val();
+                                    var proid = $('proid').val();
+                                //    alert(colorid);
+                                //    alert(varsize);
+                                    //alert(variant_id);
+/*
+                                    var varname = $("input[name='namevariant']:hidden","#namevariant").val();
+                                    var varname1 = $("#sizevariantid").val();
+                                    
+                                    alert(colorid);
+                                    alert(varid);
+                                    alert(varname);
+                                    alert(varname1); */
+                                /*    
+                                    if (!colorid) {
+                                        alert("please select Size or Color ");
+                                        return false;
+
+                                    }
+                                    else {
+                                        
+                                        return true;
+                                    }
+                                */    
+                                    if (varsize == "Size") {
+                                        //alert("Please select Size of product ");
+                                        $('#md_head').html('<h4 class="modal-title" id="md_head">Your Product !</h4>');
+                                        $('#md_body').html('<div class="modal-body" id="md_body">Please select Size of product</div>');
+                                        $('#btn').addClass('btn-info');
+                                        $('#myModal').modal('toggle');
+                                        return false;
+
+                                    } else if (varsize == "Color") {
+                                        //alert("Please select Color of product ");
+                                        $('#md_head').html('<h4 class="modal-title" id="md_head">Your Product !</h4>');
+                                        $('#md_body').html('<div class="modal-body" id="md_body">Please select Color of product</div>');
+                                        $('#btn').addClass('btn-info');
+                                        $('#myModal').modal('toggle');
+                                        return false;
+
+                                    } else if (varsize == "Size-Color") {
+                                        //alert("Please select Size and Color of product ");
+                                        $('#md_head').html('<h4 class="modal-title" id="md_head">Your Product !</h4>');
+                                        $('#md_body').html('<div class="modal-body" id="md_body">Please select Size and Color of product</div>');
+                                        $('#btn').addClass('btn-info');
+                                        $('#myModal').modal('toggle');
+                                        return false;
+
+                                    } else {                                    
+                                        return true;
+                                    }
+                                    //check the Size change action
+                                /*    $('#size').on("change", function() {
+                                        alert("Plase select Color againt");
+                                        return varsize;
+                                    });        
+                                */        
+                                  });
                                 });
                             </script>
 <!--end script ajax                    -->
 
 
-                    <div class="ps-product__block ps-product__style">
-                        <h4>CHOOSE YOUR STYLE</h4>
+                    <div class="ps-product__block ps-product__style" style="display: visible;">
+                        <h4>PRODUCT IMAGES STYLE</h4>
                         <div class="form-group">
                              <ul>
                                  {% if variant.image_id > 0 %}
                                      {% for rs in images %}
-                                        <input type="radio" >
-                                         <li><a href="#"><img src="{{ rs.image.url }}" alt=""></a></li>
+                                        {% comment %} <input type="radio" > {% endcomment %}
+                                         <li><a href="#item.{{rs}}"><img src="{{ rs.image.url }}" alt=""></a></li>
                                      {% endfor %}
                                  {% else %}
                                      {% for rs in images %}
-                                         <li><a href="#"><img src="{{ product.image.url }}" alt=""></a></li>
+                                         <li><a href="#item.{{rs}}" ><img src="{{ rs.image.url }}" alt=""></a></li>
                                      {% endfor %}
                                  {% endif %}
                              </ul>
@@ -201,16 +600,18 @@
 <!--                        <h4>CHOOSE SIZE<a href="#">Size chart</a></h4>-->
                           {% if product.variant == 'Size-Color' %}
 <!--                            this is form size as select-->
-                         <h4>CHOOSE YOUR Size and Color</h4>
+                         <h4>CHOOSE YOUR SIZE and COLORS</h4>
                             <form method="POST" id="post-form">
                                 <div class="form-group size-option">
                                  <input type="hidden" name="productid" id="productid" value="{{ product.id }}">
+                                 <input type="hidden" name="sizevariantid" id="sizevariantid" value="{{ product.variant }}">
                                  {% csrf_token %}
 
-                                 <select class="ps-select selectpicker" name="size" id="size">
+                                 <select class="ps-select selectpicker ownstyle" name="size" id="size">
 <!--                                    <option >Select Size</option>-->
                                      {% for rs in sizes %}
-                                     <option {% if variant.size_id == rs.size_id %} selected {% endif %} value="{{ rs.size_id }}">{{ rs.size.name }}</option>
+                                     <option {% if variant.size_id == rs.size_id %}  {% endif %} value="{{ rs.size_id }}">{{ rs.size.name }}</option>
+                                     {% comment %} <option {% if variant.size_id == rs.size_id %} selected {% endif %} value="{{ rs.size_id }}">{{ rs.size.name }}</option> {% endcomment %}
                                      {% endfor %}
                                  </select>
                                 </div>
@@ -227,13 +628,17 @@
                                                     <ul class="color-option">
                                                         <li><span class="text-uppercase">Color:</span></li>
                                                         {% for rs in colors %}
-                                                            <input type="radio"  {% if variant.id == rs.id %} checked {% endif %} name="variantid" id="variantid" value="{{ rs.id }}" onchange="this.form.submit();">
+                                                        <div class="form-group">
+                                                            <input type="radio"  {% if variant.id == rs.id %}  {% endif %} name="variantid" id="variantid" value="{{rs.id}},{{rs.size_id}},{{ rs.color_id }}">
+                                                            {% comment %} <input type="radio"  {% if variant.id == rs.id %} checked {% endif %} name="variantid" id="variantid" value="{{rs.id}},{{rs.size_id}},{{ rs.color_id }}"> {% endcomment %}
+                                                            {% comment %} <input type="radio"  {% if variant.id == rs.id %} checked {% endif %} name="variantid" id="variantid" value="{{ rs.id }}" onchange="this.form.submit();"> {% endcomment %}
                                                             <li  {% if variant.id == rs.id %} class="active" {% endif %}>
-                                                                <a style="background-color:{{ rs.color.code }}; color: #D9D9D9; text-shadow: 1px 1px #000000; width: 90px">
-                                                                    {{ rs.price }} {{ rs.color }}
+                                                                <a style="background-color:{{ rs.color.code }}; color: #D9D9D9; text-shadow: 1px 1px #000000; width: 90px;">
+                                                                    ${{ rs.price }} {{ rs.color }}
                                                                 </a>
-                                                                <img src="{{ rs.image }}" alt="samak" style="height: 70px">
+                                                                <img src="{{ rs.image }}" alt="" style="height: 70px;">
                                                             </li>
+                                                        </div>
                                                         {% endfor %}
                                                     </ul>
 
@@ -243,23 +648,30 @@
 <!--                    </div>-->
 
                           {% elif product.variant == 'Size' %}
-                            <h4>CHOOSE SIZE<a href="#">Size chart</a></h4>
+                            <h4>CHOOSE SIZE<a href="#overviewtab">Size chart</a></h4>
                                 <div class="ps-product__block ps-product__size">
                                     <form method="post" action="?q=selectvariant" id="post-color" class="form-inline">
                                             {% csrf_token %}
 
                                             <div id="appendHere">
-                                                <input type="hidden" name="size" id="size" value="{{ size_id }}">
-
+                                                {% comment %} <input type="hidden" name="size" id="size" value="{{ variant.size_id }}"> {% endcomment %}
+                                                <input type="hidden" name="productid" id="productid" value="{{ product.id }}">
+                                                <input type="hidden" name="sizevariantid" id="sizevariantid" value="{{ product.variant }}">
                                                 <ul class="color-option" >
                                                     <li><span class="text-uppercase">Size:</span></li><br>
                                                     {% for rs in sizes %}
-                                                        <input type="radio"  {% if variant.id == rs.id %} checked {% endif %} name="variantid" id="variantid" value="{{ rs.id }}" onchange="this.form.submit();">
-                                                        <li  {% if variant.id == rs.id %} class="active" {% endif %}>
+                                                    <div class="form-group">
+                                                        <input type="radio"  {% if variant.id == rs.id %}  {% endif %} name="variantid" id="variantid" value="{{rs.id}},{{rs.size_id}},{{ rs.color_id }}" >
+                                                        {% comment %} <input type="radio"  {% if variant.id == rs.id %} checked {% endif %} name="variantid" id="variantid" value="{{rs.id}},{{rs.size_id}},{{ rs.color_id }}" > {% endcomment %}
+                                                        {% comment %} <input type="radio"  {% if variant.id == rs.id %} checked {% endif %} name="variant_id" id="variant_id" value="{{rs.id}}" style="display:none;" > {% endcomment %}
+                                                        {% comment %} <input type="radio"  {% if variant.id == rs.id %} checked {% endif %} name="variantid" id="variantid" value="{{ rs.id }}" onchange="this.form.submit();"> {% endcomment %}
+                                                        <input type="hidden" name="variant_id" id="variant_id" value="{{ rs.id }}">
+                                                        <li  {% if variant.id == rs.id %} class="active"  {% endif %}>
                                                             <a style=" color: #204d74;  width: 70px">
                                                                 {{ rs.size }}<br> ${{ rs.price }}
                                                             </a>
                                                         </li>
+                                                    </div>
                                                     {% endfor %}
                                                 </ul>
 
@@ -268,24 +680,32 @@
                                 </div>
 
                         {% elif product.variant == 'Color' %}
-                                <h4>CHOOSE Color<a href="#">Color chart</a></h4>
+                                <h4>CHOOSE Color<a href="#overviewtab">Color chart</a></h4>
                                         <form method="post" action="?q=selectvariant" id="post-color">
                                             {% csrf_token %}
                                             <div id="appendHere">
-                                                <input type="hidden" name="size" id="size" value="{{ size_id }}">
+                                                
+                                                {% comment %} <input type="hidden" name="color" id="color" value="{{ variant.color_id }}">
+                                                <input type="hidden" name="productid" id="productid" value="{{ product.id }}"> {% endcomment %}
+                                                <input type="hidden" name="productid" id="productid" value="{{ product.id }}">
+                                                <input type="hidden" name="sizevariantid" id="sizevariantid" value="{{ product.variant }}">
                                                 <ul class="color-option" >
                                                     <li><span class="text-uppercase">Color:</span></li><br>
                                                     {% for rs in colors %}
-
-                                                        <input type="radio"  {% if variant.id == rs.id %} checked {% endif %} name="variantid" id="variantid" value="{{ rs.id }}" onchange="this.form.submit();">
+                                                    <div class="form-group">
+                                                        <input type="radio"  {% if variant.id == rs.id %}  {% endif %} name="variantid" id="variantid" value="{{rs.id}},{{rs.size_id}},{{ rs.color_id }}" >
+                                                        {% comment %} <input type="radio"  {% if variant.id == rs.id %} checked {% endif %} name="variantid" id="variantid" value="{{rs.id}},{{rs.size_id}},{{ rs.color_id }}" > {% endcomment %}
+                                                        {% comment %} <input type="hidden"  {% if variant.id == rs.id %} checked {% endif %} name="variant_id" id="variant_id" value="{{ rs.id }}" > {% endcomment %}
+                                                        {% comment %} <input type="radio"  {% if variant.id == rs.id %} checked {% endif %} name="variantid" id="variantid" value="{{ rs.id }}" onchange="this.form.submit();"> {% endcomment %}
+                                                        <input type="hidden" name="variant_id" id="variant_id" value="{{ rs.id }}">
                                                         <li  {% if variant.id == rs.id %} class="active" {% endif %}>
-                                                            <a style="background-color:{{ rs.color.code }}; color: #D9D9D9; text-shadow: 1px 1px #000000; width: 90px">
-                                                                {{ rs.price }}  {{ rs.color }}
+                                                            <a style="background-color:{{ rs.color.code }}; color: #D9D9D9; text-shadow: 1px 1px #000000; width: 90px;">
+                                                                ${{ rs.price }}  {{ rs.color }}
                                                             </a>
 
-                                                            <img src="{{ rs.image }}" style="height: 70px">
+                                                            <img src="{{ rs.image }}" style="height: 70px;">
                                                         </li>
-
+                                                    </div>
                                                     {% endfor %}
                                                 </ul>
                                             </div>
@@ -297,46 +717,108 @@
 <!--                        means size-color, size and color are choosed-->
                               <form action="/order/addtoshopcart/{{ product.id }}" method="post"  >
                                 {% csrf_token %}
-                                  <input type="hidden" name="variantid" id="variantid" value="{{ variant.id }}">
-                                  <div id="SelectedProduct">
-                                      <p><strong>Availability:</strong> {% if variant.quantity > 0  %}<strong style="background-color:#cd7bdd;"> In Stock </strong>{% else %}<strong style="background-color:#ff1344;"> Out of Stock </strong>{% endif %}
-                                      <p><strong>Selected :</strong> Size : {{ variant.size }}  Color : {{ variant.color }} </p>
-                                      <h3 class="product-price">${{ variant.price}}</h3>
-<!--                        choose amount of products-->
+                                    <input type="hidden" name="variantid" id="variantid" value="{{ variant.id }}">
+                                    <div id="SelectedProduct">
+                                    <div class="input-group selected_info">
+                                        <p><strong>Selected Info:</strong>
+                                        <p><strong>Availability:</strong>&nbsp; {% if variant.quantity > 0  %}<strong class="selected_pro"> In Stock :&nbsp;{{variant.quantity}}</strong>{% else %}<strong class="selected_outstock"> Out of Stock </strong><span>Please choose others!</span>{% endif %}
+                                        <p><strong>Selected :</strong>&nbsp;{% if variant.size != 'None' %}<strong class="selected_pro"> Size : {{ variant.size }} ; Color : {{ variant.color }} {%else%} Color : {{ variant.color }}{%endif%}</strong></p>
+                                        <p><strong>Price:&nbsp;<strong class="selected_price"> ${{ variant.price}}&nbsp;&nbsp;</strong>QTY :</strong><strong class="selected_pro selected_qty_var">&nbsp;{{qty}}</strong></p>
+                                      <!--h3 class="product-price" style="padding-bottom: 10px;">${{ variant.price}}</h3-->
+                                    </div>
+                                      <!--                        choose amount of products-->
                                       <div class="form-inline">
-                                          <input class="form-control" name="quantity" type="number" value="1" min="1" max="{{ variant.quantity }}">
-<!--                                          <button type="submit" class="btn btn-primary"  {% if variant.quantity < 1  %} disabled {% endif %} style="height:50px; background-color:orange;">Add to cart<i class="ps-icon-next"></i></button>-->
-                                              <button type="submit" class="ps-btn mb-10" {% if product.amount < 1  %} disabled {% endif %} style="background-color:orange;">Add to cart<i class="ps-icon-next"></i></button>
-                                      </div>
+                                            <input class="1form-control ps-btn mb-10" name="quantity" id="qtyvar" type="number" value="1" min="1" max="{{ variant.quantity }}" style="margin-right: 10px;">
+<!--                                         <button type="submit" class="btn btn-primary"  {% if variant.quantity < 1  %} disabled {% endif %} style="height:50px; background-color:orange;">Add to cart<i class="ps-icon-next"></i></button>-->
+                                            
+                                            <button type="submit" class="ps-btn mb-10" id="btnaddcart" {% if variant.quantity < 1  %} disabled {% endif %} style="background-color:orange;">Add to cart<i class="ps-icon-shopping-cart"></i></button>
+                                          
+                                            <!--button type="button" class="ps-btn mb-10 " id="btnaddcart_sess" {% if variant.quantity < 1  %} disabled {% endif %} style="background-color:orange;">Add to cart<i class="ps-icon-shopping-cart"></i></button-->
+                                          
+                                          </div>
+                                    
 
-                                      <div class="ps-product__shopping" style="padding-top:10px;">
-                                          <a href="/" class="ps-btn mb-10" >Continue Shopping<i class="ps-icon-next"></i></a>
-                                         <div class="ps-product__actions"><a class="mr-10" href="#"><i class="ps-icon-heart"></i></a><a href="#"><i class="ps-icon-share"></i></a></div>
+                                        <div class="ps-product__shopping" style="padding-top:10px;">
+                                            <a href="/" class="ps-btn mb-10" >Continue Shopping<i class="ps-icon-next"></i></a>
+                                            <div class="ps-product__actions">
+                                                {% shopcartcount user.id as count %}
+                                            <a href="{% url 'order:shopcart'%}" class="mr-10 " role="button" {% if count == 0 %} hidden {%endif%} data-toggle="tooltip" data-placement="top" title="View Your Cart" style="background-color: orange;"><i class="ps-icon-shopping-cart" ></i></a>    
+                                            <a class="mr-10 add_wishlist " data-id="{{product.id}}" role="button" data-toggle="tooltip" data-placement="top" title="add to your favorite" style="background-color: #ce7dde;"><i class="ps-icon-heart" ></i></a>
+                                            {% comment %} <a href="#" data-toggle="tooltip" data-placement="top" title="Share Product"><i class="ps-icon-share" ></i></a> {% endcomment %}
+                                            <a class="mr-10" data-toggle="collapse" data-target="#demoshare"><i class="ps-icon-share"></i></a>
+                                                <div id="demoshare" class="collapse">
+                                                    <a href="#" style="background-color: #3B5998;"><i class="fa fa-facebook"></i></a>
+                                                    <a href="#" style="background-color: #333;"><i class="fa fa-twitter"></i></a>
+                                                    <a href="#" style="background-color: #dd4b39;"><i class="fa fa-google"></i></a>
+                                                    <a href="#" style="background-color: #007bb5;"><i class="fa fa-linkedin"></i></a>
+                                                    <a href="#" style="background-color: #bb0000;"><i class="fa fa-youtube"></i></a>
+                                                    <a href="#" style="background-color: #E4405F;"><i class="fa fa-instagram"></i></a>
+                              
+                                                </div>
                                         </div>
-
-                                </div>
+                                        </div>
+                                        <script>
+                                            $(document).ready(function(){
+                                                $('[data-toggle="tooltip"]').tooltip();   
+                                            });
+                                        </script>  
+                                    </div>
 
                             </form>
 
                         {% else %}
+                        {% comment %} Product with No Variant {% endcomment %}
 <!--                        mean choose product with NO varriant at the front page or search page-->
-                          <form action="/order/addtoshopcart/{{ product.id }}" method="post"  >
+                        {% comment %} <form action="/order/addtoshopcart/{{ product.id }}" method="post"  > {% endcomment %}
+                        <form method="post"  >
                                     {% csrf_token %}
                                     <div id="SelectedProduct">
-                                        <p><strong>Availability:</strong> {% if product.amount > 0  %} <strong style="background-color:#cd7bdd;"> In Stock </strong> {% else %} <strong style="background-color:#ff1344;"> Out of Stock </strong> {% endif %}</p>
-                                        <h3 class="product-price">{{ product.price }} </h3>
-<!--                                       amount of product QTY:-->
-                                        <div class="form-inline">
-                                          <input class="form-control" name="quantity" type="number" value="1" min="1" max="{{ product.amount }}">
-<!--                                          <button type="submit" class="btn btn-primary" {% if product.amount < 1  %} disabled {% endif %} style="height:50px; background-color:orange;">Add to cart<i class="ps-icon-next"></i></button>-->
-                                              <button type="submit" class="ps-btn mb-10" {% if product.amount < 1  %} disabled {% endif %} style="background-color:orange;">Add to cart<i class="ps-icon-next"></i></button>
+                                            <input type="hidden" name="pid" id="pid" value="{{product.id}}" data-id="{{product.id}}">
+                                            
+                                        <div class="input-group selected_info" >
+                                            <p><strong>Selected Info:</strong></p>
+                                            <p><strong>Availability:</strong> {% if product.amount > 0  %} <strong class="selected_pro"> In Stock :&nbsp;{{product.amount}} </strong> {% else %} <strong class="selected_outstock"> Out of Stock </strong><span>Please choose others!</span> {% endif %}</p>
+                                            <p><strong>Price:&nbsp;<strong class="selected_price"> ${{ product.price}}&nbsp;&nbsp;</strong>QTY :</strong><strong class="selected_pro selected_qty">&nbsp;1</strong>&nbsp;&nbsp;</p>
+                                            <!--h3 class="product-price" style="padding-bottom: 10px;">$ {{ product.price }} </h3-->
+                                        </div>    
+                                            <!--                                       amount of product QTY:-->
+                                            <div class="form-inline">
+                                            <input class="1form-control ps-btn mb-10" name="quantity" id="qtynovar" type="number" value="1" min="1" max="{{ product.amount }}" style="margin-right: 10px;">
+    <!--                                          <button type="submit" class="btn btn-primary" {% if product.amount < 1  %} disabled {% endif %} style="height:50px; background-color:orange;">Add to cart<i class="ps-icon-next"></i></button>-->
+                                            {% if request.user.is_authenticated %}    
+                                            <button type="button" class="ps-btn mb-10 add_tocart_no_variant"  {% if product.amount < 1  %} disabled {% endif %} style="background-color:orange;">Add to cart<i class="ps-icon-shopping-cart"></i></button>
+                                            {%else%}
+                                            <button type="button" class="ps-btn mb-10 add_cart_session_no_var"  {% if product.amount < 1  %} disabled {% endif %} style="background-color:orange;">Add to cart<i class="ps-icon-shopping-cart"></i></button>
+                                            {%endif%}
+                                            {% comment %} <button type="submit" class="ps-btn mb-10 "  {% if product.amount < 1  %} disabled {% endif %} style="background-color:orange;">Add to cart<i class="ps-icon-next"></i></button> {% endcomment %}
 
-                                        </div>
+                                            </div>
+                                                
 
                                         <div class="ps-product__shopping" style="padding-top:10px;"><!--button  type="submit" {% if product.amount < 1  %} disabled {% endif %} class="btn btn-primary">Add to cart<i class="ps-icon-next"></i></button-->
                                             <a class="ps-btn mb-10" href="/">Continue Shopping<i class="ps-icon-next"></i></a>
-                                            <div class="ps-product__actions"><a class="mr-10" href="#"><i class="ps-icon-heart"></i></a><a href="#"><i class="ps-icon-share"></i></a></div>
+                                            <div class="ps-product__actions">
+                                                {% shopcartcount user.id as count %}
+                                                <a href="{% url 'order:shopcart'%}" class="mr-10 " role="button" {% if count == 0 %} hidden {%endif%} data-toggle="tooltip" data-placement="top" title="View Your Cart" style="background-color: orange;"><i class="ps-icon-shopping-cart" ></i></a> 
+                                                <a class="mr-10 add_wishlist " data-id="{{product.id}}" role="button" data-toggle="tooltip" data-placement="top" title="add to your favorite"style="background-color: #ce7dde;"> <i class="ps-icon-heart" ></i></a>
+                                                {% comment %} <a href="#" data-toggle="tooltip" data-placement="top" title="Share Product"><i class="ps-icon-share" ></i></a> {% endcomment %}
+                                                <a class="mr-10" data-toggle="collapse" data-target="#demoshare"><i class="ps-icon-share"></i></a>
+                                                <div id="demoshare" class="collapse">
+                                                    <a href="#" style="background-color: #3B5998;"><i class="fa fa-facebook"></i></a>
+                                                    <a href="#" style="background-color: #333;"><i class="fa fa-twitter"></i></a>
+                                                    <a href="#" style="background-color: #dd4b39;"><i class="fa fa-google"></i></a>
+                                                    <a href="#" style="background-color: #007bb5;"><i class="fa fa-linkedin"></i></a>
+                                                    <a href="#" style="background-color: #bb0000;"><i class="fa fa-youtube"></i></a>
+                                                    <a href="#" style="background-color: #E4405F;"><i class="fa fa-instagram"></i></a>
+                              
+                                                  </div>
+                                            </div>
                                         </div>
+                                          <script>
+                                            $(document).ready(function(){
+                                                $('[data-toggle="tooltip"]').tooltip();   
+                                            });
+                                        </script>  
 
                                     </div>
 
@@ -350,12 +832,14 @@
         </div>
                 <div class="clearfix"></div>
 
+                {%include 'vendorinfo.html'%}
+
                 <div class="ps-product__content mt-50">
                     <ul class="tab-list" role="tablist">
-                        <li class="active"><a href="#tab_01" aria-controls="tab_01" role="tab" data-toggle="tab">Overview</a></li>
-                        <li><a href="#tab_02" aria-controls="tab_02" role="tab" data-toggle="tab">Review ({{ product.countreview}} )</a></li>
-                        <li><a href="#tab_03" aria-controls="tab_03" role="tab" data-toggle="tab">PRODUCT TAG</a></li>
-                        <li><a href="#tab_04" aria-controls="tab_04" role="tab" data-toggle="tab">ADDITIONAL</a></li>
+                        <li class="active"><a href="#tab_01" aria-controls="tab_01" id="overviewtab" role="tab" data-toggle="tab">DESCRIPTION</a></li>
+                        <li><a href="#tab_02" aria-controls="tab_02" role="tab" id="reviewstab" data-toggle="tab">REVIEWS ({{ product.countreview}} )</a></li>
+                        <li><a href="#tab_03" aria-controls="tab_03" role="tab" data-toggle="tab">VENDOR</a></li>
+                        <!--li><a href="#tab_04" aria-controls="tab_04" role="tab" data-toggle="tab">ADDITIONAL INFO</a></li-->
                     </ul>
                 </div>
                 <div class="tab-content mb-60">
@@ -363,10 +847,11 @@
                         <p> {{ product.detail |safe }}</p>
                     </div>
                     <div class="tab-pane" role="tabpanel" id="tab_02">
-                        <p class="mb-20">Reviews List below: <strong>(Please login for your reviews)</strong></p>
+                        <p class="mb-20">{{ product.countreview}} Reviews for: <strong>{{product.title}}</strong></p>
                         {% for rs in comments %}
                         <div class="ps-review">
-                            <div class="ps-review__thumbnail"><img src="{{ request.session.userimage }}" alt=""></div>
+                            {% comment %} <div class="ps-review__thumbnail"><img src="{{ request.session.userimage }}" alt=""></div> {% endcomment %}
+                            <div class="ps-review__thumbnail"><img src="{{ rs.user.userprofile.image.url}}" alt=""></div>
                             <div class="ps-review__content">
                                 <header>
                                     <select class="ps-rating" name="rate">
@@ -382,7 +867,7 @@
                             </div>
                         </div>
                         {% endfor %}
-                        <form class="ps-product__review" action="/product/addcomment/{{ product.id }}" method="post">
+                        <form class="ps-product__review" id="frm_pcomment" action="{% url 'products:addcomment' product.id %}" method="post">
                             {% csrf_token %}
                             <h4>ADD YOUR REVIEW</h4>
                             <div class="row">
@@ -392,8 +877,8 @@
                                         <input class="form-control" name="subject" type="text" placeholder="Your Subject...">
                                     </div>
                                     <div class="form-group">
-                                        <label>Your rating<span></span></label>
-                                        <select class="ps-rating" name="rate">
+                                        <label>Your rating<span>*</span></label>
+                                        <select class="ps-rating" name="rate" id="selectrate">
                                             <option value="1">1</option>
                                             <option value="2">2</option>
                                             <option value="3">3</option>
@@ -404,16 +889,18 @@
                                 </div>
                                 <div class="col-lg-8 col-md-8 col-sm-6 col-xs-12 ">
                                     <div class="form-group">
-                                        <label>Your Review:</label>
+                                        <label>Your Review:<span>*</span></label>
                                         <textarea class="form-control" name="comment" rows="6"></textarea>
                                     </div>
                                     <div class="form-group">
                                         <!--                                        check user login or not-->
                                         {% if user.id is not None %}
-                                         <button class="ps-btn ps-btn--sm">Submit<i class="ps-icon-next"></i></button>
+                                        {{captcha}}
+                                         <br><button class="ps-btn ps-btn--sm" type="submit" style="margin-top: 10px;">Add Reviews<i class="ps-icon-next"></i></button>
                                             {% else %}
                                         <!--                                        if user not login request login first to comments-->
-                                            <p> You must be logged in to post a review </p>
+                                            <p style="color:red;"><strong>* You must be logged in to post a review </strong></p>
+                                            <a class="ps-btn" href="{% url 'login_form' %}"><strong>Login</strong></a>
                                         {% endif %}
                                     </div>
                                 </div>
@@ -421,26 +908,861 @@
                         </form>
                     </div>
                     <div class="tab-pane" role="tabpanel" id="tab_03">
-                        <p>Add your tag <span> *</span></p>
+                        {% comment %} <p>Add your tag <span> *</span></p>
                         <form class="ps-product__tags" action="_action" method="post">
                             <div class="form-group">
                                 <input class="form-control" type="text" placeholder="">
                                 <button class="ps-btn ps-btn--sm">Add Tags</button>
                             </div>
-                        </form>
+                        </form> {% endcomment %}
+                        <!--Add from contact us-->
+                        {% comment %} <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
+                            <div class="ps-contact__block" data-mh="contact-block">
+                              <header>
+                                <div class="row">
+                                    
+                                    <div class="col-4" style="text-align: center;"><div class="header__logo"><a class="ps-logo" href="#"><img class="imglogo" src="{{product.vendor.logo.url}}" alt=""></a></div>
+                                        <br><button class="ps-btn" type="button">(234)</button>
+                                    </div>
+                                    <div class="col-6" style="padding-left: 30px;">
+                                        
+                                        <h3><strong>{{product.vendor.companyname}} </strong></h3>
+                                        <br><span> San Francisco Since 2010</span>
+                                        <br><select class="ps-rating" name="rate">
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            </select>
+                                    
+                                    </div>
+                                </div>
+                                {% comment %} <div class="header__logo"><a class="ps-logo" href="#"><img src="{% static ''%}images/logo.png" alt=""></a></div>
+                                <h3>USA <span> San Francisco</span></h3> {% endcomment %}
+                                
+                              {% comment %} </header>
+                              <footer>
+                                <p><i class="fa fa-map-marker"></i><a href="google.com/maps"> {{product.vendor.address1}}</a></p>
+                                <p><i class="fa fa-envelope-o"></i><a href="mailto@supportShoes@shoes.net">supportShoes@shoes.net</a></p>
+                                <p><i class="fa fa-phone"></i> ( +855 ) {{product.vendor.phone1}}  -  9401 123 003</p>
+                                <p><i class="fa fa-user-circle-o"></i> <a href="#">Contact user</a></p>
+                                <p><i class="fa fa-facebook-square"></i> <a href="#">facebook.com/shop</a></p>
+                                <p><i class="fa fa-instagram"></i> <a href="#">instagram.com</a></p>
+                                <p><i class="fa fa-map-o"></i> <a href="#">012 334455</a></p>
+
+                                
+
+                                
+                              </footer>
+                            </div>
+                          </div>  {% endcomment %}
+                        <!--end add-->
+                        
+                        {% comment %} Add more for two 2 columns {% endcomment %}
+                        <div class="ps-container1">
+                            <div class="row">
+                                  <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
+                                    <div class="ps-contact__block" data-mh="contact-block" style="text-align: center;">
+                                      <header>
+                                        {% comment %} <h3>USA <span> San Francisco</span></h3> {% endcomment %}
+                                        <div class="header__logo"><a class="ps-logo" href="{% url 'home:searchvendor' product.vendor_id product.category_id %}"><img class="imglogo" src="{{product.vendor.logo.url}}" alt=""></a></div>
+                                      </header>
+                                       <footer>
+                                        <span> {{product.vendor.companyname}} since {{product.vendor.startyear}}</span>
+                                        <select class="ps-rating" name="rate">
+                                          <option value="{% if product.vendor.avaregereview >= 1 %}1{% endif %}">1</option>
+                                          <option value="{% if product.vendor.avaregereview >= 2 %}1{% endif %}">2</option>
+                                          <option value="{% if product.vendor.avaregereview >= 3 %}1{% endif %}">3</option>
+                                          <option value="{% if product.vendor.avaregereview >= 4 %}1{% endif %}">4</option>
+                                          <option value="{% if product.vendor.avaregereview >= 5 %}1{% endif %}">5</option>
+                                            {{ product.vendor.avaregereview |stringformat:".2f"}}
+                                        </select>
+                                            <a class="ps-btn" href="{% url 'home:searchvendor' product.vendor_id product.category_id %}" type="button"><i class="fa fa-cart-plus" style="font-size:20px;"></i> {{product_list_by_vendor_count}}</a>
+                                            {% comment %} <a class="ps-btn" href="{% url 'home:searchvendor' product.vendor_id product.category_id %}" type="button"><i class="fa fa-cart-plus" style="font-size:20px;"></i> {{}}</a> {% endcomment %}
+                                            {% comment %} <p><i class="fa fa-map-marker"></i> 19C Trolley Square  Wilmington, DE 19806</p>
+                                        <p><i class="fa fa-envelope-o"></i><a href="mailto@supportShoes@shoes.net">supportShoes@shoes.net</a></p>
+                                        <p><i class="fa fa-phone"></i> ( +84 ) 9892 2324  -  9401 123 003</p> {% endcomment %}
+                                      </footer> 
+                                    </div>
+        
+                                  </div>
+                                  <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
+                                              <div class="ps-contact__block" data-mh="contact-block">
+                                                <header>
+                                                  <h3>{{product.vendor.companyname}} <span> {{product.vendor.companydetail}}</span></h3>
+                                                </header>
+                                                <footer>
+                                                    <p class="sm-p"><i class="fa fa-map-marker"></i><a href="{{product.vendor.maplocation}}" > {{product.vendor.address1}}-{{product.vendor.address2}}</a></p>
+                                                    <p class="sm-p"><i class="fa fa-envelope-o"></i><a href="mailto@{{product.vendor.email}}">{{product.vendor.email}}</a></p>
+                                                    <p class="sm-p"><i class="fa fa-phone"></i> ( +855 ) {{product.vendor.phone1}}  -  {{product.vendor.phone2}}</p>
+                                                    <p class="sm-p"><i class="fa fa-user"></i> <a>{{product.vendor.contactname}}</a></p>
+                                                    <p class="sm-p"><i class="fa fa-facebook-square"></i> <a>{{product.vendor.facebook}}</a></p>
+                                                    <p class="sm-p"><i class="fa fa-instagram"></i> <a>{{product.vendor.ig}}</a></p>
+                                                    <!--p><i class="fa fa-tiktok"></i> <a href="{{product.vendor.tiktok}}">{{product.vendor.tiktok}}</a></p-->
+                                                </footer>
+                                              </div>
+                                  </div>
+                                  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+                                  <!--Add Vendor comment-->
+                                  <p class="mb-20">{{ product.vendor.countreview}} Reviews for: <strong>{{product.vendor.companyname}}</strong></p>
+                                  {% for rs in comments_v %}
+                                  <div class="ps-review">
+                                      {% comment %} <div class="ps-review__thumbnail"><img src="{{ request.session.userimage }}" alt=""></div> {% endcomment %}
+                                      <div class="ps-review__thumbnail"><img src="{{ rs.user.userprofile.image.url}}" alt=""></div>
+                                      <div class="ps-review__content">
+                                          <header>
+                                              <select class="ps-rating" name="rate_v">
+                                                  <option value="{% if rs.rate_v >= 1 %}1{% endif %}">1</option>
+                                                  <option value="{% if rs.rate_v >= 2 %}1{% endif %}">2</option>
+                                                  <option value="{% if rs.rate_v >= 3 %}1{% endif %}">3</option>
+                                                  <option value="{% if rs.rate_v >= 4 %}1{% endif %}">4</option>
+                                                  <option value="{% if rs.rate_v >= 5 %}1{% endif %}">5</option>
+                                              </select>
+                                              <p>By<a href=""> {{ rs.user.first_name }}</a> - {{ rs.create_at}}</p>
+                                          </header>
+                                          <p>{{ rs.comment_v }}</p>
+                                      </div>
+                                  </div>
+                                  {% endfor %}
+                                  <form class="ps-product__review" id="frm_vcomment" action="{% url 'vendors:addcomment_v' product.vendor_id %}" method="post">
+                                      {% csrf_token %}
+                                      <h4>ADD YOUR REVIEW</h4>
+                                      <div class="row">
+                                          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
+                                              <div class="form-group">
+                                                  <label>Subject:<span>*</span></label>
+                                                  <input class="form-control" name="subject_v" type="text" placeholder="Your Subject...">
+                                              </div>
+                                              <div class="form-group">
+                                                  <label>Your rating<span>*</span></label>
+                                                  <select class="ps-rating" name="rate_v" id="select_v_rate">
+                                                      <option value="1">1</option>
+                                                      <option value="2">2</option>
+                                                      <option value="3">3</option>
+                                                      <option value="4">4</option>
+                                                      <option value="5">5</option>
+                                                  </select>
+                                              </div>
+                                          </div>
+                                          <div class="col-lg-8 col-md-8 col-sm-6 col-xs-12 ">
+                                              <div class="form-group">
+                                                  <label>Your Review:<span>*</span></label>
+                                                  <textarea class="form-control" name="comment_v" rows="6"></textarea>
+                                              </div>
+                                              <div class="form-group">
+                                                  <!--                                        check user login or not-->
+                                                  {% if user.id is not None %}
+                                                  {{captcha}}
+                                                  <br> <button class="ps-btn ps-btn--sm" style="margin-top:10px;" type="submit">Add Reviews<i class="ps-icon-next"></i></button>
+                                                      {% else %}
+                                                  <!--                                        if user not login request login first to comments-->
+                                                      <p style="color:red;"><strong>* You must be logged in to post a review </strong></p>
+                                                      <a class="ps-btn" href="{% url 'login_form' %}"><strong>Login</strong></a>
+                                                  {% endif %}
+                                                  {% comment %} V:{{form.as_p}} {% endcomment %}
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </form>
+                                  <!--End Vendor comment-->
+                                  </div>  
+                            </div>
+                          </div>
+                        {% comment %} end add more {% endcomment %}
+                        
                     </div>
-                    <div class="tab-pane" role="tabpanel" id="tab_04">
+                    <!--div class="tab-pane" role="tabpanel" id="tab_04">
                         <div class="form-group">
                             <textarea class="form-control" rows="6" placeholder="Enter your addition here..."></textarea>
                         </div>
                         <div class="form-group">
                             <button class="ps-btn" type="button">Submit</button>
                         </div>
-                    </div>
+                      
+                    </div-->
                 </div>
             </div>
             </div>
         </div>
     </div>
 </div>
+{% comment %} {% include 'vendorproductslist.html' %} {% endcomment %}
+
+{% comment %} {% include 'topsale-Back-up.html' %}  {% endcomment %}
+
+
+
+
+<!--script>
+// Note we add the function in Selectedpro.html
+// add btnaddcart_sess with Variant 
+$(document).on('click',"#btnaddcart_sess",function(){
+    var _pid=$('#proid').val();
+    var _p_actvarid=$('input[name=actvarid]').val() ;
+    var q_ty=$('#qty').val();
+    //var _p_image=$('.imgpro').attr('src');
+    var _vm=$(this);
+    swal("Cart session with Var"+_pid+_p_actvarid+q_ty);
+    //+_p_image);
+    console.log("Cart session"+_pid+_p_actvarid+q_ty);
+    //+_p_price+_p_title+_p_image);
+    //alert("hello session"+_pid);
+    // Ajax
+    $.ajax({
+      url:"{% url 'order:add_cart_session_var' %}",
+      data:{
+        pid : $('#proid').val(),
+        varid :$('input[name=actvarid]').val(),
+        'qty':q_ty,
+        csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+        action: 'post',
+      },
+      dataType:'json',
+      /*
+      beforeSend:function(){
+        _vm.attr('disabled',true);
+      },
+      */
+      success:function(res){
+  
+        //console.log(res.product_id);
+        //swal("Product_id"+res.product_id);
+        //swal("Total item"+res.totalitems);
+        //$('.wlcount_session').text(res.wish_count);
+        //_vm.attr('disabled',false);
+        //******
+        if(res.bool==true){
+          //alert("Your product has been added to wish list");
+          $('.cart_count_sess').text(res.cart_count);
+          _vm.addClass('disabled').removeClass('add_wishlist');
+          $('#md_head').html('<h4 class="modal-title" id="md_head">Your Cart </h4>');
+          $('#md_body').html('<div class="modal-body" id="md_body">Succeeded! Product Have been Added to Cart List</div>');
+          $('#btn').addClass('btn-success');
+          $('#myModal').modal('toggle');
+        } 
+        else {
+          //alert("The product Already in wish list");
+          $('#md_head').html('<h4 class="modal-title" id="md_head">Your Cart </h4>');
+          $('#md_body').html('<div class="modal-body" id="md_body">Succeeded! Product Already in the Cart List</div>');
+          $('#btn').addClass('btn-info');
+          $('#myModal').modal('toggle');
+  
+        }
+       
+      },//end success
+      
+    });
+    // EndAjax
+  });
+
+</script-->
+
+<script>
+    //add to cart by Ajax with No variant with quantity because can be more than 1
+    $(document).on('click','.add_tocart_no_variant',function(){
+        var pid=$('#pid').val();
+        var qty=$('input[name=quantity]').val();
+        //var variantid=$(this).attr('variantid');
+        var _vm=$(this);
+        //console.log(variantid);
+        //console.log("pid:"+pid);
+        //console.log("quantitynoVar:"+qty);
+        //swal("product detail"+pid +qty);
+        //alert("pid and qty:"+pid +qty);
+        // Ajax
+        $.ajax({
+            type:'POST',
+            url:'{% url 'order:add_tocart_no_variant' %}',
+            data:{
+                product:pid,
+                qty:qty,
+                csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+                action: 'post',
+            },
+            
+            dataType:'json',
+            success:function(res){
+                console.log(res);
+                if(res.status==true){
+                //alert("Your product has been added to wish list");
+                    $(".cartlistcount").text(res.cartcount);
+                    //_vm.addClass('disabled').removeClass('add_wishlist');
+                    $('#md_head').html('<h4 class="modal-title" id="md_head">Your Product !</h4>');
+                    $('#md_body').html('<div class="modal-body" id="md_body">Have been Added to Cart List</div>');
+                    $('#btn').addClass('btn-success');
+                    $('#myModal').modal('toggle');
+                    $('#cartlistajax').html(res.rendered_table);
+                } 
+                else {
+                    //alert("The product Already in wish list");
+                    $('#md_head').html('<h4 class="modal-title" id="md_head">Your Product ! </h4>');
+                    $('#md_body').html('<div class="modal-body" id="md_body">Got Error : Please Contact Vendor</div>');
+                    $('#btn').addClass('btn-info');
+                    $('#myModal').modal('toggle');
+
+                }
+            } //end success func    
+        });    
+    });  
+    
+// add to cartlist by session not login Guesh user with NO Variant
+$(document).on('click',".add_cart_session_no_var",function(){
+    var _pid=$('#pid').attr('data-id');
+    var _p_qty=$('#qtynovar').val() ;
+    //var _p_title=$('.ps-shoe__name').attr('title');
+    //var _p_image=$('.imgpro').attr('src');
+    var _vm=$(this);
+    //swal("Cart session"+_pid+_p_qty)
+    //+_p_price+_p_title+_p_image);
+    //console.log("Cart session"+_pid+_p_qty)
+    //+_p_price+_p_title+_p_image);
+    //alert("hello session"+_pid);
+    // Ajax
+    $.ajax({
+      url:"{% url 'order:add_cart_session_no_var' %}",
+      data:{
+        'p_id':_pid,
+        'p_qty':_p_qty,
+      },
+      dataType:'json',
+      /*
+      beforeSend:function(){
+        _vm.attr('disabled',true);
+      },
+      */
+      success:function(res){
+  
+        //console.log(res.product_id);
+        //swal("Product_id"+res.product_id);
+        //swal("Total item"+res.totalitems);
+        //$('.wlcount_session').text(res.wish_count);
+        //_vm.attr('disabled',false);
+        //******
+        if(res.bool==true){
+          //alert("Your product has been added to wish list");
+          $('.cartlistcount_sess').text(res.cartlistcount_sess);
+          _vm.addClass('disabled').removeClass('add_wishlist');
+          $('#md_head').html('<h4 class="modal-title" id="md_head">Your Cart </h4>');
+          $('#md_body').html('<div class="modal-body" id="md_body">Succeeded! Product Have been Added to Cart List</div>');
+          $('#btn').addClass('btn-success');
+          $('#myModal').modal('toggle');
+          $('#cartlistajax').html(res.rendered_table);
+        } 
+        else {
+          //alert("The product Already in wish list");
+        /*  
+          $('#md_head').html('<h4 class="modal-title" id="md_head">Your Cart </h4>');
+          $('#md_body').html('<div class="modal-body" id="md_body">Succeeded! Product Already in the Cart List</div>');
+          $('#btn').addClass('btn-info');
+          $('#myModal').modal('toggle');
+        */
+        }
+       
+      },//end success
+      
+    });
+    // EndAjax
+  });
+// for the selected qty id="qtynovar"
+$(document).on('change','#qtynovar',function(){
+    var val_novar = $('#qtynovar').val();
+    var text = $('selected_qty').text();
+    $('.selected_qty').text(val_novar);
+    
+    //$('.result').append("<br>Select Text = " + text);
+})
+// for selected qty with var id=qtyvar
+$(document).on('change','#qtyvar' ,function(){
+    //var val_novar = $('#qtynovar').val();
+    var val_var = $('#qtyvar').val();
+    var text = $('selected_qty_var').text();
+    //$('.selected_qty').text(val_novar);
+    //$('.selected_qty_var').text('1');
+    $('.selected_qty_var').text(val_var);
+    //$('.result').append("<br>Select Text = " + text);
+})
+// set value to qty of product var
+$( document ).ready(function() {
+    $('.selected_qty_var').text("1");
+//add header request sess for show cartlist session NO need to alert
+    //swal("hello");
+    $.ajax({
+        url:"{% url 'order:header_cartlist_sess' %}",
+        type: "GET",
+        //data:{  },
+        dataType:'json',
+        success:function(res){
+            
+            if(res.bool==true){
+              //alert("Your product has been added to wish list");
+              $('.cartlistcount_sess').text(res.cartlistcount_sess);
+              //_vm.addClass('disabled').removeClass('add_wishlist');
+        /*      $('#md_head').html('<h4 class="modal-title" id="md_head">Your Cart </h4>');
+              $('#md_body').html('<div class="modal-body" id="md_body">Succeeded! Product Have been Added to Cart List</div>');
+              $('#btn').addClass('btn-success');
+              $('#myModal').modal('toggle');
+        */      
+              $('#cartlistajax').html(res.rendered_table);
+            } 
+            else {
+              //alert("The product Already in wish list");
+            /*  
+              $('#md_head').html('<h4 class="modal-title" id="md_head">Your Cart </h4>');
+              $('#md_body').html('<div class="modal-body" id="md_body">Succeeded! Product Already in the Cart List</div>');
+              $('#btn').addClass('btn-info');
+              $('#myModal').modal('toggle');
+            */    
+            }
+           
+          },//end success
+          
+        });
+        // EndAjax
+   
+})
+</script>
+
+<script>
+    // Add wishlist
+    $(document).on('click',".add_wishlist",function(){
+      var _pid=$(this).attr('data-id');
+     // var _pvariant=$(this).attr('data-variant');
+      var _vm=$(this);
+      //console.log(_pid);
+      //console.log(_vm);
+      // Ajax
+      $.ajax({
+        url:"{% url 'wishlist:add_wishlist' %}",
+        data:{
+          product:_pid,
+          //pvariant:_pvariant,
+        },
+        dataType:'json',
+        success:function(res){
+          console.log(res);
+          if(res.bool==true){
+            //alert("Your product has been added to wish list");
+            $(".wlcount").text(res.wlcount);
+            _vm.addClass('disabled').removeClass('add_wishlist');
+            $('#md_head').html('<h4 class="modal-title" id="md_head">Your Favorite Product </h4>');
+            $('#md_body').html('<div class="modal-body" id="md_body">Succeeded! Product Have been Added to Wish List</div>');
+            $('#btn').addClass('btn-success');
+            $('#myModal').modal('toggle');
+          } 
+          else {
+            //alert("The product Already in wish list");
+            $('#md_head').html('<h4 class="modal-title" id="md_head">Your Favorite Product </h4>');
+            $('#md_body').html('<div class="modal-body" id="md_body">Succeeded! Product Already in the Wish List</div>');
+            $('#btn').addClass('btn-info');
+            $('#myModal').modal('toggle');
+    
+          }
+        },
+
+        error:function(res){
+            alert("The product Already in wish list");
+            $('#md_head').html('<h4 class="modal-title" id="md_head">Your Favorite Product </h4>');
+            $('#md_body').html('<div class="modal-body" id="md_body">Succeeded! Product Already in the Wish List</div>');
+            $('#btn').addClass('btn-info');
+            $('#myModal').modal('toggle');
+        },
+      });
+      // EndAjax
+    });
+    // End
+</script>
+
+<!--test for copy script from selected.html -->
+<script>
+// from selectedpro.html for check duble alert session 
+// we pass these script here for correct the repeat apply json now is corrected completed
+    $(document).on('click',".btnaddcart",function(){
+      var p_id=$('#proid').val();
+      var var_id=$('input[name=actvarid]').val();
+      //var q_ty=$('input[name=quantity]').val();
+      var q_ty = $('#qty').val();
+      //console.log("proid:"+p_id);
+      //console.log("actvarid:"+var_id);
+      //console.log("qty:"+q_ty);
+      //alert("proid:"+p_id);
+      //alert("varid"+var_id);
+      //alert("qty:"+q_ty);
+      
+      //$('.btnaddcart').on("click", function(){
+      //swal("btnaddcart click"+p_id+var_id+q_ty);
+      $.ajax({
+        type:'POST',
+        url:'{% url 'order:add_tocart_with_variant' %}',
+        data:{
+          pid : $('#proid').val(),
+          varid :$('input[name=actvarid]').val(),
+          'qty':q_ty,
+          csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+          action: 'post',
+        },
+        dataType:'json',
+        success: function (response) {
+          if(response.success){
+            $(".cartlistcount").text(response.cartcount);
+          //Call modal by toggle
+            $('#md_head').html('<h4 class="modal-title" id="md_head">Your Product add to Cart succeeded!</h4>');
+            $('#md_body').html('<div class="modal-body" id="md_body">Success! Please Check you cart list for detail</div>');
+            $('#btn').addClass('btn-success');
+            $('#myModal').modal('toggle');
+            $('#cartlistajax').html(response.rendered_table);
+            //$('#test').html('<p>Hello</p>');
+            console.log("add to cart with variant successed");
+            console.log("your product have been added to cart by Ajax with variant");
+            //alert("data have been updated you can check out processed");  
+          }
+        },
+        error: function (response) {
+          console.log("Error add to cart with variant");
+          $('#md_head').html('<h4 class="modal-title" id="md_head">Your Product got Error</h4>');
+          $('#md_body').html('<div class="modal-body" id="md_body">Please feel free to Click AddCart againt!</div>');
+          $('#btn').addClass('btn-warning');
+          $('#myModal').modal('toggle');
+          //$('#test').html('<p>Hello</p>');
+          console.log("Your product got Error, please click on add cart again! Thank you");
+        },
+      });  // end ajax
+
+    }); //edn btnaddcart click
+    
+    
+  //}); // end script
+
+    // add btnaddcart_sess with Variant
+    $(document).on('click',"#btnaddcart_sess",function(){
+      var _pid=$('#proid').val();
+      var _p_actvarid=$('input[name=actvarid]').val() ;
+      var q_ty=$('#qty').val();
+      //var _p_image=$('.imgpro').attr('src');
+      var _vm=$(this);
+      //swal("Cart session with Var"+_pid+_p_actvarid+q_ty);
+      //+_p_image);
+      //console.log("Cart session"+_pid+_p_actvarid+q_ty);
+      //+_p_price+_p_title+_p_image);
+      //alert("hello session"+_pid);
+      // Ajax
+      $.ajax({
+        url:"{% url 'order:add_cart_session_var' %}",
+        data:{
+          pid : $('#proid').val(),
+          varid :$('input[name=actvarid]').val(),
+          'qty':q_ty,
+          csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+          action: 'post',
+        },
+        dataType:'json',
+        /*
+        beforeSend:function(){
+          _vm.attr('disabled',true);
+        },
+        */
+        success:function(res){
+    
+          //console.log(res.product_id);
+          //swal("Product_id"+res.product_id);
+          //swal("Total item"+res.totalitems);
+          //$('.wlcount_session').text(res.wish_count);
+          //_vm.attr('disabled',false);
+          //******
+          if(res.bool==true){
+            //alert("Your product has been added to wish list");
+            $('.cartlistcount_sess').text(res.cartlistcount_sess);
+            //_vm.addClass('disabled').removeClass('add_wishlist');
+          /*  
+            $('#md_head').html('<h4 class="modal-title" id="md_head">Your Cart </h4>');
+            $('#md_body').html('<div class="modal-body" id="md_body">Succeeded! Product Have been Added to Cart List</div>');
+            $('#btn').addClass('btn-success');
+            $('#myModal').modal('toggle');
+          */  
+            $('#cartlistajax').html(res.rendered_table);
+            swal("Successfully, Added to Cart");
+          } 
+          else {
+            //alert("The product Already in wish list");
+          /*  
+            $('#md_head').html('<h4 class="modal-title" id="md_head">Your Cart </h4>');
+            $('#md_body').html('<div class="modal-body" id="md_body">Succeeded! Product Already in the Cart List</div>');
+            $('#btn').addClass('btn-info');
+            $('#myModal').modal('toggle');
+          */  
+          }
+         
+        },//end success
+        
+      });
+      // EndAjax
+    });
+  
+  </script>
+
+<!--end test selected.html-->
+ <!-- The Modal -->
+ <div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title" id="md_head">Modal Heading</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+        <!-- Modal body -->
+        <div class="modal-body" id="md_body">
+          Modal body..
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn" id="btn" data-dismiss="modal">Close</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+                  <!-- end test modals -->
+{% comment %} {% if messages %}
+    {% for message in messages %}
+        <div class="alert {{ message.tags }} m-2" id="msg" role="alert">
+            <div id="alertmsg" data_smg='{{message}}'>{{ message }} </div>
+        </div>
+    {% endfor %}
+{% endif %}  {% endcomment %}
+
+<script>
+  // take the messages from python to template with sweet alert
+  $(document).ready(function(){
+    // active processbar step and disabled other steps
+    $('#step2,#step3,#step4,#step5,#step6').addClass("disabled");
+    $('#step2,#step3,#step4,#step5,#step6').css('opacity','0.3');
+    $('#step1').addClass("active");
+    // for hidden  vendorinfo icon collapse
+    $('.demoprobar').attr("hidden","false");
+    //hidden vendorinfo toggle
+    $('#vendor_info').attr("data-toggle","none");
+
+    var info_=$('#alertmsg').attr('data_smg');
+    if($('#msg').length>0){
+      swal("Message:"+info_);
+    };
+   
+    //check product comment field
+    $("#frm_pcomment").submit(function(e){  
+      //e.preventDefault();
+      
+      var subject_=$("input[name='subject']").val();
+      var rate_=$("#selectrate option:selected").text();
+      var textarea_=$("textarea[name='comment']").val();
+      
+      console.log(subject_);
+      console.log(rate_);
+      console.log(textarea_);
+      
+      if (subject_ == ""  ) {
+      //  alert("please input in the required ");
+        swal("Please input in the required in RED Box");
+        $("input[name='subject']").css("border-color","red");
+        //return false;
+        e.preventDefault();
+        return false;
+      } 
+      else if(rate_ == "") {
+        swal("Please input in the required in RED Box");
+        $("#selectrate").css("border-color","red");
+        e.preventDefault();
+        return false;
+      }
+      else if(textarea_ == "") {
+        swal("Please input in the required in RED Box");
+        $("textarea[name='comment']").css("border-color","red");
+        e.preventDefault();
+        return false;
+      }
+    
+      else if( subject_ =="" || rate_ == "" || textarea_ == "" ) {
+        swal("Please input in the required in RED Box");
+        $("input[name='subject']").css("border-color","red");
+        $("#selectrate").css("border-color","red");
+        $("textarea[name='comment']").css("border-color","red");
+        e.preventDefault();
+        return false;
+      } 
+      else {
+        //swal("Hello world! Your have input all the required:"+address_+phone_+email_+latlng_+paymentmethod_);
+        return true;
+
+      }
+    
+    }); //end form submit pcomment
+//End check product comment
+
+//check Vendor comment field
+    $("#frm_vcomment").submit(function(e){  
+      //e.preventDefault();
+      
+      var subject_=$("input[name='subject_v']").val();
+      var rate_=$("#select_v_rate option:selected").text();
+      var textarea_=$("textarea[name='comment_v']").val();
+      
+      console.log(subject_);
+      console.log(rate_);
+      console.log(textarea_);
+      
+      if (subject_ == ""  ) {
+      //  alert("please input in the required ");
+        swal("Please input in the required in RED Box");
+        $("input[name='subject']").css("border-color","red");
+        //return false;
+        e.preventDefault();
+        return false;
+      } 
+      else if(rate_ == "") {
+        swal("Please input in the required in RED Box");
+        $("#select_v_rate").css("border-color","red");
+        e.preventDefault();
+        return false;
+      }
+      else if(textarea_ == "") {
+        swal("Please input in the required in RED Box");
+        $("textarea[name='comment']").css("border-color","red");
+        e.preventDefault();
+        return false;
+      }
+    
+      else if( subject_ =="" || rate_ == "" || textarea_ == "" ) {
+        swal("Please input in the required in RED Box");
+        $("input[name='subject_v']").css("border-color","red");
+        $("#select_v_rate").css("border-color","red");
+        $("textarea[name='comment_v']").css("border-color","red");
+        e.preventDefault();
+        return false;
+      } 
+      else {
+        //swal("Hello world! Your have input all the required:"+address_+phone_+email_+latlng_+paymentmethod_);
+        return true;
+
+      }
+    
+    }); //end form submit pcomment
+//End check Vendor comment
+
+
+
+
+  });
+  </script>
+  <script>
+    // Set the date we're counting down to
+    var countDownDate = new Date("{{eventtimer.end_date|date:'Y-m-d H:i'}}").getTime();
+    //var countDownDate = new Date("Dec 2").getTime();
+   
+    // Update the count down every 1 second
+    var x = setInterval(function() {
+   
+      // Get today's date and time
+      var now = new Date().getTime();
+   
+      // Find the distance between now and the count down date
+      var distance = countDownDate - now;
+   
+      // Time calculations for days, hours, minutes and seconds
+      var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+   
+      // Output the result in an element with id="demo"
+      document.getElementById("demotime_p").innerHTML = days + "d " + hours + "h "
+      + minutes + "m " + seconds + "s ";
+      document.getElementById("days").innerHTML = days ;
+      document.getElementById("hours").innerHTML = hours ;
+      document.getElementById("minutes").innerHTML = minutes ;
+      document.getElementById("seconds").innerHTML = seconds ;
+   
+      // If the count down is over, write some text
+      if (distance < 0) {
+        clearInterval(x);
+        document.getElementById("demotime_p").innerHTML = "EXPIRED";
+        alert("TimeOut");
+        $('.ps-hot-deal').fadeOut();
+        // Ajax
+        $.ajax({
+          url:"{% url 'home:expired_dis_timer' %}",
+          data:{
+            pid_ : {{product.id}},
+            //csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+            //action: 'post',
+          },
+          dataType:'json',
+          /*
+          beforeSend:function(){
+            _vm.attr('disabled',true);
+          },
+          */
+          success:function(res){
+      
+            console.log(res.products);
+            swal(res.products);
+            //swal("Product_id"+res.product_id);
+            //swal("Total item"+res.totalitems);
+            $('.price_sm').text("$"+res.products);
+            //_vm.attr('disabled',false);
+            /*
+            if(res.bool==true){
+             
+              $('.cartlistcount_sess').text(res.cartlistcount_sess);
+              
+              $('#cartlistajax').html(res.rendered_table);
+              swal("Successfully, Added to Cart");
+            } 
+            else {
+              
+            }
+            */
+          
+          },//end success
+          
+        });
+        // EndAjax
+
+
+
+
+      }
+    }, 1000);
+    </script>
+  
+  <!-- Back-to-top button handler code -->
+  <script>
+    $(document).ready(function(){
+        var btn = $('#backToTop');
+        $(window).on('scroll', function() {
+            if ($(window).scrollTop() > 300) {
+                btn.addClass('show');
+            } else {
+                btn.removeClass('show');
+            }
+        });
+        btn.on('click', function(e) {
+            e.preventDefault();
+            $('html, body').animate({
+                scrollTop: 0
+            }, '300');
+        });
+    });
+    </script>
 {% endblock %}
+{% comment %} #plase these out of detail block {% endcomment %}
+{% comment %} {% block topsale %} {% include 'topsale.html' %} {% endblock %} {% endcomment %}
+{% comment %} {%if id="tab_03"%} {% endcomment %}
+{% comment %} {% block topsale %}  {% include 'vendorproductslist.html' %} {% endblock %} {% endcomment %}
+{% comment %} {%else%} {% endcomment %}
+{% block topsale %}  {% include 'relatedproducts.html' %} {% endblock %} 
+{% comment %} {%endif%} {% endcomment %}
+{% block subscribe %}{% include 'subscribe.html' %}{% endblock %}
+

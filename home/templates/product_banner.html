@@ -1,8 +1,13 @@
 {% load static %}
 <!--(5)-->
       {% block product_banner_offer %}
+      
       <div class="ps-section--offer">
-        <div class="ps-column"><a class="ps-offer" href="product-listing.html"><img src="{% static '' %}images/banner/home-banner-1.png" alt=""></a></div>
-        <div class="ps-column"><a class="ps-offer" href="product-listing.html"><img src="{% static '' %}images/banner/home-banner-2.png" alt=""></a></div>
+        {%for rs in banners %}
+        {% comment %} <div class="ps-column"><a class="ps-offer" href="product-listing.html"><img src="{% static '' %}images/banner/958x401.png" alt="958x401"></a></div>
+        <div class="ps-column"><a class="ps-offer" href="product-listing.html"><img src="{% static '' %}images/banner/960x401.png" alt="960x401"></a></div> {% endcomment %}
+        <div class="ps-column"><a class="ps-offer" href="product-listing.html"><img src="{{rs.image.url}}" alt="958x401"></a></div>
+        {% comment %} <div class="ps-column"><a class="ps-offer" href="product-listing.html"><img src="{{banner1.image.url}}" alt="960x401"></a></div> {% endcomment %}
+      {%endfor%}
       </div>
       {% endblock %}

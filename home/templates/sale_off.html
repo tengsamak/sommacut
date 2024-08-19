@@ -1,23 +1,32 @@
 {% load static %}
+{% load myapptags %}
+
 <!--(6)-->
-      {% block sale_off %}
+{% block sale_off %}
+      <!--HOT DEAL TODAY-->
       <div class="ps-section--sale-off ps-section pt-80 pb-40">
         <div class="ps-container">
           <div class="ps-section__header mb-50">
-            <h3 class="ps-section__title" data-mask="Sale off">- Hot Deal Today</h3>
+            <h3 class="ps-section__title" data-mask="Sale off">- Hot Deal Today<p id="demotime1"></p></h3>
           </div>
           <div class="ps-section__content">
             <div class="row">
                   <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 ">
                     <div class="ps-hot-deal">
-                      <h3>Nike DUNK Max 95 OG</h3>
-                      <p class="ps-hot-deal__price">Only:  <span>£155</span></p>
-                      <ul class="ps-countdown" data-time="December 13, 2017 15:37:25">
-                        <li><span class="hours"></span><p>Hours</p></li>
+                      {% hot_deal as saleoff %}
+                      <h3>{{saleoff.product.title}}</h3>
+                      
+                      <p class="ps-hot-deal__price">Only:  <span>${{saleoff.product.price}}</span></p>
+                      {% comment %} <p id="demotime"></p> {% endcomment %}
+                      {% comment %} <ul class="ps-countdown" data-time="Dec 13, 2024 15:37:25" id="demotime1"> {% endcomment %}
+                      <ul class="ps-countdown" data-time="{%if saleoff.status == "Active" %}{{saleoff.end_date|date:'Y-m-d H:i'}}{%else%}{{saleoff|date:'Y-m-d H:i'}}{%endif%}" style="background-color:greenyellow;border-radius:25px;">
+                        {% comment %} <li><span class="days" id="days"></span><p>Days</p></li>
+                        <li class="divider">:</li>  {% endcomment %}
+                        <li><span class="hours" id="hours"></span><p>Hours</p></li>
                         <li class="divider">:</li>
-                        <li><span class="minutes"></span><p>minutes</p></li>
+                        <li><span class="minutes" id="minutes"></span><p>minutes</p></li>
                         <li class="divider">:</li>
-                        <li><span class="seconds"></span><p>Seconds</p></li>
+                        <li><span class="seconds" id="seconds"></span><p>Seconds</p></li>
                       </ul><a class="ps-btn" href="#">Order Today<i class="ps-icon-next"></i></a>
                     </div>
                   </div>
@@ -33,11 +42,47 @@
                         </div></a><a class="point third" href="javascript:;"><i class="fa fa-plus"></i>
                         <div class="ps-hotspot__content">
                           <p class="heading">JUMP TO HEADER</p>
-                          <p>Dynamic Fit Collar en la zona del tobillo que une la parte inferior de la pierna y el pie sin reducir la libertad de movimiento.</p>
-                        </div></a><img src="{% static '' %}images/hot-deal.png" alt=""></div>
+                          <!--p>Dynamic Fit Collar en la zona del tobillo que une la parte inferior de la pierna y el pie sin reducir la libertad de movimiento.</p-->
+                        </div></a><img src="{{saleoff.product.image.url}}" alt="" style="width:555px; height:393px;"></div>
                   </div>
             </div>
           </div>
         </div>
       </div>
-      {% endblock %}
+      <!--End HOT DEAL TODAY-->
+      <!--script>
+        // Set the date we're counting down to
+        var countDownDate = new Date("Dec 5, 2024 15:37:25").getTime();
+        
+        // Update the count down every 1 second
+        var x = setInterval(function() {
+        
+          // Get today's date and time
+          var now = new Date().getTime();
+        
+          // Find the distance between now and the count down date
+          var distance = countDownDate - now;
+        
+          // Time calculations for days, hours, minutes and seconds
+          var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+          var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+          var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+          var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        
+          // Output the result in an element with id="demo"
+          document.getElementById("demotime").innerHTML = days + "d " + hours + "h "
+          + minutes + "m " + seconds + "s ";
+          document.getElementById("days").innerHTML = days ;
+          document.getElementById("hours").innerHTML = hours ;
+          document.getElementById("minutes").innerHTML = minutes ;
+          document.getElementById("seconds").innerHTML = seconds ;
+        
+          // If the count down is over, write some text
+          if (distance < 0) {
+            clearInterval(x);
+            document.getElementById("demotime").innerHTML = "EXPIRED";
+          }
+        }, 1000);
+        </script-->      
+
+{% endblock %}

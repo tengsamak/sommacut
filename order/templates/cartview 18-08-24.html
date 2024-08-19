@@ -1,0 +1,207 @@
+{% load static%}
+{% load humanize %}
+{% load myapptags %}
+<style>
+    tfoot>tr>td{
+        /* font-family: "Archivo Narrow", sans-serif; */
+        font-size: 18px;
+        font-weight: bold;
+        color: #515356;
+        text-transform: uppercase;
+        /* border-bottom: 1px solid #e5e5e5; */
+        }
+        .ftcolor{
+          color:#27b574;
+          font-weight: bolder;
+          /* font-size: 18px; */
+    
+        }
+        .ps-cart-listing .ps-cart__table tbody > tr > td:nth-child(3) {
+            min-width: 100px;
+        }
+        .proven{
+          font-size:14px;
+          color: #27b574;
+        }
+        .ftcolor{
+          color:#27b574;
+          font-weight: bolder;
+          /* font-size: 18px; */
+    
+      }
+</style>
+<div class="1ps-content 1pt-80 pb-80">
+    <div class="1ps-container">
+      <div class="ps-cart-listing">
+        <header class="mb-20" style="float:right;">
+            <h1 style="color:orange;font-size:38px;margin-top: 20px;font-weight:bold;"> Your Cart</h1>
+            {% if request.user.is_authenticated %}
+            {% shopcartcount user.id as count %}
+            <h4 style="color:gray;">There are <b style="color:#2ac37d;" class="cartlistcount">{{count}}</b> products in your cart</h4>
+            {% comment %} <h4 style="color:gray;">There are <b style="color:#2ac37d;">{{shopcart.count}}</b> products in your cart</h4> {% endcomment %}
+            {%else%}
+            <h4 style="color:gray;">There are <b style="color:#2ac37d;" class="cartlistcount_sess">{{count_sess}}</b> products in your cart</h4>
+            {%endif%}
+          </header>
+        <table class="table ps-cart__table">
+            <thead>
+              <tr>
+                <th>Image</th>
+                <th>Product Details</th>
+                <th>Price</th>
+                <th>Qty</th>
+                <th>Total</th>
+                <!-- <th></th> -->
+              </tr>
+            </thead>
+            <tbody>
+              {% if request.user.is_authenticated %}
+                {% for rs in shopcart %} 
+              <tr>
+                {% if rs.variant.image_id > 0 %}
+                <td><a class="ps-product__preview" ><img class="mr-15" src="{{rs.variant.image }}" style="width:100px;height:100px;" alt=""></a></td>
+                <td>{{rs.product}}<span class="kh">{{rs.product.title_kh}}</span>{% if rs.product.variant == "Color" %}({{ rs.variant.color }}){%elif rs.product.variant == "Size"%} ({{ rs.variant.size}}) {% else%}({{ rs.variant.size }}/{{ rs.variant.color }}) {%endif%}(<span class="ftcolor">-DISC&nbsp;{{rs.product.discount_percentage}}</span>)<br><span class="proven">By:{{rs.product.vendor.companyname | upper}}</span><br><span>Code:{{rs.product.pro_code}}</span></td>
+                {% else %}
+                <td><a class="ps-product__preview" ><img class="mr-15" src="{{rs.product.image.url}}" style="width:100px;height:100px;"  alt=""></a></td>
+                <td> {{rs.product}}<span>{{rs.product.title_kh}}</span>(<span class="ftcolor">-DISC&nbsp;{{rs.product.discount_percentage}}</span>)<br><span class="proven">By:{{rs.product.vendor.companyname | upper}}</span><br><span>Code:{{rs.product.pro_code}}</span></td>
+                {%endif%}
+                <td>$
+                    {% if rs.product.variant == 'None' %}
+                        {{ rs.product.price }}<br><del style="color:orange;">${{rs.product.m_price}}</del>
+                    {% else %}
+                        {{ rs.variant.price }}<br><del style="color:orange;">${{rs.product.m_price}}</del>
+                    {% endif %}
+                </td>
+                <td>
+                    {{rs.quantity}}
+                  <!-- <div class="form-group--number">
+                    <button class="minus"><span>-</span></button>
+                    <input class="form-control" type="text" value="2">
+                    <button class="plus"><span>+</span></button>
+                  </div> -->
+                </td>
+                <td>${% if rs.product.variant == 'None' %}
+                    {{ rs.amount|floatformat:2 |intcomma}}<br><del style="color:orange;">${{rs.m_amount|floatformat:2 |intcomma}}</del>
+                {% else %}
+                    {{ rs.varamount|floatformat:2 |intcomma }}<br><del style="color:orange;">${{rs.m_amount|floatformat:2 |intcomma}}</del>
+                {% endif %}
+            </td>
+                <td>
+                  <!-- <div class="ps-remove"></div> -->
+                </td>
+              </tr>
+              {% endfor %}
+            {%else%}  <!--Not Login-->
+              {%if check_cart_sess == 'cart_var' %}
+              {% for rs in cart_sess_products_var %} 
+            <tr>
+              <td><a class="ps-product__preview" ><img class="mr-15" src="{{rs.image }}" style="width:100px;height:100px;" alt=""></a></td>
+              <td> {{rs.product}}-{{rs.product.title_kh}}{% if rs.product.variant == "Color" %}{{ rs.color }}{%elif rs.product.variant == Size %} {{ rs.size}} {% else%}{{ rs.size }}/{{ rs.color}} {%endif%}(<span class="ftcolor">-DISC&nbsp;{{rs.product.discount_percentage}}</span>)<br><span class="proven">By:{{rs.product.vendor.companyname | upper}}</span><br><span>Code:{{rs.product.pro_code}}</span></td>
+              <td>$
+                  {{ rs.price }}<br><del style="color:orange;">${{rs.product.m_price}}</del>
+              </td>
+              <td>
+                {%for key, values in cart_pro_qty.items %}{%if key == rs.product.id|stringformat:"i" %}{{values}}{%endif%}{%endfor%}
+              </td>
+              <td>$
+                {%for key, values in cart_pro_qty.items %}{%if key == rs.product.id|stringformat:"i" %}{% multiply values|floatformat:2 rs.price %}{%endif%}{%endfor%}<br><del style="color:orange;">${%for key, values in cart_pro_qty.items %}{%if key == rs.product.id|stringformat:"i" %}{% multiply values|floatformat:2 rs.product.m_price %}{%endif%}{%endfor%}</del>
+              </td>
+              <td>
+                <!-- <div class="ps-remove"></div> -->
+              </td>
+            </tr>
+            {% endfor %}
+            {%elif check_cart_sess == 'cart_no_var' %}<!--check no variant-->
+            {% for rs in cart_list_sess_prods_no_var %}
+            <tr>
+              <td><a class="ps-product__preview" ><img class="mr-15" src="{{rs.image.url}}" style="width:100px;height:100px;"  alt=""></a></td>
+              <td>{{rs.title}}-{{rs.title_kh}}(<span class="ftcolor">-DISC&nbsp;{{rs.discount_percentage}}</span>)<br><span class="proven">By:{{rs.vendor.companyname | upper}}</span><br><span>Code:{{rs.pro_code}}</span></td>
+              <td>$
+                  {{ rs.price }}<br><del style="color:orange;">${{rs.m_price}}</del>
+              </td>
+              <td>
+                {%for key, values in cart_pro_qty_no_var.items %}{%if key == rs.id|stringformat:"i" %}{{values}}{%endif%}{%endfor%}
+              </td>
+              <td>$
+                {%for key, values in cart_pro_qty_no_var.items %}{%if key == rs.id|stringformat:"i" %}{% multiply values|floatformat:2 rs.price   %}{%endif%}{%endfor%}<br><del style="color:orange;">$ {%for key, values in cart_pro_qty_no_var.items %}{%if key == rs.id|stringformat:"i" %}{% multiply values|floatformat:2 rs.m_price   %}{%endif%}{%endfor%}</del>
+              </td>
+              <td>
+                <!-- <div class="ps-remove"></div> -->
+              </td>
+            </tr>
+            {% endfor %}
+            {% elif check_cart_sess == 'both'%}
+              {% for rs in cart_sess_products_var %} <!--for var 1st-->
+              <tr>
+                <td><a class="ps-product__preview" ><img class="mr-15" src="{{rs.image }}" style="width:100px;height:100px;" alt=""></a></td>
+                <td> {{rs.product}}-{{rs.product.title_kh}}{% if rs.product.variant == "Color" %}{{ rs.color }}{%elif rs.product.variant == Size %} {{ rs.size}} {% else%}{{ rs.size }}/{{ rs.color}} {%endif%}(<span class="ftcolor">-DISC&nbsp;{{rs.product.discount_percentage}}</span>)<br><span class="proven">By:{{rs.product.vendor.companyname | upper}}</span><br><span>Code:{{rs.product.pro_code}}</span></td>
+                <td>$
+                    {{ rs.price }}<br><del style="color:orange;">${{rs.product.m_price}}</del>
+                </td>
+                <td>
+                  {%for key, values in cart_pro_qty.items %}{%if key == rs.product.id|stringformat:"i" %}{{values}}{%endif%}{%endfor%}
+                </td>
+                <td>$
+                  {%for key, values in cart_pro_qty.items %}{%if key == rs.product.id|stringformat:"i" %}{% multiply values|floatformat:2 rs.price %}{%endif%}{%endfor%}<br><del style="color:orange;">${%for key, values in cart_pro_qty.items %}{%if key == rs.product.id|stringformat:"i" %}{% multiply values|floatformat:2 rs.product.m_price %}{%endif%}{%endfor%}</del>
+                </td>
+                <td>
+                  <!-- <div class="ps-remove"></div> -->
+                </td>
+              </tr>
+              {% endfor %}<!--End for no_var 1st-->
+              {% for rs in cart_list_sess_prods_no_var %} <!--for no_var 2st-->
+              <tr>
+                <td><a class="ps-product__preview" ><img class="mr-15" src="{{rs.image.url}}" style="width:100px;height:100px;"  alt=""></a></td>
+                <td>{{rs.title}}-{{rs.title_kh}}(<span class="ftcolor">-DISC&nbsp;{{rs.discount_percentage}}</span>)<br><span class="proven">By:{{rs.vendor.companyname | upper}}</span><br><span>Code:{{rs.pro_code}}</span></td>
+                <td>$
+                    {{ rs.price }}<br><del style="color:orange;">${{rs.m_price}}</del>
+                </td>
+                <td>
+                  {%for key, values in cart_pro_qty_no_var.items %}{%if key == rs.id|stringformat:"i" %}{{values}}{%endif%}{%endfor%}
+                </td>
+                <td>$
+                  {%for key, values in cart_pro_qty_no_var.items %}{%if key == rs.id|stringformat:"i" %}{% multiply values|floatformat:2 rs.price   %}{%endif%}{%endfor%}<br><del style="color:orange;">$ {%for key, values in cart_pro_qty_no_var.items %}{%if key == rs.id|stringformat:"i" %}{% multiply values|floatformat:2 rs.m_price   %}{%endif%}{%endfor%}</del>
+                </td>
+                <td>
+                  <!-- <div class="ps-remove"></div> -->
+                </td>
+              </tr>
+              {% endfor %}<!--End for no_var 2st-->
+            {% else%}<!--dont have cart in session-->
+          {%endif%}<!--End Check Session Not Login-->
+        {%endif%}<!--End authenticate-->
+            </tbody>
+          </table>    
+
+
+        <div class="ps-cart__actions">
+           <div class="ps-cart__promotion">
+            <div class="form-group">
+              {% comment %} <button class="ps-btn ps-btn--gray">Continue Shopping</button> {% endcomment %}
+            </div> 
+          </div> 
+          {% if request.user.is_authenticated %}
+          <div class="ps-cart__total">
+            <h2 class="ftcolor"style="margin-top: 20px;margin-bottom: 10px;text-align:center;">ORDER SUMMARY</h2>
+            <h3 >Total Sub: <span class="ftcolor">$<b class="ftcolor" id="cart-subtotal"> {{total|floatformat:2 |intcomma}} </b></span></h3>
+            <h6 >Included VAT <!--span class="ftcolor">$<b class="ftcolor " id="cart-tax"> {{vat10|floatformat:2 |intcomma}} </b></span--></h6>
+            <h3 hidden>VAT 10%: <span class="ftcolor">$<b class="ftcolor " id="cart-tax"> {{vat10|floatformat:2 |intcomma}} </b></span></h3>
+            <hr />
+            <h3>Grand Total: <span class="ftcolor">$<b class="ftcolor " id="cart-total"> {{grandtotal|floatformat:2 |intcomma}} </b></span></h3>
+          </div>
+          {%else%} <!--Not login-->
+          <div class="ps-cart__total">
+            <h2 class="ftcolor"style="margin-top: 20px;margin-bottom: 10px;text-align:center;">ORDER SUMMARY</h2>
+            <h3 >Total Sub: <span class="ftcolor">$<b class="ftcolor" id="cart-subtotal">{{ grandtotal_sess|floatformat:2 |intcomma}}</b></span></h3>
+            <h6 >Included VAT <!--span class="ftcolor">$<b class="ftcolor " id="cart-tax"> {{vat10|floatformat:2 |intcomma}} </b></span--></h6>
+            <h3 hidden>VAT 10%: <span class="ftcolor">$<b class="ftcolor " id="cart-tax"> {{vat10|floatformat:2 |intcomma}} </b></span></h3>
+            <hr />
+            <h3>Grand Total: <span class="ftcolor">$<b class="ftcolor " id="cart-total">{{ grandtotal_sess|floatformat:2 |intcomma}}</b></span></h3>
+          </div>
+
+          {%endif%}
+
+        </div>
+      </div>
+    </div>
+  </div>

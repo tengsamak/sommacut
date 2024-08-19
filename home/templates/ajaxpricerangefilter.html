@@ -1,0 +1,88 @@
+
+<!--div class="ps-product-action">
+    <div class="ps-product__filter">
+      <select class="ps-select selectpicker" id="sortprice">
+        {% comment %} <option selected value="0">Shortby</option> {% endcomment %}
+        <option value="1">Name(A-Z)</option>
+        <option value="2">Name(Z-A)</option>
+        <option value="3">Price (Low to High)</option>
+        <option value="4">Price (High to Low)</option>
+      </select>
+    </div>
+    <div class="ps-pagination">
+      <ul class="pagination">
+        <li><a href="#"><i class="fa fa-angle-left"></i></a></li>
+        <li class="active"><a href="#">1</a></li>
+        <li><a href="#">2</a></li>
+        <li><a href="#">3</a></li>
+        <li><a href="#">...</a></li>
+        <li><a href="#"><i class="fa fa-angle-right"></i></a></li>
+      </ul>
+    </div>
+</div-->
+
+  <div class="ps-product__columns"> <!-- columns-->
+
+{% for rs in products %}
+    <input type=hidden value="{{pmin}}" id="pmin">
+    <input type=hidden value="{{pmax}}" id="pmax">
+    <input type=hidden value="{{rs.vendor.id}}" id="vid">
+    <input type=hidden value="{{rs.category.id}}" id="cid">
+    {% comment %} {% if rs.status == "True" %} {% endcomment %}
+    {% comment %} {% if cr.id == rs.category_id %} {% endcomment %}
+    <div class="ps-product__column">
+        <div class="ps-shoe mb-30">
+            <div class="ps-shoe__thumbnail">
+                <div class="ps-badge"><span>{%if rs.newstatus == "New" %}New {%else%} Discount {%endif%}</span></div>
+                <div class="ps-badge ps-badge--sale {%if rs.newstatus == "New"%} ps-badge--2nd {%else%}1ps-badge--2nd{%endif%}"><span>{{rs.discount_percentage}}</span></div><a class="ps-shoe__favorite" href="/product/{{ rs.id}}/{{ rs.slug}}"><i class="ps-icon-heart"></i></a><img class="imgpro" src="{{ rs.image.url }}"  alt=""><a class="ps-shoe__overlay" href="/product/{{ rs.id}}/{{ rs.slug}}"></a>
+            </div>
+            <div class="ps-shoe__content">
+                <div class="ps-shoe__variants">
+                    <div class="ps-shoe__variant normal">
+
+                    {% for pr in rs.images_set.all %}
+                    <img class="imgvar" src="{{pr.image.url }}" alt="">
+              
+                    {%endfor%}
+                    </div>
+                    <select class="ps-rating ps-shoe__rating">
+                        <option value="{% if rs.avaregereview >= 0 %}1{% endif %}">1</option>
+                        <option value="{% if rs.avaregereview >= 2 %}1{% endif %}">2</option>
+                        <option value="{% if rs.avaregereview >= 3 %}1{% endif %}">3</option>
+                        <option value="{% if rs.avaregereview >= 4 %}1{% endif %}">4</option>
+                        <option value="{% if rs.avaregereview >= 5 %}1{% endif %}">5</option>
+                        {{ rs.avaregereview |stringformat:".2f"}}
+                    </select>
+                </div>
+                <div class="ps-shoe__detail"><a class="ps-shoe__name mytextwrap" href="/product/{{ rs.id}}/{{ rs.slug}}" title="{{ rs.title }}">{{ rs.title }}</a>
+                    <p class="ps-shoe__categories"><a href="/searchcateid/{{ rs.category.id }}/{{ rs.category.slug }}">{{rs.category.title}}</a>,by <a href="{% url 'home:searchvendor' rs.vendor_id rs.category_id %}" style="color:#2ac37d;font-weight: bold;">{{rs.vendor.companyname | upper}}</a></p><span class="ps-shoe__price" style="padding-top:30px;color: #2ac37d;font-size:medium;top: 10px;">
+                         <del style="font-size: small;margin-right: 5px;font-weight: bold;">$ {{ rs.m_price }} </del><strong>$ {{ rs.price }}</strong></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    {% endfor %}   
+</div> <!-- end columns-->
+
+<!--div class="ps-product-action">
+  <div class="ps-product__filter">
+    <select class="ps-select selectpicker">
+      <option value="1">Shortby</option>
+      <option value="2">Name</option>
+      <option value="3">Price (Low to High)</option>
+      <option value="3">Price (High to Low)</option>
+    </select>
+  </div>
+  <div class="ps-pagination">
+    <ul class="pagination">
+      <li><a href="#"><i class="fa fa-angle-left"></i></a></li>
+      <li class="active"><a href="#">1</a></li>
+      <li><a href="#">2</a></li>
+      <li><a href="#">3</a></li>
+      <li><a href="#">...</a></li>
+      <li><a href="#"><i class="fa fa-angle-right"></i></a></li>
+    </ul>
+  </div>
+</div-->
+

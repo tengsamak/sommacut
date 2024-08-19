@@ -1,0 +1,218 @@
+{% comment %} {% load myapptags %} {% endcomment %}
+
+<input type="hidden" name="qty" id="qty" value="{{qty}}">
+<input type="hidden" name="proid" id="proid" value="{{proid}}">
+<input type="hidden" name="namevariant" id="namevariant" value="{{varinatname}}">
+<input type="hidden" name="size" id="size" value="{{variantsize}}">
+<input type="hidden" name="actvarid" id="actvarid" value="{{variantid}}">
+<input type="hidden" name="namesize_id" id="namesize_id" value="{{variantsize}}">
+<input type="hidden" name="namecolor_id"  value="{{variantcolor}}">
+
+<div class="input-group selected_info">
+    <p><strong>Selected Info:</strong>
+    <p><strong>Availability:</strong> {% if variant.quantity > 0  %}<strong class="selected_pro"> In Stock :&nbsp;{{ variant.quantity}}</strong>{% else %}<strong class="selected_outstock"> Out of Stock </strong><span>Please choose others!</span>{% endif %}
+    <p><strong>Selected :</strong><strong class="selected_pro">{% if variant.product.variant == "Size" %} Size : {{ variant.size }} {%elif variant.product.variant == "Color"%} Color : {{ variant.color }} {%else%}Size : {{ variant.size }}; Color : {{ variant.color }}{%endif%}</strong></p>
+    <p><strong>Price:&nbsp;<strong class="selected_price"> ${{ variant.price}}</strong>&nbsp;&nbsp;<strong>QTY :</strong><strong class="selected_pro selected_qty_var">{{qty}}</strong></p>
+    <!--h3 class="product-price"style="padding-bottom: 10px;" >${{ variant.price}}</h3-->
+</div>
+    <!--                        choose amount of products-->
+    <div class="form-inline">
+        <input class="1form-control ps-btn mb-10" name="quantity" id="qtyvar" type="number" value="{{qty}}" min="1" max="{{ variant.quantity }}" style="margin-right: 10px;">
+<!--                                          <button type="submit" class="btn btn-primary"  {% if variant.quantity < 1  %} disabled {% endif %} style="height:50px; background-color:orange;">Add to cart<i class="ps-icon-next"></i></button>-->
+  
+        <button type="button" class="ps-btn mb-10 btnaddcart"  {% if variant.quantity < 1  %} disabled {% endif %} style="background-color:orange;">Add to cart<i class="ps-icon-shopping-cart"></i></button>
+  
+        <!--button type="button" class="ps-btn mb-10" id="btnaddcart_sess" {% if variant.quantity < 1  %} disabled {% endif %} style="background-color:orange;">Add to cart<i class="ps-icon-shopping-cart"></i></button-->
+ 
+    </div>
+  {% comment %} </div> {% endcomment %}
+
+    <div class="ps-product__shopping" style="padding-top:10px;">
+        <a href="/" class="ps-btn mb-10" >Continue Shopping<i class="ps-icon-next"></i></a>
+      <div class="ps-product__actions">
+        {% comment %} {% load myapptags %}
+        {% shopcartcount user.id as count %}
+        <a href="{% url 'order:shopcart'%}" class="mr-10 " role="button" {% if count == 0 %} hidden {%endif%} data-toggle="tooltip" data-placement="top" title="View Your Cart" style="background-color: orange;"><i class="ps-icon-shopping-cart" ></i></a>  {% endcomment %}
+        <a class="mr-10 add_wishlist " data-id="{{proid}}" role="button" data-toggle="tooltip" data-placement="top" title="add to your favorite" style="background-color: #ce7dde;"><i class="ps-icon-heart" ></i></a>
+        <a class="mr-10" data-toggle="collapse" data-target="#demo"><i class="ps-icon-share"></i></a>
+          <div id="demo" class="collapse">
+              <a href="#" style="background-color: #3B5998;"><i class="fa fa-facebook"></i></a>
+              <a href="#" style="background-color: #55ACEE;"><i class="fa fa-twitter"></i></a>
+              <a href="#" style="background-color: #dd4b39;"><i class="fa fa-google"></i></a>
+              <a href="#" style="background-color: #007bb5;"><i class="fa fa-linkedin"></i></a>
+              <a href="#" style="background-color: #bb0000;"><i class="fa fa-youtube"></i></a>
+              <a href="#" style="background-color: #E4405F;"><i class="fa fa-instagram"></i></a>
+
+          </div>
+      
+      </div>
+    </div>
+
+
+
+      <script>
+          $(document).ready(function(){
+              $('[data-toggle="tooltip"]').tooltip();   
+          });
+      </script>  
+      {% comment %} for button btnaddcart click check {% endcomment %}
+
+<!--script>
+        //$(document).on('change','form#post-color,form#post-form',function(){
+        $(document).ready(function(){    
+          $("#btnaddcart").click(function(){
+            alert("btnaddcart Click");
+          });
+        });
+    </!script-->
+    <!--script>
+      // from selectedpro.html for check duble alert session 
+      $(document).ready(function(){
+        var p_id=$('#proid').val();
+        var var_id=$('input[name=actvarid]').val();
+        //var q_ty=$('input[name=quantity]').val();
+        var q_ty = $('#qty').val();
+        console.log("proid:"+p_id);
+        console.log("actvarid:"+var_id);
+        console.log("qty:"+q_ty);
+        //alert("proid:"+p_id);
+        //alert("varid"+var_id);
+        //alert("qty:"+q_ty);
+        $('#btnaddcart').on("click", function(){
+          $.ajax({
+            type:'POST',
+            url:'{% url 'order:add_tocart_with_variant' %}',
+            data:{
+              pid : $('#proid').val(),
+              varid :$('input[name=actvarid]').val(),
+              'qty':q_ty,
+              csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+              action: 'post',
+            },
+            dataType:'json',
+            success: function (response) {
+              if(response.success){
+                $(".cartlistcount").text(response.cartcount);
+              //Call modal by toggle
+                $('#md_head').html('<h4 class="modal-title" id="md_head">Your Product add to Cart succeeded!</h4>');
+                $('#md_body').html('<div class="modal-body" id="md_body">Success! Please Check you cart list for detail</div>');
+                $('#btn').addClass('btn-success');
+                $('#myModal').modal('toggle');
+                $('#cartlistajax').html(response.rendered_table);
+                //$('#test').html('<p>Hello</p>');
+                console.log("add to cart with variant successed");
+                console.log("your product have been added to cart by Ajax with variant");
+                //alert("data have been updated you can check out processed");  
+              }
+            },
+            error: function (response) {
+              console.log("Error add to cart with variant");
+              $('#md_head').html('<h4 class="modal-title" id="md_head">Your Product got Error</h4>');
+              $('#md_body').html('<div class="modal-body" id="md_body">Please feel free to Click AddCart againt!</div>');
+              $('#btn').addClass('btn-warning');
+              $('#myModal').modal('toggle');
+              //$('#test').html('<p>Hello</p>');
+              console.log("Your product got Error, please click on add cart again! Thank you");
+            },
+          });  // end ajax
+
+        }); //edn btnaddcart click
+        
+        
+      }); // end script
+
+      // add btnaddcart_sess with Variant
+      $(document).on('click',"#btnaddcart_sess",function(){
+        var _pid=$('#proid').val();
+        var _p_actvarid=$('input[name=actvarid]').val() ;
+        var q_ty=$('#qty').val();
+        //var _p_image=$('.imgpro').attr('src');
+        var _vm=$(this);
+        swal("Cart session with Var"+_pid+_p_actvarid+q_ty);
+        //+_p_image);
+        console.log("Cart session"+_pid+_p_actvarid+q_ty);
+        //+_p_price+_p_title+_p_image);
+        //alert("hello session"+_pid);
+        // Ajax
+        $.ajax({
+          url:"{% url 'order:add_cart_session_var' %}",
+          data:{
+            pid : $('#proid').val(),
+            varid :$('input[name=actvarid]').val(),
+            'qty':q_ty,
+            csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+            action: 'post',
+          },
+          dataType:'json',
+          /*
+          beforeSend:function(){
+            _vm.attr('disabled',true);
+          },
+          */
+          success:function(res){
+      
+            //console.log(res.product_id);
+            //swal("Product_id"+res.product_id);
+            //swal("Total item"+res.totalitems);
+            //$('.wlcount_session').text(res.wish_count);
+            //_vm.attr('disabled',false);
+            //******
+            if(res.bool==true){
+              //alert("Your product has been added to wish list");
+              $('.cartlistcount_sess').text(res.cartlistcount_sess);
+              //_vm.addClass('disabled').removeClass('add_wishlist');
+            /*  
+              $('#md_head').html('<h4 class="modal-title" id="md_head">Your Cart </h4>');
+              $('#md_body').html('<div class="modal-body" id="md_body">Succeeded! Product Have been Added to Cart List</div>');
+              $('#btn').addClass('btn-success');
+              $('#myModal').modal('toggle');
+            */  
+              $('#cartlistajax').html(res.rendered_table);
+              swal("Successfully, Added to Cart");
+            } 
+            else {
+              //alert("The product Already in wish list");
+            /*  
+              $('#md_head').html('<h4 class="modal-title" id="md_head">Your Cart </h4>');
+              $('#md_body').html('<div class="modal-body" id="md_body">Succeeded! Product Already in the Cart List</div>');
+              $('#btn').addClass('btn-info');
+              $('#myModal').modal('toggle');
+            */  
+            }
+           
+          },//end success
+          
+        });
+        // EndAjax
+      });
+    
+    </script-->
+
+    <!-- The Modal -->
+{% comment %}    
+<div class="modal fade" id="myModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title" id="md_head">Modal Heading</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body" id="md_body">
+        Modal body..
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn" id="btn" data-dismiss="modal">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+  {% endcomment %}
+                <!-- end test modals -->
+      

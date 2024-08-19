@@ -27,7 +27,7 @@ class OrderProductline(admin.TabularInline):
 #for pdf print
 def order_pdf(obj):
     # pass
-	return mark_safe('<a href="{}">PDF</a>'.format(reverse('admin_order_pdf',args=[obj.id])))
+	return mark_safe('<a href="{}">PDF</a>'.format(reverse('order:admin_order_pdf',args=[obj.id])))
 
 order_pdf.short_description = 'Order PDF'
 #
@@ -35,9 +35,9 @@ order_pdf.short_description = 'Order PDF'
 
 #style order import export pdf
 class OrderAdmin(ImportExportActionModelAdmin):
-    list_display = ['id','code','first_name','last_name','phone','city','total','status','userordernote',order_pdf,]
+    list_display = ['id','code','first_name','last_name','phone','total','status','userordernote',order_pdf,]
     list_filter = ['status']
-    readonly_fields = ('code','user','address','city','country','phone','first_name','last_name','ip','phone','city','total','userordernote')
+    readonly_fields = ('code','user','address','phone','first_name','last_name','ip','phone','total','userordernote')
     inlines = [OrderProductline]
     can_delate = False
 

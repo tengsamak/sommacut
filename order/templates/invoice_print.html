@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+{% load static%}
+{% load humanize %}
+{% load qr_code %}
+<!--[if IE 7]><html class="ie ie7"><![endif]-->
+<!--[if IE 8]><html class="ie ie8"><![endif]-->
+<!--[if IE 9]><html class="ie ie9"><![endif]-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <!-- <link href="apple-touch-icon.png" rel="apple-touch-icon"> -->
+    <!-- <link href="favicon.png" rel="icon">
+    <meta name="author" content="Nghia Minh Luong">
+    <meta name="keywords" content="Default Description">
+    <meta name="description" content="Default keyword"> -->
+    <title>SOMMA Mart Invoice Print</title>
+    <!-- Fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Archivo+Narrow:300,400,700%7CMontserrat:300,400,500,600,700,800,900" rel="stylesheet">
+    <link rel="stylesheet" href="{% static ''%}plugins/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{% static ''%}plugins/ps-icon/style.css">
+    <!-- CSS Library-->
+    <link rel="stylesheet" href="{% static ''%}plugins/bootstrap/dist/css/bootstrap.min.css">
+    <!-- <link rel="stylesheet" href="plugins/owl-carousel/assets/owl.carousel.css">
+    <link rel="stylesheet" href="plugins/jquery-bar-rating/dist/themes/fontawesome-stars.css">
+    <link rel="stylesheet" href="plugins/slick/slick/slick.css">
+    <link rel="stylesheet" href="plugins/bootstrap-select/dist/css/bootstrap-select.min.css">
+    <link rel="stylesheet" href="plugins/Magnific-Popup/dist/magnific-popup.css">
+    <link rel="stylesheet" href="plugins/jquery-ui/jquery-ui.min.css">
+    <link rel="stylesheet" href="plugins/revolution/css/settings.css">
+    <link rel="stylesheet" href="plugins/revolution/css/layers.css">
+    <link rel="stylesheet" href="plugins/revolution/css/navigation.css"> -->
+    <!-- Custom-->
+    <link rel="stylesheet" href="{% static ''%}css/style.css">
+    <!--HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries-->
+    <!--WARNING: Respond.js doesn't work if you view the page via file://-->
+    <!--[if lt IE 9]><script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script><script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script><![endif]-->
+    <style>
+    * {
+      font-family: "Archivo Narrow", sans-serif;
+      font-size:14px !important;
+    }
+    button.ps-btn--gray {
+      background-color: #ad7;
+    }
+    .table>tbody>tr>td {
+    vertical-align: middle;
+    }
+    tfoot>tr>td{
+    /* font-family: "Archivo Narrow", sans-serif; */
+    font-size: 12px;
+    font-weight: bold;
+    color: #515356;
+    text-transform: uppercase;
+
+    /* border-bottom: 1px solid #e5e5e5; */
+    }
+    .ftcolor{
+      color:#27b574;
+      font-weight: bolder;
+      /* font-size: 18px; */
+
+    }
+    .proven{
+      font-size:12px;
+    }
+    .form-group--number button{
+      background-color: #27b574;
+    }
+    .mr-15{
+      width:70px;
+      height: 70px;
+    }
+    .list-group-item {
+      padding: 1px 1px;
+    }
+  @media print {
+    .btnrow{
+      display:none;
+    }
+    .footrow {
+     
+      text-align: center !important;
+      background-color: #27b574 !important;
+      color: white !important;
+      box-shadow:  inset 10px 10px 10px 1000px #27b574 !important;
+      text-align: center;
+      background-color: #27b574;
+      color: white;
+    }
+
+    /* .container img {vertical-align: middle;} */
+
+    /* @page {size: A4 landscape;max-height:100%; max-width:100% } */
+    @page {
+        size: A4;
+        margin: 60px;
+
+    }
+
+  }
+.foottotal {
+  font-size: 18px !important;
+  margin-top: 10px;
+}
+.ps-cart__actions {
+  padding-top: 0px;
+}
+thead {
+  font-size: 12px;
+  background-color: #c4cef0;
+  box-shadow: 0px 0px 0px #c4cef0 inset;
+}
+/* .valign {
+  vertical-align: middle;
+} */
+.list-group-flush .list-group-item {
+  border-color: #8d8d8d;
+}
+.footrow-1{
+  display: flex;
+  flex-wrap:wrap-reverse;
+}
+.list-group-item:first-child {
+  border-top-right-radius: 0px;
+  border-top-left-radius: 0px;
+
+}
+.list-group-item:last-child {
+  border-bottom-right-radius: 0px;
+  border-bottom-left-radius: 0px;
+}
+    </style>
+
+
+
+  </head>
+  <!--[if IE 7]><body class="ie7 lt-ie8 lt-ie9 lt-ie10"><![endif]-->
+  <!--[if IE 8]><body class="ie8 lt-ie9 lt-ie10"><![endif]-->
+  <!--[if IE 9]><body class="ie9 lt-ie10"><![endif]-->
+  <body class="ps-loading">
+    <div class="header--sidebar"></div>
+    <!-- <header class="header">
+      <div class="header__top">
+        <div class="container-fluid">
+          <div class="row">
+                <div class="col-lg-6 col-md-8 col-sm-6 col-xs-12 ">
+                  <p>460 West 34th Street, 15th floor, New York  -  Hotline: 804-377-3580 - 804-399-3580</p>
+                </div>
+                <div class="col-lg-6 col-md-4 col-sm-6 col-xs-12 ">
+                  <div class="header__actions"><a href="#">Login & Regiser</a>
+                    <div class="btn-group ps-dropdown"><a class="dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">USD<i class="fa fa-angle-down"></i></a>
+                      <ul class="dropdown-menu">
+                        <li><a href="#"><img src="images/flag/usa.svg" alt=""> USD</a></li>
+                        <li><a href="#"><img src="images/flag/singapore.svg" alt=""> SGD</a></li>
+                        <li><a href="#"><img src="images/flag/japan.svg" alt=""> JPN</a></li>
+                      </ul>
+                    </div>
+                    <div class="btn-group ps-dropdown"><a class="dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Language<i class="fa fa-angle-down"></i></a>
+                      <ul class="dropdown-menu">
+                        <li><a href="#">English</a></li>
+                        <li><a href="#">Japanese</a></li>
+                        <li><a href="#">Chinese</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+          </div>
+        </div>
+      </div>
+      <nav class="navigation">
+        <div class="container-fluid">
+          <div class="navigation__column left">
+            <div class="header__logo"><a class="ps-logo" href="index.html"><img src="images/logo.png" alt=""></a></div>
+          </div>
+          <div class="navigation__column center">
+                <ul class="main-menu menu">
+                  <li class="menu-item menu-item-has-children dropdown"><a href="index.html">Home</a>
+                        <ul class="sub-menu">
+                          <li class="menu-item"><a href="index.html">Homepage #1</a></li>
+                          <li class="menu-item"><a href="#">Homepage #2</a></li>
+                          <li class="menu-item"><a href="#">Homepage #3</a></li>
+                        </ul>
+                  </li>
+                  <li class="menu-item menu-item-has-children has-mega-menu"><a href="#">Men</a>
+                    <div class="mega-menu">
+                      <div class="mega-wrap">
+                        <div class="mega-column">
+                          <ul class="mega-item mega-features">
+                            <li><a href="product-listing.html">NEW RELEASES</a></li>
+                            <li><a href="product-listing.html">FEATURES SHOES</a></li>
+                            <li><a href="product-listing.html">BEST SELLERS</a></li>
+                            <li><a href="product-listing.html">NOW TRENDING</a></li>
+                            <li><a href="product-listing.html">SUMMER ESSENTIALS</a></li>
+                            <li><a href="product-listing.html">MOTHER'S DAY COLLECTION</a></li>
+                            <li><a href="product-listing.html">FAN GEAR</a></li>
+                          </ul>
+                        </div>
+                        <div class="mega-column">
+                          <h4 class="mega-heading">Shoes</h4>
+                          <ul class="mega-item">
+                            <li><a href="product-listing.html">All Shoes</a></li>
+                            <li><a href="product-listing.html">Running</a></li>
+                            <li><a href="product-listing.html">Training & Gym</a></li>
+                            <li><a href="product-listing.html">Basketball</a></li>
+                            <li><a href="product-listing.html">Football</a></li>
+                            <li><a href="product-listing.html">Soccer</a></li>
+                            <li><a href="product-listing.html">Baseball</a></li>
+                          </ul>
+                        </div>
+                        <div class="mega-column">
+                          <h4 class="mega-heading">CLOTHING</h4>
+                          <ul class="mega-item">
+                            <li><a href="product-listing.html">Compression & Nike Pro</a></li>
+                            <li><a href="product-listing.html">Tops & T-Shirts</a></li>
+                            <li><a href="product-listing.html">Polos</a></li>
+                            <li><a href="product-listing.html">Hoodies & Sweatshirts</a></li>
+                            <li><a href="product-listing.html">Jackets & Vests</a></li>
+                            <li><a href="product-listing.html">Pants & Tights</a></li>
+                            <li><a href="product-listing.html">Shorts</a></li>
+                          </ul>
+                        </div>
+                        <div class="mega-column">
+                          <h4 class="mega-heading">Accessories</h4>
+                          <ul class="mega-item">
+                            <li><a href="product-listing.html">Compression & Nike Pro</a></li>
+                            <li><a href="product-listing.html">Tops & T-Shirts</a></li>
+                            <li><a href="product-listing.html">Polos</a></li>
+                            <li><a href="product-listing.html">Hoodies & Sweatshirts</a></li>
+                            <li><a href="product-listing.html">Jackets & Vests</a></li>
+                            <li><a href="product-listing.html">Pants & Tights</a></li>
+                            <li><a href="product-listing.html">Shorts</a></li>
+                          </ul>
+                        </div>
+                        <div class="mega-column">
+                          <h4 class="mega-heading">BRAND</h4>
+                          <ul class="mega-item">
+                            <li><a href="product-listing.html">NIKE</a></li>
+                            <li><a href="product-listing.html">Adidas</a></li>
+                            <li><a href="product-listing.html">Dior</a></li>
+                            <li><a href="product-listing.html">B&G</a></li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="menu-item"><a href="#">Women</a></li>
+                  <li class="menu-item"><a href="#">Kids</a></li>
+                  <li class="menu-item menu-item-has-children dropdown"><a href="#">News</a>
+                        <ul class="sub-menu">
+                          <li class="menu-item menu-item-has-children dropdown"><a href="blog-grid.html">Blog-grid</a>
+                                <ul class="sub-menu">
+                                  <li class="menu-item"><a href="blog-grid.html">Blog Grid 1</a></li>
+                                  <li class="menu-item"><a href="blog-grid-2.html">Blog Grid 2</a></li>
+                                </ul>
+                          </li>
+                          <li class="menu-item"><a href="blog-list.html">Blog List</a></li>
+                        </ul>
+                  </li>
+                  <li class="menu-item menu-item-has-children dropdown"><a href="#">Contact</a>
+                        <ul class="sub-menu">
+                          <li class="menu-item"><a href="contact-us.html">Contact Us #1</a></li>
+                          <li class="menu-item"><a href="contact-us.html">Contact Us #2</a></li>
+                        </ul>
+                  </li>
+                </ul>
+          </div>
+          <div class="navigation__column right">
+            <form class="ps-search--header" action="do_action" method="post">
+              <input class="form-control" type="text" placeholder="Search Product…">
+              <button><i class="ps-icon-search"></i></button>
+            </form>
+            <div class="ps-cart"><a class="ps-cart__toggle" href="#"><span><i>20</i></span><i class="ps-icon-shopping-cart"></i></a>
+              <div class="ps-cart__listing">
+                <div class="ps-cart__content">
+                  <div class="ps-cart-item"><a class="ps-cart-item__close" href="#"></a>
+                    <div class="ps-cart-item__thumbnail"><a href="product-detail.html"></a><img src="images/cart-preview/1.jpg" alt=""></div>
+                    <div class="ps-cart-item__content"><a class="ps-cart-item__title" href="product-detail.html">Amazin’ Glazin’</a>
+                      <p><span>Quantity:<i>12</i></span><span>Total:<i>£176</i></span></p>
+                    </div>
+                  </div>
+                  <div class="ps-cart-item"><a class="ps-cart-item__close" href="#"></a>
+                    <div class="ps-cart-item__thumbnail"><a href="product-detail.html"></a><img src="images/cart-preview/2.jpg" alt=""></div>
+                    <div class="ps-cart-item__content"><a class="ps-cart-item__title" href="product-detail.html">The Crusty Croissant</a>
+                      <p><span>Quantity:<i>12</i></span><span>Total:<i>£176</i></span></p>
+                    </div>
+                  </div>
+                  <div class="ps-cart-item"><a class="ps-cart-item__close" href="#"></a>
+                    <div class="ps-cart-item__thumbnail"><a href="product-detail.html"></a><img src="images/cart-preview/3.jpg" alt=""></div>
+                    <div class="ps-cart-item__content"><a class="ps-cart-item__title" href="product-detail.html">The Rolling Pin</a>
+                      <p><span>Quantity:<i>12</i></span><span>Total:<i>£176</i></span></p>
+                    </div>
+                  </div>
+                </div>
+                <div class="ps-cart__total">
+                  <p>Number of items:<span>36</span></p>
+                  <p>Item Total:<span>£528.00</span></p>
+                </div>
+                <div class="ps-cart__footer"><a class="ps-btn" href="cart.html">Check out<i class="ps-icon-arrow-left"></i></a></div>
+              </div>
+            </div>
+            <div class="menu-toggle"><span></span></div>
+          </div>
+        </div>
+      </nav>
+    </header> -->
+    <!-- <div class="header-services">
+      <div class="ps-services owl-slider" data-owl-auto="true" data-owl-loop="true" data-owl-speed="7000" data-owl-gap="0" data-owl-nav="true" data-owl-dots="false" data-owl-item="1" data-owl-item-xs="1" data-owl-item-sm="1" data-owl-item-md="1" data-owl-item-lg="1" data-owl-duration="1000" data-owl-mousedrag="on">
+        <p class="ps-service"><i class="ps-icon-delivery"></i><strong>Free delivery</strong>: Get free standard delivery on every order with Sky Store</p>
+        <p class="ps-service"><i class="ps-icon-delivery"></i><strong>Free delivery</strong>: Get free standard delivery on every order with Sky Store</p>
+        <p class="ps-service"><i class="ps-icon-delivery"></i><strong>Free delivery</strong>: Get free standard delivery on every order with Sky Store</p>
+      </div>
+    </div> -->
+    <main class="ps-main">
+      <div class="ps-content pt-10 pb-10">
+        <div class="ps-container container-print" style="width: 730px;">
+
+
+          <div class="row" style="display: flex;align-items: center;">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 ">
+              <div class="form-group" style="float:left;">
+                  <strong  style="font-size: 27px !important;">INVOICE</strong>
+                  <br><strong class="ftcolor"> #SOMMA00-{{ordercode}}</strong>
+                  <br>Date:<strong style=" font-size:18px;color:orange;">{{orderinfo.create_at |date:"D d M Y"}}</strong>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 ">
+              <div class="form-group">
+                <div style="float:right; ">{% qr_from_text request.build_absolute_uri size=10 border=6 %}</div>
+                </div>
+            </div>
+          </div> 
+          
+          {% comment %} <header class="mb-50" style="margin-bottom: 20px;">
+          <h1 class="ftcolor" style="font-size:22px !important;margin-top: 5px;" >INVOICE <span>Invoice:&nbsp;<b class="ftcolor"> #SOMMA00-{{ordercode}}</b></span></h1>
+          <h2 style="float:right; ">{% qr_from_text request.build_absolute_uri size=10 border=6 %}</h2><!--i class="fa fa-qrcode" style="font-size:56px;float:right;"></i-->
+          </header> {% endcomment %}
+          
+          <!--div class="row"style="margin-left: 0px;margin-right: 0px;">
+            <div class="col-lg-12 col-md-4 col-sm-12 col-xs-12 "><p style="margin-bottom: 0px;"><strong  style="font-size:18px;color:#ce7dde;">{{setting.company| upper  }}</strong><strong style="float: right; font-size:18px;color:orange;">{{orderinfo.create_at |date:"D d M Y"}}</strong></p></div>
+          </div-->
+          <div class="row"style="padding-bottom: 10px;padding-top: 10px;margin-left: 0px;margin-right: 0px;border-left: 2px solid #27b574;border-right: 2px solid #27b574;border-top:2px solid #27b574; ">
+                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6 ">
+                  <div class="ps-post mb-0">
+                    <div class="ps-post__content">
+                      <p>
+                        <strong class="ftcolor">FROM:</strong>
+                        <strong class="ftcolor">{{setting.company}}</strong><br>
+                        Address:{{setting.address}}<br>
+                        Phone: (855) {{setting.phone}}<br>
+                        Email: {{setting.email}}
+                      </p>
+
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6 ">
+                  <div class="ps-post mb-0">
+                    <div class="ps-post__content">
+                        <p>
+                        <strong class="ftcolor">SHIP TO:</strong><br>
+                        Customer:<strong class="ftcolor">{{orderinfo.first_name}}-{{orderinfo.last_name}}</strong><br>
+                        Shipping To Address:{{orderinfo.address}}<br>
+                        Location:{{orderinfo.adminnote}}<br>
+                        Phone: (855) {{orderinfo.phone}}<br>
+                        Email:  {{orderinfo.email}}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <!--div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 ">
+                  <div class="ps-post mb-0">
+                  <div class="ps-post__content">
+                    <p>
+                        <strong class="ftcolor">PAYMENT DETAILS:</strong><br>
+                        <b class="ftcolor">Invoice: #SOMMA00{{ordercode}}</b><br>
+                        <b>OrderCode:</b>&nbsp;<b class="ftcolor">{{ordercode}}</b><br>
+                        <b>Payment Due:</b><b class="ftcolor">&nbsp; {{orderinfo.create_at}}</b><br>
+                        <b>Payment Methods:</b><b class="ftcolor"> &nbsp;{{orderinfo.paymentinfo}}</b><br>
+                        <b>Payment Status:</b><b class="ftcolor">&nbsp; {{orderinfo.paymentstatus}}</b>
+                      </p>
+                  </div>
+                  </div>
+                </div-->
+
+          </div>
+            <div class="ps-cart-listing" style="border: 2px solid #27b574;">
+              <!-- table test -->
+              {% comment %} <table class="table table-striped"> {% endcomment %}
+              <table class="table 1ps-cart__table" style="margin-bottom: 0px;">  
+                <thead style="background-color: #eee !important;" >
+                  <tr>
+                    <!-- <th scope="col">#</th> -->
+                    <th scope="col">Image</th>
+                    <th scope="col">Product Details</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Qty</th>
+                    <th scope="col">Total</th>
+                  </tr>
+                </thead>
+                <tbody class="table-group-divider" style="font-size: 18px;">
+                  {% load myapptags %}
+                  {% for rs in order_product %}
+                  <tr>
+                    {% if rs.variant.image_id > 0 %}
+                    <!-- <th scope="row">1</th> -->
+                    <td><a class="ps-product__preview" ><img class="mr-15" src="{{rs.variant.image }}"  alt=""></a></td>
+                    <td>{{rs.product}}<span class="kh">{{rs.product.title_kh}}</span>{% if rs.product.variant == "Color" %}({{ rs.variant.color }}){%elif rs.product.variant == "Size"%} ({{ rs.variant.size}}) {% else%}({{ rs.variant.size }}/{{ rs.variant.color }}) {%endif%}(<span class="ftcolor">-DISC&nbsp;{{rs.product.discount_percentage}}</span>)<br><span class="proven">By:{{rs.product.vendor.companyname | upper}}</span><br><span>Code:{{rs.product.pro_code}}</span></td>
+                    {% else %}
+                    <td><a class="ps-product__preview" ><img class="mr-15" src="{{rs.product.image.url}}"   alt=""></a></td>
+                    <td> {{rs.product}}<span>{{rs.product.title_kh}}</span>(<span class="ftcolor">-DISC&nbsp;{{rs.product.discount_percentage}}</span>)<br><span class="proven">By:{{rs.product.vendor.companyname | upper}}</span><br><span>Code:{{rs.product.pro_code}}</span></td>
+                    {%endif%}
+
+                    <td >$
+                    {% if rs.product.variant == 'None' %}
+                        {{ rs.product.price}}<br><del style="color:orange;">${{rs.product.m_price}}</del>
+                    {% else %}
+                        {{ rs.variant.price}}<br><del style="color:orange;">${{rs.product.m_price}}</del>
+                    {% endif %}
+
+                    </td>
+                    <td>
+                      {{rs.quantity}}
+                    </td>
+                    <td>$
+                      {{ rs.amount|floatformat:2 |intcomma}}<br><del style="color:orange;">${% multiply rs.quantity rs.product.m_price %}</del>
+                    </td>
+                  </tr>
+                {% endfor %}
+                </tbody>
+                <tfoot>
+                  {% itemcount ordercode as count %}
+                  <tr>
+                    <td></td>
+                    <td colspan=2 style="text-align: right;">Amount of items</td>
+                    <td></td>
+                    <td>{{count}}</td>
+                    
+                  </tr>
+                </tfoot>
+              </table>
+              <!-- end table test -->
+              <!-- <table class="table ps-cart__table">
+                <thead>
+                  <tr>
+                    <th>All Products</th>
+                    <th>Price</th>
+                    <th>Qty</th>
+                    <th>Total</th>
+
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><a class="ps-product__preview" href="product-detail.html"><img class="mr-15" src="images/product/cart-preview/1.jpg" alt=""> air jordan One mid</a></td>
+                    <td>$150</td>
+                    <td>2
+
+                    </td>
+                    <td>$300</td>
+
+                  </tr>
+                  <tr>
+                    <td><a class="ps-product__preview" href="product-detail.html"><img class="mr-15" src="images/product/cart-preview/2.jpg" alt=""> The Crusty Croissant</a></td>
+                    <td>$150</td>
+                    <td>3
+
+                    </td>
+                    <td>$300</td>
+
+                  </tr>
+                  <tr>
+                    <td><a class="ps-product__preview" href="product-detail.html"><img class="mr-15" src="images/product/cart-preview/3.jpg" alt="">The Rolling Pin</a></td>
+                    <td>$150</td>
+                    <td>3
+
+                    </td>
+                    <td>$300</td>
+
+                  </tr>
+                </tbody>
+              </table> -->
+            <div class="ps-cart__actions" style="border-top: solid 0px #27b574;padding-top: 10px;">
+              <div class="ps-cart__promotion">
+
+
+              </div> <!--End ps-cart__promotion-->
+
+            </div> <!--End ps-cart__actions-->
+
+            </div>
+            <div class="row footrow-1">
+              <div class="col-lg-6 col-md-6 col-sm-4 col-xs-4 ">
+                <!--div class="form-group">
+                  <h2 class="ftcolor">Payment Info</h2>
+                </div-->
+                <div class="form-group"style="margin-top: 15px;">
+                  <p>
+                        <strong class="ftcolor">PAYMENT DETAILS:</strong><br>
+                        <!--
+                        Invoice:&nbsp;<b class="ftcolor"> #SOMMA00-{{ordercode}}</b><br>
+                        OrderCode:&nbsp;<b class="ftcolor">{{ordercode}}</b><br>
+                        -->
+                        Order Date:<b class="ftcolor">&nbsp; {{orderinfo.create_at}}</b><br>
+                        Payment Methods:<b class="ftcolor"> &nbsp;{{orderinfo.paymentinfo}}</b><br>
+                        Payment Status:{% if orderinfo.paymentstatus == "UNPAID" %}<b class="ftcolor" style="color:red !important;">&nbsp; {{orderinfo.paymentstatus}}</b>{%endif%}
+                        <br>
+                        {% comment %} Rate:{{payment.ratetoday}}៛=1$<br> {% endcomment %}
+                    <img src="{{payment.image_khqr.url}}" alt="{{payment.bankname}}" style="width:50%;" >
+                    {% comment %} <img src="{% static ''%}images/payment/ACLEDA.png" alt="ACLEDA BANK"style="width:88px;height:45px;">
+                    <img src="{% static ''%}images/payment/WING.png" alt="WING PAY" style="width:88px;height:45px;"> {% endcomment %}
+                  </p>
+                </div>
+                <!--div class="form-group">
+                  <strong>NOTE:</strong>
+                  <p>
+                    Please feel free to contact us for Payment and Shipping by Click on button below for chat telgram with us:
+                  </p>
+                  <p>
+                    Invoice was created on a computer and is valid without the signature and seal.
+                    Thank you for your order!
+                  </p>
+                </div-->
+
+              </div>
+              <div class="col-lg-6 col-md-6 col-sm-8 col-xs-8 ">
+                <!--div class="form-group">
+                <h2 class="ftcolor">Payment Due:<span>&nbsp;{{orderinfo.create_at}}</span></h2>
+                <p style="color:orange;">Exchange Rate: 1$ = {{orderinfo.rate_by_ordered }}៛</p>
+                </div-->
+                <div class="form-group">
+                <ul class="list-group list-group-flush"style="border: 1px solid #2ac37d;margin-bottom: 1px;">
+                  {% if orderinfo.discount %}
+              <li class="list-group-item" ><h3 class="foottotal">Sub Total: <span class="totals-value" id="cart-subtotal" style="float:right;"><b class="ftcolor foottotal"> ${{orderinfo.total|floatformat:2 |intcomma}} </b></span></h3></li>
+              <li class="list-group-item"><h3 class="foottotal">Discount: <span class="totals-value" id="cart-subtotal" style="float:right;"><b class="ftcolor foottotal">{% if orderinfo.discount < 1 %} {{orderinfo.discount|percentage }} {%else%}{{orderinfo.discount}}${%endif%}</b></span></h3></li>
+              <li class="list-group-item"><h3 class="foottotal">Sub Total after Discount: <span class="totals-value" id="cart-subtotal" style="float:right;"><b class="ftcolor foottotal"> ${{orderinfo.totalafterdiscount|floatformat:2 |intcomma}} </b></span></h3></li>
+              <li class="list-group-item"><h3 >Included VAT<!--span class="totals-value" id="cart-tax" style="float:right;"><b class="ftcolor  "> {{orderinfo.vat10afterdiscount|floatformat:2 |intcomma}} $</b></span--></h3></li>
+              <li hidden class="list-group-item"><h3 >VAT 10%: <span class="totals-value" id="cart-tax" style="float:right;"><b class="ftcolor foottotal ">$ {{orderinfo.vat10afterdiscount|floatformat:2 |intcomma}} </b></span></h3></li>
+              <li class="list-group-item"style="background-color: #dee2e6;"><h3 class="foottotal">Grand Total ($): <span class="totals-value" style="float:right;" ><b class="ftcolor foottotal" >$ {{orderinfo.grandtotalafterdiscount|floatformat:2 |intcomma}} </b></span></h3></li>
+              <li class="list-group-item"style="background-color: #dee2e6;"><h3 class="foottotal">Grand Total (៛): <span class="totals-value" style="float:right;" ><b class="ftcolor foottotal" >៛{{orderinfo.grandtotal_in_kh_real |floatformat:2 |intcomma}}  (រៀល)</b></span></h3></li>
+              {%else%}
+              {% comment %} <li class="list-group-item" ><h3 >Sub Total: <span class="totals-value" id="cart-subtotal" style="float:right;"><b class="ftcolor">  {{orderinfo.total|floatformat:2}} $</b></span></h3></li> {% endcomment %}
+              <li class="list-group-item" ><h3 class="foottotal">Sub Total: <span class="totals-value" id="cart-subtotal" style="float:right;"><b class="ftcolor foottotal">  ${{orderinfo.total |floatformat:2|intcomma}} </b></span></h3></li>
+              <li class="list-group-item"><h3 class="foottotal">Included VAT <!--span class="totals-value" id="cart-tax" style="float:right;"><b class="ftcolor  "> {{orderinfo.vat10|floatformat:2 |intcomma}} $</b></span--></h3></li>
+              <li hidden class="list-group-item"><h3 >VAT 10%: <span class="totals-value" id="cart-tax" style="float:right;"><b class="ftcolor  "> ${{orderinfo.vat10|floatformat:2 |intcomma}} </b></span></h3></li>
+              <li class="list-group-item"style="background-color: #dee2e6;"><h3 class="foottotal">Grand Total ($): <span class="totals-value" style="float:right;" ><b class="ftcolor foottotal " > ${{orderinfo.grandtotal|floatformat:2 |intcomma}} </b></span></h3></li>
+              <li class="list-group-item"style="background-color: #dee2e6;"><h3 class="foottotal">Grand Total (៛): <span class="totals-value" style="float:right;" ><b class="ftcolor foottotal" > ៛{{orderinfo.grandtotal_in_kh_real |floatformat:2 |intcomma}}  (រៀល)</b></span></h3></li>
+              {%endif%}
+                  {% comment %} <li class="list-group-item"><h3 >Total Sub: <span class="totals-value" id="cart-subtotal" style="float:right;"><b class="ftcolor"> 99.00 $</b></span></h3></li>
+                  <li class="list-group-item"><h3 >VAT 10%: <span class="totals-value" id="cart-tax" style="float:right;"><b class="ftcolor  "> 9.00 $</b></span></h3></li>
+                  <li class="list-group-item"><h3>Grand Total: <span class="totals-value" style="float:right;" ><b class="ftcolor " > 2599.00 $</b></span></h3></li> {% endcomment %}
+                  
+                </ul>
+                <span>Rate:{{payment.ratetoday}}៛=1$</span>
+                </div>
+              </div>
+            </div>
+            <!-- btn PrintPDF  -->
+            <div class="row" style="padding-left: 20px;padding-right: 20px;">
+              <div class="form-group">
+                <strong>NOTE:</strong>
+                <p>
+                  Please feel free to contact us for Payment and Shipping by Click on button below for chat telgram with us:
+                  Invoice was created on a computer and is valid without the signature and seal.
+                  Thank you for your order!
+                </p>
+              </div>
+            </div>
+            <div class="row btnrow"style="margin-bottom: 10px;">
+                <!--div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
+                  {% comment %} <button class="ps-btn ps-btn--gray" onclick="location.href='{% url 'order:generate_pdf' ordercode %}';">Generate PDF</button> {% endcomment %}
+                  <a  class="ps-cart__toggle btn"  onclick="GetHome()"style="background-color: orange;font-size:16px;" ><i class='fa fa-shopping-cart'></i></a>
+                </div-->
+                {% comment %} <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 "> {% endcomment %}
+                  <a  class="ps-cart__toggle btn"  onclick="GetHome()"style="left:80%;background-color:#ce7dde;font-size:16px;" ><i class='fa fa-home' style="font-size: 24px !important;"></i></a>
+                  <a  class="ps-cart__toggle btn" style="background-color: #2ac37d;left:80%;" onclick="GetPrint()"><i class='fa fa-print'style="font-size: 24px !important;"></i></a>
+                  <a  class="ps-cart__toggle btn" style="background-color: #2ac37d;left:80%;" onclick="GetPrint()"><i class='fa fa-file-pdf-o'style="font-size: 24px !important;"></i></a>
+                  <span>Contact Us</span><a type="button"class="btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" style="color:#0088cc;" width="40" height="40" fill="currentColor" class="bi bi-telegram" viewBox="0 0 16 16">
+                      <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.287 5.906c-.778.324-2.334.994-4.666 2.01-.378.15-.577.298-.595.442-.03.243.275.339.69.47l.175.055c.408.133.958.288 1.243.294.26.006.549-.1.868-.32 2.179-1.471 3.304-2.214 3.374-2.23.05-.012.12-.026.166.016.047.041.042.12.037.141-.03.129-1.227 1.241-1.846 1.817-.193.18-.33.307-.358.336a8.154 8.154 0 0 1-.188.186c-.38.366-.664.64.015 1.088.327.216.589.393.85.571.284.194.568.387.936.629.093.06.183.125.27.187.331.236.63.448.997.414.214-.02.435-.22.547-.82.265-1.417.786-4.486.906-5.751a1.426 1.426 0 0 0-.013-.315.337.337 0 0 0-.114-.217.526.526 0 0 0-.31-.093c-.3.005-.763.166-2.984 1.09z"/>
+                    </svg>
+                  </a>
+                {% comment %} </div> {% endcomment %}
+
+              </div>
+                <div class="row footrow" id="footrow"  style="text-align: center;background-color: #27b574;color: white;" ><strong>
+                  #ផ្ទះលេខ២៣៤​,ផ្លូវ ៦៣ សង្កាត់បឹងកេងទី១ ខណ្ឌបឹងកេងកេង រាជធានីភ្នំពេញ ប្រទេសកម្ពុជា
+                </strong></div>
+            <!-- end btn PrintPDF -->
+          </div> <!--End ps-container-->
+
+        </div>
+      </div>
+      <!-- <div class="ps-subscribe">
+        <div class="ps-container">
+          <div class="row">
+                <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12 ">
+                  <h3><i class="fa fa-envelope"></i>Sign up to Newsletter</h3>
+                </div>
+                <div class="col-lg-5 col-md-7 col-sm-12 col-xs-12 ">
+                  <form class="ps-subscribe__form" action="do_action" method="post">
+                    <input class="form-control" type="text" placeholder="">
+                    <button>Sign up now</button>
+                  </form>
+                </div>
+                <div class="col-lg-4 col-md-5 col-sm-12 col-xs-12 ">
+                  <p>...and receive  <span>$20</span>  coupon for first shopping.</p>
+                </div>
+          </div>
+        </div>
+      </div>
+      <div class="ps-footer bg--cover" data-background="images/background/parallax.jpg">
+        <div class="ps-footer__content">
+          <div class="ps-container">
+            <div class="row">
+                  <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 ">
+                    <aside class="ps-widget--footer ps-widget--info">
+                      <header><a class="ps-logo" href="index.html"><img src="images/logo-white.png" alt=""></a>
+                        <h3 class="ps-widget__title">Address Office 1</h3>
+                      </header>
+                      <footer>
+                        <p><strong>460 West 34th Street, 15th floor, New York</strong></p>
+                        <p>Email: <a href='mailto:support@store.com'>support@store.com</a></p>
+                        <p>Phone: +323 32434 5334</p>
+                        <p>Fax: ++323 32434 5333</p>
+                      </footer>
+                    </aside>
+                  </div>
+                  <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 ">
+                    <aside class="ps-widget--footer ps-widget--info second">
+                      <header>
+                        <h3 class="ps-widget__title">Address Office 2</h3>
+                      </header>
+                      <footer>
+                        <p><strong>PO Box 16122 Collins  Victoria 3000 Australia</strong></p>
+                        <p>Email: <a href='mailto:support@store.com'>support@store.com</a></p>
+                        <p>Phone: +323 32434 5334</p>
+                        <p>Fax: ++323 32434 5333</p>
+                      </footer>
+                    </aside>
+                  </div>
+                  <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12 ">
+                    <aside class="ps-widget--footer ps-widget--link">
+                      <header>
+                        <h3 class="ps-widget__title">Find Our store</h3>
+                      </header>
+                      <footer>
+                        <ul class="ps-list--link">
+                          <li><a href="#">Coupon Code</a></li>
+                          <li><a href="#">SignUp For Email</a></li>
+                          <li><a href="#">Site Feedback</a></li>
+                          <li><a href="#">Careers</a></li>
+                        </ul>
+                      </footer>
+                    </aside>
+                  </div>
+                  <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12 ">
+                    <aside class="ps-widget--footer ps-widget--link">
+                      <header>
+                        <h3 class="ps-widget__title">Get Help</h3>
+                      </header>
+                      <footer>
+                        <ul class="ps-list--line">
+                          <li><a href="#">Order Status</a></li>
+                          <li><a href="#">Shipping and Delivery</a></li>
+                          <li><a href="#">Returns</a></li>
+                          <li><a href="#">Payment Options</a></li>
+                          <li><a href="#">Contact Us</a></li>
+                        </ul>
+                      </footer>
+                    </aside>
+                  </div>
+                  <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12 ">
+                    <aside class="ps-widget--footer ps-widget--link">
+                      <header>
+                        <h3 class="ps-widget__title">Products</h3>
+                      </header>
+                      <footer>
+                        <ul class="ps-list--line">
+                          <li><a href="#">Shoes</a></li>
+                          <li><a href="#">Clothing</a></li>
+                          <li><a href="#">Accessries</a></li>
+                          <li><a href="#">Football Boots</a></li>
+                        </ul>
+                      </footer>
+                    </aside>
+                  </div>
+            </div>
+          </div>
+        </div>
+        <div class="ps-footer__copyright">
+          <div class="ps-container">
+            <div class="row">
+                  <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
+                    <p>&copy; <a href="#">SKYTHEMES</a>, Inc. All rights Resevered. Design by <a href="#"> Alena Studio</a></p>
+                  </div>
+                  <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
+                    <ul class="ps-social">
+                      <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                      <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                      <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                      <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+                    </ul>
+                  </div>
+            </div>
+          </div>
+        </div>
+      </div> -->
+    </main>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <!--script type="text/javascript">
+  jQuery(document).ready(function(){
+    // This button will increment the value
+    $('[data-quantity="plus"]').click(function(e){
+        // Stop acting like a button
+        e.preventDefault();
+        // Get the field name
+        fieldName = $(this).attr('data-field');
+        // Get its current value
+        var currentVal = parseInt($('input[name='+fieldName+']').val());
+        // If is not undefined
+        if (!isNaN(currentVal)) {
+            // Increment
+            $('input[name='+fieldName+']').val(currentVal + 1);
+        } else {
+            // Otherwise put a 0 there
+            $('input[name='+fieldName+']').val(0);
+        }
+    });
+    // This button will decrement the value till 0
+    $('[data-quantity="minus"]').click(function(e) {
+        // Stop acting like a button
+        e.preventDefault();
+        // Get the field name
+        subtotal=0
+        fieldName = $(this).attr('data-field');
+        // Get its current value
+        var currentVal = parseInt($('input[name='+fieldName+']').val());
+        // alert($('#product-price').text());
+        // subtotal=$('#product-price').text() * currentVal;
+        // alert(subtotal);
+        // If it isn't undefined or its greater than 0
+        if (!isNaN(currentVal) && currentVal > 0) {
+            // Decrement one
+            $('input[name='+fieldName+']').val(currentVal - 1);
+            alert($('#product-price').text());
+            subtotal=$('#product-price').text() * currentVal;
+            alert(subtotal);
+            // calculate subtotal
+            // alert($('input[name='+fieldName+']').val(currentVal - 1));
+            // subtotal=($('input[name='+fieldName+']').val(currentVal - 1))*($('td.product-price'));
+            // alert(subtotal);
+        } else {
+            // Otherwise put a 0 there
+            $('input[name='+fieldName+']').val(0);
+        }
+    });
+});
+
+
+
+    </script-->
+
+<!-- Script for subtotal and total -->
+    <!--script>
+  // jQuery(document).ready(function()
+  $(document).ready(function()
+                                  {
+    //alert("Hello");
+
+    /* Set rates + misc */
+    var taxRate = 0.05;
+    var fadeTime = 300;
+
+    $('.pass-quantity input').change(function() {
+      console($('.pass-quantity input'));
+      console(updateQuantity(this));
+      alert(updateQuantity(this));
+      updateQuantity(this);
+    });
+
+    $('.remove-item button').click(function() {
+      removeItem(this);
+    });
+
+
+    /* Recalculate cart */
+    function recalculateCart() {
+      var subtotal = 0;
+
+      /* Sum up row totals */
+      $('.item').each(function() {
+        subtotal += parseFloat($(this).children('.product-line-price').text());
+      });
+
+      /* Calculate totals */
+      var tax = subtotal * taxRate;
+      var total = subtotal + tax;
+
+      /* Update totals display */
+      $('.totals-value').fadeOut(fadeTime, function() {
+        $('#cart-subtotal').html(subtotal.toFixed(2));
+        $('#cart-tax').html(tax.toFixed(2));
+        $('.cart-total').html(total.toFixed(2));
+        if (total == 0) {
+          $('.checkout').fadeOut(fadeTime);
+        } else {
+          $('.checkout').fadeIn(fadeTime);
+        }
+        $('.totals-value').fadeIn(fadeTime);
+      });
+    }
+
+    /* Update quantity */
+    function updateQuantity(quantityInput) {
+      /* Calculate line price */
+      var productRow = $(quantityInput).parent().parent();
+      var price = parseFloat(productRow.children('.product-price').text());
+      var quantity = $(quantityInput).val();
+      var linePrice = price * quantity;
+
+      /* Update line price display and recalc cart totals */
+      productRow.children('.product-line-price').each(function() {
+        $(this).fadeOut(fadeTime, function() {
+          $(this).text(linePrice.toFixed(2));
+          recalculateCart();
+          $(this).fadeIn(fadeTime);
+        });
+      });
+    }
+
+    /* Remove item from cart */
+    function removeItem(removeButton) {
+      /* Remove row from DOM and recalc cart total */
+      var productRow = $(removeButton).parent().parent();
+      productRow.slideUp(fadeTime, function() {
+        productRow.remove();
+        recalculateCart();
+      });
+    }
+
+  });
+
+</script-->
+<!--script>
+    //for promocode
+    $(document).ready(function(){
+      $("#btnpromo").click(function(e){
+        e.preventDefault();
+        var getpromo_=$("input[name='promocode']").val();
+        alert("Hello");
+        console.log(getpromo_);
+      });
+    });
+
+  </script-->
+  <script>
+    //for print invoice PDF
+    function GetPrint(){
+      window.print();
+    }
+    function GetHome(){
+      window.location.href ="/";
+    }
+  </script>
+    <!-- JS Library-->
+    <script type="text/javascript" src="{% static ''%}plugins/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="{% static ''%}plugins/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- <script type="text/javascript" src="plugins/jquery-bar-rating/dist/jquery.barrating.min.js"></script>
+    <script type="text/javascript" src="plugins/owl-carousel/owl.carousel.min.js"></script>
+    <script type="text/javascript" src="plugins/gmap3.min.js"></script>
+    <script type="text/javascript" src="plugins/imagesloaded.pkgd.js"></script>
+    <script type="text/javascript" src="plugins/isotope.pkgd.min.js"></script>
+    <script type="text/javascript" src="plugins/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+    <script type="text/javascript" src="plugins/jquery.matchHeight-min.js"></script>
+    <script type="text/javascript" src="plugins/slick/slick/slick.min.js"></script>
+    <script type="text/javascript" src="plugins/elevatezoom/jquery.elevatezoom.js"></script>
+    <script type="text/javascript" src="plugins/Magnific-Popup/dist/jquery.magnific-popup.min.js"></script> -->
+    <!-- <script type="text/javascript" src="plugins/jquery-ui/jquery-ui.min.js"></script> -->
+    <!-- <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAx39JFH5nhxze1ZydH-Kl8xXM3OK4fvcg&amp;region=GB"></script><script type="text/javascript" src="plugins/revolution/js/jquery.themepunch.tools.min.js"></script> -->
+<!-- <script type="text/javascript" src="plugins/revolution/js/jquery.themepunch.revolution.min.js"></script>
+<script type="text/javascript" src="plugins/revolution/js/extensions/revolution.extension.video.min.js"></script>
+<script type="text/javascript" src="plugins/revolution/js/extensions/revolution.extension.slideanims.min.js"></script>
+<script type="text/javascript" src="plugins/revolution/js/extensions/revolution.extension.layeranimation.min.js"></script>
+<script type="text/javascript" src="plugins/revolution/js/extensions/revolution.extension.navigation.min.js"></script>
+<script type="text/javascript" src="plugins/revolution/js/extensions/revolution.extension.parallax.min.js"></script>
+<script type="text/javascript" src="plugins/revolution/js/extensions/revolution.extension.actions.min.js"></script> -->
+    <!-- Custom scripts-->
+    <script type="text/javascript" src="{% static ''%}js/main.js"></script>
+  </body>
+</html>

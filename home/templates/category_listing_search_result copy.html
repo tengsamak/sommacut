@@ -1,0 +1,356 @@
+{% extends 'homebase.html' %}
+{% load static %}
+{% block author %} SOMMA{% endblock %}
+{% block title %} {{ setting.title }} Home SOMMA Mart Search Result{% endblock %}
+{% block keywords %} {{ setting.keywords }} {% endblock %}
+{% block description %} {{ setting.description }} {% endblock %}
+{% block head %}
+<style>
+  .bgc{
+    background:#2ac37d;
+  }
+  .ps-badge{
+    border-radius: 15px;
+  }
+  .imgvar{
+    width:55px;
+    height:55px;
+  }
+  .ps-shoe__price  {
+    color: #3BB77E;
+    font-weight: bold;
+    }
+  del{
+    font-size: 14px;
+    font-weight: bold;
+
+    }
+  {% comment %} .imgpro{
+    width:330px;
+    height:330px;
+
+  } {% endcomment %}
+  .imgpro{
+    width:248px;
+    height:248px;
+
+}
+  .bgc-icon{
+    background-color:#cd7bdd;
+  }
+</style>
+<!--script>
+    $(document).on('change','select#sortcate' ,function(){
+        var val = $('#sortfc option:selected').val();
+        alert("Select Value of sortcate = " + val);
+        //alert("Select Value of vid = " + $("input#vid").val());
+        alert("Select Value of parentid = " + $("input#parentid").val());
+        console.log($('#sortfc option:selected').val());
+        //console.log($("input#vid").val());
+        console.log($("input#parentid").val()); 
+        
+
+        	// Run Ajax
+        $.ajax({
+            //type:'POST',
+            url:'{% url "home:sortcate" %}',
+            data:{
+                sort_cate : $('#sortfc option:selected').val(),
+                //v_id : $("input#vid").val(),
+                parent_id : $("input#parentid").val(),
+                /*colorid : $("input[name='variantid']:checked").val(),
+                csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+                action: 'post', */
+            },
+            data_type : 'html',
+            success: function (res) {
+
+                $('#sortpro_by_cate').html(res.rendered_table);
+        },
+            error: function (res) {
+                
+                alert("Got an error dude " + res);
+                //console.log(res.data);
+                //console.log(res);
+        }
+        });
+        /*end ajax*/
+    });
+</script-->
+<script>
+    $(document).on('change','select#sortprocate' ,function(){
+        var val = $('#sortprocate option:selected').val();
+        //alert("Select Value of sortprocate = " + val);
+        //alert("Select Value of vid = " + $("input#vid").val());
+        //alert("Select Value of cid = " + $("input#cid").val());
+        console.log($('#sortprocate option:selected').val());
+        //console.log($("input#vid").val());
+        console.log($("input#cid").val()); 
+        
+
+        	// Run Ajax
+        $.ajax({
+            //type:'POST',
+            url:'{% url "home:sortprocate" %}',
+            data:{
+                sort_procate : $('#sortprocate option:selected').val(),
+                //v_id : $("input#vid").val(),
+                c_id : $("input#cid").val(),
+                /*colorid : $("input[name='variantid']:checked").val(),
+                csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+                action: 'post', */
+            },
+            data_type : 'html',
+            success: function (res) {
+
+                $('#sortpro_by_cate').html(res.rendered_table);
+        },
+            error: function (res) {
+                
+                alert("Got an error dude " + res);
+                //console.log(res.data);
+                //console.log(res);
+        }
+        });
+        /*end ajax*/
+    });
+</script>
+<script>
+    $(document).on('click','#ps-btn',function(e){
+        e.preventDefault();
+        var pmin_=$('.ac-slider__min').text();
+        var pmax_=$('.ac-slider__max').text();
+        console.log(pmin_);
+        console.log(pmax_);
+        	// Run Ajax
+        $.ajax({
+            type:'post',
+            url:'{% url "home:pricerangefilter" %}',
+            data:{
+                    pmin : pmin_ ,
+                    pmax : pmax_ ,
+                    csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+                    action: 'post', 
+                    },
+            data_type : 'html',
+                //data_type : 'Json',
+            success: function (res) {
+                    //alert(res.rendered_table);
+                console.log(res.rendered_table);
+                    //console.log(res.data);
+                    //$('#sortpro_by_vendor').addClass("hidden");
+                $('#sortpro_by_cate').html(res.rendered_table);
+                    
+            },
+            error: function (res) {
+                    
+                alert("Got an error dude " + res);
+            
+            },
+            });
+            /*end ajax*/
+});
+</script>
+{% endblock %}
+
+{% load mptt_tags %}
+
+
+{% block breadcrumb %}
+{% comment %} <nav aria-label="breadcrumb"> {% endcomment %}
+    <ol class="breadcrumb" >
+        <li class="breadcrumb-item" ><a href="/" style="text-transform: capitalize;"><strong>Home</strong></a></li>
+        {% comment %} <li class="breadcrumb-item"><a href="/category/{{ product.category.id }}/{{ product.category.slug }}"><strong>{{ product.category.title }}</strong></a></li> {% endcomment %}
+        <li class="breadcrumb-item active" aria-current="page"><strong style="background-color:orange;color:white;padding: 10px;border-radius:10px;">
+            Your Search Result "
+            {%if categoryname == 'Filter By Price'%}
+            Filter By Price  
+            {%else%} 
+            {% recursetree categoryname %}
+                {{ node.title }}
+                {% if not node.is_leaf_node %}
+                    
+                        {{ children }}
+                    
+                {% endif %}
+            
+        {% endrecursetree %} 
+            {%endif%}
+            "  
+        {% if result_count >= 2 %}Are {{result_count}} products {% else %}Is {{result_count}} product {%endif%}</strong></li>
+    </ol>
+{% comment %} </nav> {% endcomment %}
+<!-- for everypage excepte index page-->
+{% comment %} <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Your Search Result of {{ query }} is : {{result_count}} products</li>
+    </ol>
+</nav> {% endcomment %}
+<!-- end for page -->
+{% endblock%}
+{% block messagealert %}{% include 'messagealert.html' %} {% endblock %}
+{% block search_products %}
+<div class="ps-products-wrap pt-80 pb-80">
+    <div class="ps-products" data-mh="product-listing">
+   
+    <!--stop sidebar category-->
+    {%if result_count == 0 %}
+        {% include "404-1.html"%}    
+    {%else%}
+        {% include "category_product_listing_search_copy.html "%}
+    {%endif%}
+    </div>
+{% include "leftsidebarsearchlist.html" %}
+    <!--
+    <div class="ps-sidebar" data-mh="product-listing">
+        <aside class="ps-widget--sidebar ps-widget--category">
+            <div class="ps-widget__header">
+                <h3>Category</h3>
+            </div>
+            <div class="ps-widget__content">
+                <ul class="ps-list--checked">
+                    <li class="current"><a href="product-listing.html">Life(521)</a></li>
+                    <li><a href="product-listing.html">Running(76)</a></li>
+                    <li><a href="product-listing.html">Baseball(21)</a></li>
+                    <li><a href="product-listing.html">Football(105)</a></li>
+                    <li><a href="product-listing.html">Soccer(108)</a></li>
+                    <li><a href="product-listing.html">Trainning & game(47)</a></li>
+                    <li><a href="product-listing.html">More</a></li>
+                </ul>
+            </div>
+        </aside>
+        <aside class="ps-widget--sidebar ps-widget--filter">
+            <div class="ps-widget__header">
+                <h3>Category</h3>
+            </div>
+            <div class="ps-widget__content">
+                <div class="ac-slider" data-default-min="300" data-default-max="2000" data-max="3450" data-step="50" data-unit="$"></div>
+                <p class="ac-slider__meta">Price:<span class="ac-slider__value ac-slider__min"></span>-<span class="ac-slider__value ac-slider__max"></span></p><a class="ac-slider__filter ps-btn" href="#">Filter</a>
+            </div>
+        </aside>
+        <aside class="ps-widget--sidebar ps-widget--category">
+            <div class="ps-widget__header">
+                <h3>Sky Brand</h3>
+            </div>
+            <div class="ps-widget__content">
+                <ul class="ps-list--checked">
+                    <li class="current"><a href="product-listing.html">Nike(521)</a></li>
+                    <li><a href="product-listing.html">Adidas(76)</a></li>
+                    <li><a href="product-listing.html">Baseball(69)</a></li>
+                    <li><a href="product-listing.html">Gucci(36)</a></li>
+                    <li><a href="product-listing.html">Dior(108)</a></li>
+                    <li><a href="product-listing.html">B&G(108)</a></li>
+                    <li><a href="product-listing.html">Louis Vuiton(47)</a></li>
+                </ul>
+            </div>
+        </aside>
+        <aside class="ps-widget--sidebar ps-widget--category">
+            <div class="ps-widget__header">
+                <h3>Width</h3>
+            </div>
+            <div class="ps-widget__content">
+                <ul class="ps-list--checked">
+                    <li class="current"><a href="product-listing.html">Narrow</a></li>
+                    <li><a href="product-listing.html">Regular</a></li>
+                    <li><a href="product-listing.html">Wide</a></li>
+                    <li><a href="product-listing.html">Extra Wide</a></li>
+                </ul>
+            </div>
+        </aside>
+        <div class="ps-sticky desktop">
+            <aside class="ps-widget--sidebar">
+                <div class="ps-widget__header">
+                    <h3>Size</h3>
+                </div>
+                <div class="ps-widget__content">
+                    <table class="table ps-table--size">
+                        <tbody>
+                        <tr>
+                            <td class="active">3</td>
+                            <td>5.5</td>
+                            <td>8</td>
+                            <td>10.5</td>
+                            <td>13</td>
+                        </tr>
+                        <tr>
+                            <td>3.5</td>
+                            <td>6</td>
+                            <td>8.5</td>
+                            <td>11</td>
+                            <td>13.5</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>6.5</td>
+                            <td>9</td>
+                            <td>11.5</td>
+                            <td>14</td>
+                        </tr>
+                        <tr>
+                            <td>4.5</td>
+                            <td>7</td>
+                            <td>9.5</td>
+                            <td>12</td>
+                            <td>14.5</td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>7.5</td>
+                            <td>10</td>
+                            <td>12.5</td>
+                            <td>15</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </aside>
+            <aside class="ps-widget--sidebar">
+                <div class="ps-widget__header">
+                    <h3>Color</h3>
+                </div>
+                <div class="ps-widget__content">
+                    <ul class="ps-list--color">
+                        <li><a href="#"></a></li>
+                        <li><a href="#"></a></li>
+                        <li><a href="#"></a></li>
+                        <li><a href="#"></a></li>
+                        <li><a href="#"></a></li>
+                        <li><a href="#"></a></li>
+                        <li><a href="#"></a></li>
+                        <li><a href="#"></a></li>
+                        <li><a href="#"></a></li>
+                        <li><a href="#"></a></li>
+                        <li><a href="#"></a></li>
+                        <li><a href="#"></a></li>
+                        <li><a href="#"></a></li>
+                    </ul>
+                </div>
+            </aside>
+        </div>
+        <!--aside.ps-widget--sidebar-->
+        <!--    .ps-widget__header: h3 Ads Banner-->
+        <!--    .ps-widget__content-->
+        <!--        a(href='product-listing'): img(src="{% static ''%}images/offer/sidebar.jpg" alt="")-->
+        <!---->
+        <!--aside.ps-widget--sidebar-->
+        <!--    .ps-widget__header: h3 Best Seller-->
+        <!--    .ps-widget__content-->
+        <!--        - for (var i = 0; i < 3; i ++)-->
+        <!--            .ps-shoe--sidebar-->
+        <!--                .ps-shoe__thumbnail-->
+        <!--                    a(href='#')-->
+        <!--                    img(src="{% static ''%}images/shoe/sidebar/"+(i+1)+".jpg" alt="")-->
+        <!--                .ps-shoe__content-->
+        <!--                    if i == 1-->
+        <!--                        a(href='#').ps-shoe__title Nike Flight Bonafide-->
+        <!--                    else if i == 2-->
+        <!--                        a(href='#').ps-shoe__title Nike Sock Dart QS-->
+        <!--                    else-->
+        <!--                        a(href='#').ps-shoe__title Men's Sky-->
+        <!--                    p <del> £253.00</del> £152.00-->
+        <!--                    a(href='#').ps-btn PURCHASE-->
+   <!-- </div>-->
+<!--endstop-->
+</div>
+{% endblock%}

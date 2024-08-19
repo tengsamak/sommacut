@@ -1,137 +1,200 @@
+{% extends 'homebase.html' %}
 {% load static %}
+{% block author %} SOMMA{% endblock %}
+{% block title %} About Us{{ setting.title }} {% endblock %}
+{% block keywords %} {{ setting.keywords }} {% endblock %}
+{% block description %} {{ setting.description }} {% endblock %}
+
+
 {% block about %}
 
-     <div class="ps-mission bg-cover" style='background: url("{% static '' %}images/parallax/home-testimonial.jpg");' data-background="images/parallax/home-testimonial.jpg">
-        <div class="ps-container">
-          <h3>our mission</h3>
-          <h2>Your success is our ambition. <br> Your defeat spurs us on to be better.</h2>
-        </div>
-     </div>
-        <div class="ps-section ps-ourteam pt-80 pb-80">
-        <div class="ps-container">
-          <div class="ps-section__header mb-50">
-            <h2 class="ps-section__title" data-mask="TEAM">- OUR STAFF</h2>
-          </div>
-          <div class="ps-section__content">
-            <div class="row">
-                  <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
-                    <div class="ps-user">
-                      <div class="ps-user__thumbnnail"><img alt="" src="{% static '' %}images/team/1.png">
-                        <ul class="ps-user__social">
-                          <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                          <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                          <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
-                        </ul>
-                      </div>
-                      <div class="ps-user__content">
-                        <h3>Mitchell Blair</h3>
-                        <p>CEO &amp; FOUNDER</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
-                    <div class="ps-user">
-                      <div class="ps-user__thumbnnail"><img alt="" src="{% static '' %}images/team/2.png">
-                        <ul class="ps-user__social">
-                          <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                          <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                          <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
-                        </ul>
-                      </div>
-                      <div class="ps-user__content">
-                        <h3>Nellie Cook</h3>
-                        <p>DIRECTOR</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
-                    <div class="ps-user">
-                      <div class="ps-user__thumbnnail"><img alt="" src="{% static '' %}images/team/3.png">
-                        <ul class="ps-user__social">
-                          <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                          <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                          <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
-                        </ul>
-                      </div>
-                      <div class="ps-user__content">
-                        <h3>Frances Austin</h3>
-                        <p>Designer</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
-                    <div class="ps-user">
-                      <div class="ps-user__thumbnnail"><img alt="" src="{% static '' %}images/team/4.png">
-                        <ul class="ps-user__social">
-                          <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                          <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                          <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
-                        </ul>
-                      </div>
-                      <div class="ps-user__content">
-                        <h3>Corey Greene</h3>
-                        <p>Designer</p>
-                      </div>
-                    </div>
-                  </div>
+<div class="ps-mission bg-cover" data-background="{% static '' %}images/parallax/home-testimonial.jpg">
+  <div class="ps-container">
+    <h3>our mission</h3>
+    <h2>Your success is our ambition. <br/> Your defeat spurs us on to be better.</h2>
+  </div>
+</div>
+<div class="ps-section ps-ourteam pt-80 pb-80">
+  <div class="ps-container">
+    <div class="ps-section__header mb-50">
+      <h2 class="ps-section__title" data-mask="TEAM">- OUR STAFF</h2>
+    </div>
+    <div class="ps-section__content">
+      <div class="row">
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
+              <div class="ps-user">
+                <div class="ps-user__thumbnnail"><img src="{% static '' %}images/team/1.png" alt="">
+                  <ul class="ps-user__social">
+                    <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                    <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                    <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
+                  </ul>
+                </div>
+                <div class="ps-user__content">
+                  <h3>Mitchell Blair</h3>
+                  <p>CEO &amp; FOUNDER</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
+              <div class="ps-user">
+                <div class="ps-user__thumbnnail"><img src="{% static '' %}images/team/2.png" alt="">
+                  <ul class="ps-user__social">
+                    <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                    <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                    <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
+                  </ul>
+                </div>
+                <div class="ps-user__content">
+                  <h3>Nellie Cook</h3>
+                  <p>DIRECTOR</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
+              <div class="ps-user">
+                <div class="ps-user__thumbnnail"><img src="{% static '' %}images/team/3.png" alt="">
+                  <ul class="ps-user__social">
+                    <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                    <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                    <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
+                  </ul>
+                </div>
+                <div class="ps-user__content">
+                  <h3>Frances Austin</h3>
+                  <p>Designer</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
+              <div class="ps-user">
+                <div class="ps-user__thumbnnail"><img src="{% static '' %}images/team/4.png" alt="">
+                  <ul class="ps-user__social">
+                    <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                    <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                    <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
+                  </ul>
+                </div>
+                <div class="ps-user__content">
+                  <h3>Corey Greene</h3>
+                  <p>Designer</p>
+                </div>
+              </div>
+            </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- test-ceo  -->
+<div class="ps-home-testimonial bg--parallax pb-80" data-background="{% static '' %}images/background/parallax.jpg">
+  <div class="container">
+    <div class="owl-slider" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="0" data-owl-nav="false" data-owl-dots="true" data-owl-item="1" data-owl-item-xs="1" data-owl-item-sm="1" data-owl-item-md="1" data-owl-item-lg="1" data-owl-duration="1000" data-owl-mousedrag="on" data-owl-animate-in="fadeIn" data-owl-animate-out="fadeOut">
+      <div class="ps-testimonial">
+        <div class="ps-testimonial__thumbnail"><img src="{% static '' %}images/testimonial/1.jpg" alt=""><i class="fa fa-quote-left"></i></div>
+        <header>
+          <select class="ps-rating">
+            <option value="1">1</option>
+            <option value="1">2</option>
+            <option value="1">3</option>
+            <option value="1">4</option>
+            <option value="5">5</option>
+          </select>
+          <p>Logan May - CEO & Founder Invision</p>
+        </header>
+        <footer>
+          <p>“Dessert pudding dessert jelly beans cupcake sweet caramels gingerbread. Fruitcake biscuit cheesecake. Cookie topping sweet muffin pudding tart bear claw sugar plum croissant. “</p>
+        </footer>
+      </div>
+      <div class="ps-testimonial">
+        <div class="ps-testimonial__thumbnail"><img src="{% static '' %}images/testimonial/2.jpg" alt=""><i class="fa fa-quote-left"></i></div>
+        <header>
+          <select class="ps-rating">
+            <option value="1">1</option>
+            <option value="1">2</option>
+            <option value="1">3</option>
+            <option value="1">4</option>
+            <option value="5">5</option>
+          </select>
+          <p>Logan May - CEO & Founder Invision</p>
+        </header>
+        <footer>
+          <p>“Dessert pudding dessert jelly beans cupcake sweet caramels gingerbread. Fruitcake biscuit cheesecake. Cookie topping sweet muffin pudding tart bear claw sugar plum croissant. “</p>
+        </footer>
+      </div>
+      <div class="ps-testimonial">
+        <div class="ps-testimonial__thumbnail"><img src="{% static '' %}images/testimonial/3.jpg" alt=""><i class="fa fa-quote-left"></i></div>
+        <header>
+          <select class="ps-rating">
+            <option value="1">1</option>
+            <option value="1">2</option>
+            <option value="1">3</option>
+            <option value="1">4</option>
+            <option value="5">5</option>
+          </select>
+          <p>Logan May - CEO & Founder Invision</p>
+        </header>
+        <footer>
+          <p>“Dessert pudding dessert jelly beans cupcake sweet caramels gingerbread. Fruitcake biscuit cheesecake. Cookie topping sweet muffin pudding tart bear claw sugar plum croissant. “</p>
+        </footer>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- endtest -->
+<div class="ps-all-user pt-25 pb-50">
+  <div class="ps-container">
+    <div class="row ps-col-tiny">
+          <div class="col-lg-2 col-md-2 col-sm-3 col-xs-12 ">
+            <div class="ps-team">
+              <h3>Staff.</h3>
+              <ul class="ps-team__listing">
+                <li><a href="#">Carolyn Flowers</a></li>
+                <li><a href="#">Norman Barnett</a></li>
+                <li><a href="#">Gabriel Barnes</a></li>
+                <li><a href="#">Harriett Weaver</a></li>
+              </ul>
             </div>
           </div>
-        </div>
-      </div>
-    <div class="ps-all-user pt-25 pb-50">
-        <div class="ps-container">
-          <div class="row ps-col-tiny">
-                <div class="col-lg-2 col-md-2 col-sm-3 col-xs-12 ">
-                  <div class="ps-team">
-                    <h3>Staff.</h3>
-                    <ul class="ps-team__listing">
-                      <li><a href="#">Carolyn Flowers</a></li>
-                      <li><a href="#">Norman Barnett</a></li>
-                      <li><a href="#">Gabriel Barnes</a></li>
-                      <li><a href="#">Harriett Weaver</a></li>
-                    </ul>
-                  </div>
-                </div>
-                <div class="col-lg-2 col-md-2 col-sm-3 col-xs-12 ">
-                  <div class="ps-team">
-                    <h3>Assistant.</h3>
-                    <ul class="ps-team__listing">
-                      <li><a href="#">Hattie Figueroa</a></li>
-                      <li><a href="#">Sarah Cruz</a></li>
-                      <li><a href="#">Edna Cortez</a></li>
-                      <li><a href="#">Mabel Castillo</a></li>
-                    </ul>
-                  </div>
-                </div>
-                <div class="col-lg-2 col-md-2 col-sm-3 col-xs-12 ">
-                  <div class="ps-team">
-                    <h3>Staff.</h3>
-                    <ul class="ps-team__listing">
-                      <li><a href="#">Max Wagner</a></li>
-                      <li><a href="#">Robert Peterson</a></li>
-                      <li><a href="#">Lee McLaughlin</a></li>
-                      <li><a href="#">Cory Payne</a></li>
-                    </ul>
-                  </div>
-                </div>
-                <div class="col-lg-2 col-md-2 col-sm-3 col-xs-12 ">
-                  <div class="ps-team">
-                    <h3>Staff.</h3>
-                    <ul class="ps-team__listing">
-                      <li><a href="#">Sally Murray</a></li>
-                      <li><a href="#">Sally Sherman</a></li>
-                      <li><a href="#">Edith King</a></li>
-                      <li><a href="#">Mathilda Austin</a></li>
-                    </ul>
-                  </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 ">
-                  <div class="ps-join-team">
-                    <h3>Would you like to join team &amp; build your dream NOW?</h3><a class="ps-btn" href="#">JOIN OUR TEAM<i class="ps-icon-arrow-left"></i></a>
-                  </div>
-                </div>
+          <div class="col-lg-2 col-md-2 col-sm-3 col-xs-12 ">
+            <div class="ps-team">
+              <h3>Assistant.</h3>
+              <ul class="ps-team__listing">
+                <li><a href="#">Hattie Figueroa</a></li>
+                <li><a href="#">Sarah Cruz</a></li>
+                <li><a href="#">Edna Cortez</a></li>
+                <li><a href="#">Mabel Castillo</a></li>
+              </ul>
+            </div>
           </div>
-        </div>
-      </div>
+          <div class="col-lg-2 col-md-2 col-sm-3 col-xs-12 ">
+            <div class="ps-team">
+              <h3>Staff.</h3>
+              <ul class="ps-team__listing">
+                <li><a href="#">Max Wagner</a></li>
+                <li><a href="#">Robert Peterson</a></li>
+                <li><a href="#">Lee McLaughlin</a></li>
+                <li><a href="#">Cory Payne</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-lg-2 col-md-2 col-sm-3 col-xs-12 ">
+            <div class="ps-team">
+              <h3>Staff.</h3>
+              <ul class="ps-team__listing">
+                <li><a href="#">Sally Murray</a></li>
+                <li><a href="#">Sally Sherman</a></li>
+                <li><a href="#">Edith King</a></li>
+                <li><a href="#">Mathilda Austin</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 ">
+            <div class="ps-join-team">
+              <h3>Would you like to join team & build your dream NOW?</h3><a class="ps-btn" href="#">Contact Us<i class="ps-icon-arrow-left"></i></a>
+            </div>
+          </div>
+    </div>
+  </div>
+</div>
 
 {% endblock %}

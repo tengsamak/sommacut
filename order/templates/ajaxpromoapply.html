@@ -1,0 +1,37 @@
+{%load myapptags%}
+{% load humanize %}
+                        {% comment %} {% if checkcoupon.valid == True %} {% endcomment %}
+                        <input type="hidden" name="getpromocode" id="getpromocode" value="{{getpromocode}}">
+                        <input type="hidden" name="checkcouponvalid" id="checkcouponvalid" value="{{checkcoupon.valid}}">
+                        <input type="hidden" name="promoapplydiscount" id="promoapplydiscount" value="{%if promodiscount.is_percentage == True%} {{promodiscount.value}}%{%else%}{{promodiscount.value}}${%endif%}">
+                        <input type="hidden" name="is_percentage" id="is_percentage" value="{{promodiscount.is_percentage}}">
+                        <input type="hidden" name="priceafterdiscount" id="priceafterdiscount" value="{{newpriceaftercoupon|floatformat:2 |intcomma}}">
+                        <input type="hidden" name="vat10afterdiscount" id="vat10afterdiscount" value="{% multiply newpriceaftercoupon 0.0 %}"><!--NO_VAT 0.00-->
+                        <input type="hidden" name="newpricegrandtotal" id="newpricegrandtotal" value="{%newgrandtotal newpriceaftercoupon as newgrandtotal%} {{newgrandtotal|floatformat:2 |intcomma}}">
+                        <tr>
+                            <td>Sub Total:(A)</td>
+                            <td>${{total|floatformat:2 |intcomma}}</td>
+                          </tr>
+                        <tr>
+                          <td>Discount by Coupon:(B)</td>
+                          <td> {%if promodiscount.is_percentage == True%} {{promodiscount.value}}%{%else%}{{promodiscount.value}}${%endif%}</td>
+                        </tr>
+                        <tr>
+                          <td>Sub Total after Discount:(C)=(A)-(B)</td>
+                          {% comment %} <td>${%if promodiscount.is_percentage == True%} {% devided promodiscount.value 100 as pricepercentage%} {% valueafterdiscount total pricepercentage as result%} {{result|floatformat:2}} {%else%} {{total|add:"-promodiscount.value"|floatformat:2}}{%endif%}</td> {% endcomment %}
+                          {% comment %} <td>${%if promodiscount.is_percentage == True%} {% valueafterdiscount total promodiscount.value as result%} {{result}} {%else%} {{total|add:"-promodiscount.value"}}{%endif%}</td> {% endcomment %}
+                          <td>${{newpriceaftercoupon|floatformat:2 |intcomma}}</td>
+                        </tr>
+                        <tr>
+                            <td>Included VAT</td>
+                            <td hidden>Vat 10%:(D)</td>
+                            <td hidden>${% multiply newpriceaftercoupon 0.0 %}</td>
+                          </tr>
+                          
+                          <tr>
+                            <td>Grand Order Total:(D)=</td>
+                            <td hidden>Grand Order Total:(E)=(C)+(D)</td>
+                            {% comment %} <td>${%newgrandtotal result as newgrandtotal%} {{newgrandtotal|floatformat:2}}</td> {% endcomment %}
+                            <td>${%newgrandtotal newpriceaftercoupon as newgrandtotal%} {{newgrandtotal|floatformat:2 |intcomma}}</td>
+                          </tr>
+                        {% comment %} {%endif%} {% endcomment %}

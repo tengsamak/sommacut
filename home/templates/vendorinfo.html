@@ -1,0 +1,66 @@
+{% load static %}
+{% block head %}
+<style>
+  .br-theme-fontawesome-stars .br-widget{
+    margin-bottom: 0px;
+  }
+  .ps-contact__block > header{
+    margin-bottom: 0px;
+  }
+  .sm-p {
+    margin-bottom: 5px !important;
+  }
+  .tooltip:hover{
+    background-color:#2ac37d;
+  }
+</style>
+{%endblock%}
+<div class="ps-contact__block" data-mh="contact-block" style="margin-bottom: 0px;padding-bottom: 0px;padding-top: 5px;">
+        <header>
+        <div class="ps-review"style="margin-bottom: 0px;display: inline-flex;">
+            <div class="ps-review__thumbnail">
+              <img src="{{product.vendor.logo.url}}{{vendorinfo.logo.url}}" alt="" style="border-radius:50%;width:50%;">
+              {% comment %} <a href="{% url 'home:searchvendor' product.vendor_id product.category_id %}"><img src="{{product.vendor.logo.url}}{{vendorinfo.logo.url}}" alt="" style="border-radius:50%;width:50%;"></a> {% endcomment %}
+            </div>
+            <div class="ps-review__content" style="padding-top: 0px;padding-left: 5px;padding-bottom: 0px;background-color: #f5f5f5">
+                  <a data-toggle="collapse" data-target="#veninfo" id="vendor_info"><h5 style="margin-top: 0px;color:#2ac37d;">{{product.vendor.companyname|upper}}{{vendorinfo.companyname|upper}} </h5></a>
+                  
+                  <div class="br-wrapper br-theme-fontawesome-stars">
+                    <select class="ps-rating" name="rate" style="display: none;">
+                      <option value="{% if product.vendor.avaregereview >= 1 or vendorinfo.avaregereview >= 1 %}1{% endif %}">1</option>
+                      <option value="{% if product.vendor.avaregereview >= 2 or vendorinfo.avaregereview >= 2 %}1{% endif %}">2</option>
+                      <option value="{% if product.vendor.avaregereview >= 3 or vendorinfo.avaregereview >= 3%}1{% endif %}">3</option>
+                      <option value="{% if product.vendor.avaregereview >= 4 or vendorinfo.avaregereview >= 4%}1{% endif %}">4</option>
+                      <option value="{% if product.vendor.avaregereview >= 5 or vendorinfo.avaregereview >= 5%}1{% endif %}">5</option>
+                        {{ product.vendor.avaregereview |stringformat:".2f"}}{{ vendorinfo.avaregereview |stringformat:".2f"}}
+                    </select>
+                  </div>
+                  <span data-toggle="tooltip" data-placement="top" title="Verify"><i class="fa fa-certificate"style="color: #FFD700;font-size:20px;" ></i><i class="fa fa-check"style="position: relative;left: -10%;color: #2ac37d;top: -3px;font-size: 10px;"></i></span> 
+                  {% comment %} {% if user.id is not None %}
+                  <button type="button" class="ps-btn ps-btn--gray" id="followbtn" data-user="{{user.id}}" style="background-color:orange;font-size:12px;padding-top: 0px;padding-bottom: 0px;">Follow</button>
+                  {%else%}
+                  <span>Login</span>
+                  {%endif%} {% endcomment %}
+                </div>
+        </div>
+        <a class="ps-cart__toggle demoprobar" data-toggle="collapse" data-target="#demoprobar" style="float:right;padding: 4px 10px;font-size: 12px;background-color: #2AC37D;"type="button" ><i class="fa fa-sitemap"></i></a>
+        </header>
+        <div id="veninfo" class="collapse">
+          <footer>
+            <p class="sm-p"><i class="fa fa-map-marker"></i><a href="{{product.vendor.maplocation}}" > {{product.vendor.address1}}-{{product.vendor.address2}}{{vendorinfo.address1}}-{{vendorinfo.address2}}</a></p>
+            <p class="sm-p"><i class="fa fa-envelope-o"></i><a href="mailto@{{product.vendor.email}}">{{product.vendor.email}}{{vendorinfo.email}}</a></p>
+            <p class="sm-p"><i class="fa fa-phone"></i> ( +855 ) {{product.vendor.phone1}}  -  {{product.vendor.phone2}}{{vendorinfo.phone2}}</p>
+            <p class="sm-p"><i class="fa fa-user"></i> <a>{{product.vendor.contactname}}{{vendorinfo.contactname}}</a></p>
+            <p class="sm-p"><i class="fa fa-facebook-square"></i> <a>{{product.vendor.facebook}}{{vendorinfo.facebook}}</a></p>
+            <p class="sm-p"><i class="fa fa-instagram"></i> <a>{{product.vendor.ig}}{{vendorinfo.ig}}</a></p>
+            <!--p><i class="fa fa-tiktok"></i> <a href="{{product.vendor.tiktok}}">{{product.vendor.tiktok}}</a></p-->
+        </footer>
+        </div>
+        {% include 'processstepbar.html' %}
+      
+</div>
+<script>
+  $(document).ready(function(){
+      $('[data-toggle="tooltip"]').tooltip();   
+  });
+</script>  

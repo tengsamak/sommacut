@@ -27,8 +27,10 @@ SECRET_KEY = 'mst6!yv6=eez559kkbgsw8ui30j$9eoc-7&a41e*7nx)z&w&bt'
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'mydjangoajax.herokuapp.com' # add for heroku domain name
-    '127.0.0.1' # for local host
+    'localhost'
+    #'127.0.0.1' # for local host
+   # 'mydjangoajax.herokuapp.com' # add for heroku domain name
+    
 
 ]
 
@@ -43,15 +45,17 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize', # for install filter templatage '1000.05' to '1,000.05'
     'home',
     'products',
     'order',
     'user',
     'vendors',
     'ckeditor',
-    'mptt',
+    'mptt', # django-mptt for Category 
     'import_export',
     'coupons',
+    'wishlist', # for wish list or favorit products lsit
     'django_simple_coupons', #install package django simple coupons
     'debug_toolbar', # debug toolbar package
     # install the socialmedia login
@@ -67,6 +71,20 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.twitter',
     'allauth.socialaccount.providers.telegram',
+    #for Google ReCapchar i'm not robot
+    'django_recaptcha',
+    #'captcha',
+    #for 'crispy_forms',
+    'crispy_forms',
+    # install tweads to add class
+    'widget_tweaks',
+    # phonefield for phone number 
+    'phonenumber_field',
+    # generate QR code 
+    'qr_code', 
+    # for tags products
+    'taggit',# pip install django-taggit==3.1.0
+    #'tagging', not working
 
 
 ]
@@ -102,7 +120,8 @@ TEMPLATES = [
                # 'apps.store.context_processores.menu_categories',
                 #'apps.store.context_processores.globle_main_menus',
                 #'apps.store.context_processores.globle_sub_menus1',
-
+                'wishlist.context_processors.wishsession', # for apply wish session all page
+                'order.context_processors.cartsession', # for apply Cart session all page
             ],
         },
     },
@@ -157,7 +176,7 @@ LOCALE_PATHS = (
 # Default languages
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Bangkok'
 
 
 USE_I18N = True
@@ -183,7 +202,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static/')   # original
 
 # create path for folder upload
 MEDIA_URL='/media/'
-MEDIA_ROOT= os.path.join(BASE_DIR,'uploads')
+MEDIA_ROOT= os.path.join(BASE_DIR,'uploads/')
 
 #... Copy the ckeditor from its'website link
 SITE_ID = 1
@@ -237,7 +256,15 @@ SOCIALACCOUNT_PROVIDERS = {
         },
 }
 # socialmedia allauth required
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+#for sending email contactus.html emailsetting
+#EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'tengsamak@gmail.com' #sender email-id your email account
+EMAIL_HOST_PASSWORD = 'xuol jvia dthn wyoo' #password associated with sender email-id your email encrip pass
+#end sending email
 
 # install socialmedia required
 AUTHENTICATION_BACKENDS = [
@@ -258,6 +285,37 @@ ACCOUNT_AUTHENTICATION_METHOD = 'email'
 #for debug toolbar ip
 INTERNAL_IPS = [
     # ...
+    
     '127.0.0.1',
     # ...
 ]
+
+# For reCapcha
+RECAPTCHA_PUBLIC_KEY = '6LeBti8pAAAAAMYVX1AHQNvqIxNO7e5jMxKq_p0M'
+RECAPTCHA_PRIVATE_KEY = '6LeBti8pAAAAALaK4X84WTKhuWyyaiC2xljYSNoa'
+SILENCED_SYSTEM_CHECKS = ['django_recaptcha.recaptcha_test_key_error']
+
+#RECAPTCHA_DOMAIN = 'www.recaptcha.net'
+#RECAPTCHA_PROXY = {'http': 'http://127.0.0.1:8000', 'https': 'https://127.0.0.1:8000'}
+
+RECAPTCHA_REQUIRED_SCORE = 0.85
+
+#for allow host use
+#ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'www.sommarmart.com']
+ALLOWED_HOSTS = []
+
+#for crispy form
+#CRISPY_TEMPLATE_PACK = 'uni_form'
+
+# for expired token sent via email
+#PASSWORD_RESET_TIMEOUT=86400 # 24h in second
+PASSWORD_RESET_TIMEOUT_DAYS=1
+AUTH_TOKEN_VALIDITY=1
+
+#for upgrate from django 3.1 to 3.2
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# info for Telegram TOKEN when sent to group
+TOKEN="7043199444:AAGRP4Uo25wOHY6_7Y-rbtWCV-iTxGMDPUg"
+CHAT_ID="-4159721907"
+# end info

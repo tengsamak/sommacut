@@ -1,0 +1,748 @@
+{% extends 'homebase.html' %}
+{% load static %}
+{% load humanize %}
+{% load widget_tweaks %}
+{% block author %} SOMMA{% endblock %}
+{% block title %} SOMMA Mart Checkout {{ setting.title }} {% endblock %}
+{% block keywords %} {{ setting.keywords }} {% endblock %}
+{% block description %} {{ setting.description }} {% endblock %}
+{% block head%}
+<style>
+@media (min-width: 992px){
+    .modal-lg {
+        width: 100%;
+    }
+  } 
+@media (min-width: 992px){ 
+  .modal-lg, .modal-xl {
+      max-width: 100%;
+  }  
+}
+span ,.helptext{
+  color:orange;
+}
+.ps-checkout__order {
+  border-radius: 10px;
+  background-color: #ce7dde;
+}
+
+.couponapply{
+  border-style: solid;
+  border-color:#27b574;
+  border-width: thick;
+}
+button.ps-btn--gray{
+  color:white;
+}
+.form-control{
+  border-radius:25px;
+}
+.breadcrumb>li+li::before{
+  content:"";
+}
+</style>
+{%endblock%}
+
+{% block breadcrumb %}
+{% include 'breadcrumb.html' %}
+{% endblock %}
+
+{% block checkout %} 
+
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert {{ message.tags }} m-2" id="msg" role="alert">
+            <div id="alertmsg" data_smg='{{message}}'>{{ message }} </div>
+        </div>
+    {% endfor %}
+{% endif %} 
+<!--start checkout-->
+<div class="ps-checkout pt-80 pb-80">
+
+    <div class="ps-container">
+      {% comment %} <form class="ps-checkout__form" action="{%url 'order:checkoutcompleted'%}" method="post"> {% endcomment %}
+      {% if request.user.is_authenticated %} 
+      <form action="{% url 'order:checkoutcompleted' %}" class="ps-checkout__form" id="idfrmcheckout" method="post">
+      {%else%}
+      <form action="{% url 'order:checkoutcompleted_sess' %}" class="ps-checkout__form" id="idfrmcheckout_sess" method="post">
+      {%endif%}
+        {% csrf_token %}
+        <div class="row">
+              <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 ">
+                <div class="ps-checkout__billing">
+                  <h3>SHIPPING INFOMATION</h3><label>Note:<span> (*)is required</span></label>
+                        <div class="form-group form-group--inline">
+                          <label>First Name<span></span>
+                          </label>
+                          <input class="form-control" type="text" name="first_name" value="{{ user.first_name }}" >
+                        </div>
+                        <div class="form-group form-group--inline">
+                          <label>Last Name<span></span>
+                          </label>
+                          <input class="form-control" type="text" name="last_name" value="{{ user.last_name }}">
+                        </div>
+                        <div class="form-group form-group--inline">
+                          <label>Address<span>*</span>
+                          </label>
+                          <input class="form-control" type="text" name="address" value="{{ profile.address }}" placeholder="Please input your delivery address" required>
+                        </div>
+                        <div class="form-group form-group--inline">
+                          <label>Email Address<span>*</span>
+                          </label>
+                          <input class="form-control" type="email" name="email" value="{{ user.email }}" required>
+                        </div>
+                        {% comment %} <div class="form-group form-group--inline">
+                          <label>Address<span>*</span>
+                          </label>
+                          <input class="form-control" type="text" value="{{ profile.address }}" >
+                        </div> {% endcomment %}
+                        <div class="form-group form-group--inline">
+                          <label>Phone<span>*</span>
+                          </label>
+                          <div class="form-group">
+                            <div class="ps-form--icon">
+                              <button  type="button" class="ps-btn ps-btn--gray" data-toggle="modal" data-target="#checkphonenumber"   style="background-color:orange;position: absolute; right: 0%;top: 0%;width: 100%;" >Add Phone Number<i class="fa fa-phone-square mr-2" style="font-size:20px;"></i></button>
+                               <input class="form-control" type="tel" placeholder="ex:(855)0123456789" name="phone" value="{% if 'phonenum' in request.session %}{{ request.session.phonenum }}{%endif%}" readonly> 
+                              {% comment %} {{phonefrm.phone}}  {% endcomment %}
+                            </div>  
+                          </div>
+                        </div>
+                        {% comment %} <div class="form-group form-group--inline">
+                          <label>Your Location<span>*</span>
+                          </label>
+                          <input class="form-control" type="text" placeholder="Please point to your location on map and click" >
+                        </div> {% endcomment %}
+                        <div class="form-group form-group--inline">
+                          <label>Shipping location :<span>*</span>
+                          </label>
+                          <!-- <form method="POST"> -->
+
+                          <div class="form-group">
+                            <div class="ps-form--icon">
+                              <button  type="button" class="ps-btn ps-btn--gray" data-toggle="modal" data-target="#myModal"   style="background-color:orange;position: absolute; right: 0%;top: 0%;width: 100%;" >Add on Map<i class="fa fa-map-marker" style="font-size:20px;"></i></button>
+                              <input class="form-control" name="locationlatlng" required id="DisplayLatLng" type="text" placeholder="Click button to Add" value="11.556589128313135, 104.92788791656494" >
+                              <span>Please pointer shipping location on the map</span>
+                            </div>
+                          </div>
+                         <!-- </form> -->
+                        </div>
+                  <!--div class="form-group">
+                    <div class="ps-checkbox">
+                      <input class="form-control" type="checkbox" id="cb01">
+                      <label for="cb01">Create an account?</label>
+                    </div>
+                  </div-->
+                  <h3 class="mt-40"> Addition information</h3>
+                  <div class="form-group form-group--inline textarea">
+                    <label>Add Note:</label>
+                    <textarea class="form-control" name="useraddnote" rows="5" placeholder="Notes about your order, e.g. special notes for delivery."></textarea>
+                  </div>
+                  {% comment %} <div id="map"></div>   {% endcomment %}
+                </div>
+              </div>
+              <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 ">
+                <div class="ps-checkout__order">
+                  <header style="border-bottom: none;margin-bottom: 0px;padding-bottom: 10px;">
+                    <h3>Billing Your Order</h3>
+                    <a type="button" class="ps-cart__toggle" style="float: inline-end;background-color:orange;top:-40px;" data-toggle="modal" data-target="#viewcart"><!--span><i class="cartlistcount_sess">2</i></span--><i class="ps-icon-shopping-cart"></i></a>
+                    <!--button type="button" class="ps-btn ps-btn--gray" data-toggle="modal" data-target="#viewcart" style="background-color:orange;font-size:12px;padding-top: 0px;padding-bottom: 0px;">View Your Order</button-->
+                  </header>
+                  <div class="content"style="padding-bottom: 0px;">
+                    <table class="table ps-checkout__products" style="margin-bottom: 0px;">
+                      <thead>
+                        <tr>
+                          <th class="text-uppercase">ORDER SUMMARY</th>
+                          <th class="text-uppercase">Total</th>
+                        </tr>
+                      </thead>
+                      <tbody id="couponapply">
+                        {% if request.user.is_authenticated %} 
+                        <tr>
+                          <td>Sub Total:</td>
+                          <td hidden>Sub Total:(A)</td>
+                          <td><strong>${{total|intcomma}}</strong></td>
+                        </tr>
+                        {% comment %} <div id="couponapply"> {% endcomment %}
+                          {% comment %} <tr>
+                             <td>Total Sub:</td>
+                            <td>${{total}}</td>  
+                          </tr> {% endcomment %}
+                        {% comment %} </div> {% endcomment %}
+                        <tr>
+                          <td>Included VAT</td>
+                          <td hidden>Vat 10%:(B) </td>
+                          <td hidden><strong>${{vat10|floatformat:2 |intcomma}}</strong></td>
+                          {% comment %} <td><strong>${{vat10|floatformat:2}}</strong></td> {% endcomment %}
+                        </tr>
+                        
+                        <tr>
+                          <td>Grand Order Total:</td>
+                          <td hidden>Grand Order Total:(C)=(A)+(B)</td>
+                          <td><strong>${{grandtotal|floatformat:2 |intcomma}}</strong> </td>
+                          {% comment %} <td><strong>${{grandtotal|floatformat:2}}</strong> </td> {% endcomment %}
+                        </tr>
+                        {%else%}<!--Not login-->
+                        <tr>
+                          <td>Sub Total:</td>
+                          <td hidden>Sub Total:(A)</td>
+                          <td><strong>${{ grandtotal_sess|floatformat:2 |intcomma}}</strong></td>
+                        </tr>
+                        {% comment %} <div id="couponapply"> {% endcomment %}
+                          {% comment %} <tr>
+                             <td>Total Sub:</td>
+                            <td>${{total}}</td>  
+                          </tr> {% endcomment %}
+                        {% comment %} </div> {% endcomment %}
+                        <tr>
+                          <td>Included VAT</td>
+                          <td hidden>Vat 10%:(B) </td>
+                          <td hidden><strong>${{vat10|floatformat:2 |intcomma}}</strong></td>
+                          {% comment %} <td><strong>${{vat10|floatformat:2}}</strong></td> {% endcomment %}
+                        </tr>
+                        
+                        <tr>
+                          <td>Grand Order Total:</td>
+                          <td hidden>Grand Order Total:(C)=(A)+(B)</td>
+                          <td><strong>${{ grandtotal_sess|floatformat:2 |intcomma}}</strong> </td>
+                          {% comment %} <td><strong>${{grandtotal|floatformat:2}}</strong> </td> {% endcomment %}
+                        </tr>
+                        {%endif%}
+                      </tbody>
+                    </table>
+                  </div>
+                  <footer>
+                    <h3>Payment Method</h3>
+                    <div class="form-group cheque" required style="border-top-color: white;border-bottom: none;">
+                      <div class="form-check">
+                          <input class="form-check-input" type="radio" name="paymentinfo" value="ABA BANK ACCOUNT" id="ABAACCOUNT">
+                          <img src="{% static ''%}images/payment/ABABANK.png" alt="ABA BANK" style="width:68px;height:35px;">
+                          <label class="form-check-label" for="ABAACCOUNT" >
+                              ABA ACCOUNT
+                          </label>
+                      </div>
+                      <div class="form-check">
+                          <input class="form-check-input" type="radio" name="paymentinfo" value="ACLEDA BANK ACCOUNT" id="ACLEDAACCOUNT" >
+                          <img src="{% static ''%}images/payment/ACLEDA.png" alt="ACLEDA BANK"style="width:68px;height:35px;">
+                          <label class="form-check-label" for="ACLEDAACCOUNT">
+                              ACLEDA ACCOUNT
+                          </label>
+                      </div>
+                      <div class="form-check">
+                          <input class="form-check-input" type="radio" name="paymentinfo" value="WING" id="WINGACCOUNT" >
+                          <img src="{% static ''%}images/payment/WING.png" alt="WING PAY" style="width:68px;height:35px;">
+                          <label class="form-check-label" for="WINGACCOUNT">
+                              WING
+                          </label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" name="paymentinfo" value="other COD" id="otherACCOUNT" >
+                        {% comment %} <img src="{% static ''%}images/payment/WING.png" alt="WING PAY" style="width:68px;height:35px;"> {% endcomment %}
+                        <label class="form-check-label" for="otherACCOUNT" style="padding-bottom: 10px;">
+                            Other Account COD
+                        </label>
+                    </div>
+                      <!--                                <div class="ps-radio">-->
+                      <!--                                    <input class="form-control" type="radio" id="rdo01" name="payment" checked>-->
+                      <!--                                    <label for="rdo01">ABA ACCOUNT</label>-->
+                      <!--                                    <p>Please send your cheque to Store Name, Store Street, Store Town, Store State / County, Store Postcode.</p>-->
+                      <!--                                </div>-->
+                      {% if request.user.is_authenticated %}                                 
+                      <button class="ps-btn ps-btn--fullwidth" type="submit" id="btncompleted"style="margin-top: 10px;">Place Order<i class="ps-icon-shopping-cart" style="font-size:20px;"></i></button>
+                      {%else%}
+                      <button class="ps-btn ps-btn--fullwidth" type="submit" id="btncompleted_sess"style="margin-top: 10px;">Place Order<i class="ps-icon-shopping-cart" style="font-size:20px;"></i></button>
+                      {%endif%}
+                    </div>
+                    {% comment %} <div class="form-group cheque">
+                      <div class="ps-radio">
+                        <input class="form-control" type="radio" id="rdo01" name="payment" checked>
+                        <label for="rdo01">Cheque Payment</label>
+                        <p>Please send your cheque to Store Name, Store Street, Store Town, Store State / County, Store Postcode.</p>
+                      </div>
+                    </div> {% endcomment %}
+                    {% comment %} <div class="form-group paypal">
+                      <div class="ps-radio ps-radio--inline">
+                        <input class="form-control" type="radio" name="payment" id="rdo02">
+                        <label for="rdo02">Paypal</label>
+                      </div>
+                      <ul class="ps-payment-method">
+                        <li><a href="#"><img src="images/payment/1.png" alt=""></a></li>
+                        <li><a href="#"><img src="images/payment/2.png" alt=""></a></li>
+                        <li><a href="#"><img src="images/payment/3.png" alt=""></a></li>
+                      </ul>
+                      <button class="ps-btn ps-btn--fullwidth">Place Order<i class="ps-icon-next"></i></button>
+                    </div> {% endcomment %}
+                  </footer>
+                </div>
+                <!--div class="ps-shipping">
+                  <h3>FREE SHIPPING</h3>
+                  <p>YOUR ORDER QUALIFIES FOR FREE SHIPPING.<br> <a href="#"> Singup </a> for free shipping on every order, every time.</p>
+                </div-->
+                {% if request.user.is_authenticated %} 
+                <div class="ps-shipping"> <!--Apply Coupon-->
+                  <h3>Apply Coupon</h3>
+                  <div class="ps-cart__promotion" style="padding-top: 15px;">
+                    <div class="form-group" id="alertpromo" style="text-align:center;">
+                      <!--p>
+                        Your Code{{getpromocode}}, Status:{{checkcoupon.valid}}, Message:{{checkcoupon.message}}
+                      </p-->
+                    </div>
+                    <form method="POST">
+                      {% csrf_token %}
+                    <div class="form-group" id="formpromo">  
+                      <div class="ps-form--icon">
+                        <button class="ps-btn ps-btn--gray" type ="submit" id="btnpromo" style="position: absolute; right: 0%;background-color:orange;" >Apply<i class="fa fa-angle-right"></i></button>
+                        <input class="form-control" name="promocode" type="text" placeholder="Coupon Code">
+                      </div>
+                    </div>
+                    </form>
+                    <!-- <div class="form-group">
+                      <button class="ps-btn ps-btn--gray">Continue Shopping</button> -->
+                      <!-- <a class="ps-btn checkout" href="checkout.html" style="background-color:#fc8244;">Continue Shopping<i class="ps-icon-next"></i></a> -->
+                    <!-- </div> -->
+                  </div>
+                </div> <!--End Apply Coupon-->
+                {%endif%}
+              </div>
+        </div>
+      </form>  <!-- Form chechout completed-->
+    </div>
+  </div>
+  <!-- The Modal Map point-->
+  <div class="modal fade" id="myModal">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h2 class="modal-title">Please Point or Click on your location</h2>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+        <!-- Modal body -->
+        <div class="modal-body">
+          <div id="map" style="height:450px;"></div>
+          {% comment %} <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d250151.45210707132!2d104.75010084181018!3d11.579330574994277!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3109513dc76a6be3%3A0x9c010ee85ab525bb!2sPhnom%20Penh!5e0!3m2!1sen!2skh!4v1619502495418!5m2!1sen!2skh" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe> {% endcomment %}
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" data-dismiss="modal">OK</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+                  <!-- end test modals map point-->
+
+  <!-- The Modal viewcart -->
+  <div class="modal fade" id="viewcart">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Your Shop Cart View</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+        <!-- Modal body -->
+        <div class="modal-body">
+          <!-- <div id="map" style="height: 400px;"></div> -->
+          {% include 'cartview.html'%}
+          
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" data-dismiss="modal">OK</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+                  <!-- end test modals viewcart -->       
+                  
+   <!-- Modal Header Modal for alert Coupon -->
+   <!-- The Modal -->
+   <div class="modal fade" id="myModalcoupon">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+   <div class="modal-header">
+    <h4 class="modal-title" id="md_head">Modal Heading</h4>
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+  </div>
+
+  <!-- Modal body -->
+  <div class="modal-body" id="md_body">
+    Modal body..
+  </div>
+
+  <!-- Modal footer -->
+  <div class="modal-footer">
+    <button type="button" class="btn" id="btn" data-dismiss="modal">Close</button>
+  </div>
+
+</div>
+</div>
+</div>
+            <!-- end test modals alert coupon -->                
+  <!--End checkout-->
+
+ <!-- Modal check phone number-->
+ 
+  <!-- Modal -->
+  <div class="modal fade" id="checkphonenumber" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Please input your Active phone number</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          {% comment %} <p>Phone number.</p> {% endcomment %}
+          <form method="POST" action="{% url 'order:checkphone'%}">
+            {% csrf_token %}
+          {% comment %} <input class="form-control" type="tel" name="phone" placeholder="Default input" aria-label="default input example"> {% endcomment %}
+          {{phonefrm.phone|remove_attr:"readonly"}}  
+          <button type="submit" class="btn btn-success"style="float: right;margin-top: 5px;border-radius: 20px;">Submit</button>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+<!-- End Modal check phone number -->
+<script type="text/javascript">
+    function initMap() {
+      const myLatlng = { lat: 11.5564, lng: 104.9282 };
+      const map = new google.maps.Map(document.getElementById("map"), {
+        zoom: 12,
+        center: myLatlng,
+      });
+      // Create the initial InfoWindow.
+      let infoWindow = new google.maps.InfoWindow({
+        content: "Click the map to get Lat/Lng!",
+        position: myLatlng,
+      });
+      infoWindow.open(map);
+      // Configure the click listener.
+      map.addListener("click", (mapsMouseEvent) => {
+        // Close the current InfoWindow.
+        infoWindow.close();
+        // Create a new InfoWindow.
+        infoWindow = new google.maps.InfoWindow({
+          position: mapsMouseEvent.latLng,
+        });
+        infoWindow.setContent(
+          JSON.stringify(mapsMouseEvent.latLng.toJSON(), null, 2)
+        );
+        document.getElementById('DisplayLatLng').value = mapsMouseEvent.latLng;
+        infoWindow.open(map);
+      });
+    }
+</script>
+    <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
+    <script 
+    src="https://maps.googleapis.com/maps/api/js?AIzaSyAdXk5HB1EysqKPjd3qiO8a45ryyUJO0QI&callback=initMap"
+    async
+  ></script>
+  {% comment %} <script 
+  src="https://maps.googleapis.com/maps/api/js?AIzaSyAdXk5HB1EysqKPjd3qiO8a45ryyUJO0QI&callback=initMap&libraries=&v=weekly"
+  async
+></script> {% endcomment %}
+
+<script>
+      //for promocode
+      $(document).ready(function(){
+        $("#btnpromo").click(function(e){
+          e.preventDefault();
+          var getpromo_=$("input[name='promocode']").val();
+          //alert("Hello");
+          console.log(getpromo_);
+          x=getpromo_.length;
+          if (x<=0) {
+            swal("Please input your Coupon code");
+            //alert("please input your promo code");
+          } else {
+            //alert("start ajax");
+          
+  
+          $.ajax({
+            type:'POST',
+            url:'{% url 'order:promoapply' %}',
+            data:{
+                'get_promocode' : getpromo_,
+                csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+                action: 'post',
+            },
+            dataType:'json',
+            success: function (response) {
+
+                //if(response.success){
+                  //Call modal by toggle
+                  //$('#couponapply').html("<td>Your Discount Coupon</td><td>$3.00</td>"
+                  //+"<td>Your Discount Coupon</td><td>$4.00</td>"); 
+
+                //alert(response);
+                if (response.status){
+                  $('#md_head').html('<h4 class="modal-title" id="md_head">Your Coupons Apply Succeeded</h4>');
+                  //$('#md_body').html('<div class="modal-body" id="md_body">Succeeded! Please look at your order summary</div>');
+                  $('#md_body').html(response.rendered_table_alert);
+                  $('#btn').addClass('btn-success');
+                  $('#myModalcoupon').modal('toggle');
+                  $('#couponapply').addClass('couponapply');
+                  $('#couponapply').html(response.rendered_table);
+                  $('#alertpromo').html(response.rendered_table_alert);
+                  $('#formpromo').hide();
+
+                 
+                }else {
+                  $('#md_head').html('<h4 class="modal-title" id="md_head">Your Coupons False</h4>');
+                  //$('#md_body').html('<div class="modal-body" id="md_body">Your Code:"+{{getpromocode}}+"<br> Status:{{checkcoupon.valid}}<br> Message:{{checkcoupon.message}} </div>');
+                  $('#md_body').html(response.rendered_table);
+                  $('#btn').addClass('btn-info');
+                  $('#myModalcoupon').modal('toggle');
+                  $('#alertpromo').html(response.rendered_table);
+                  
+                };
+        
+                  
+                 
+                  //alert(response);
+                  //alert(response.rendered_table);
+                  
+                  
+                  
+                  //console.log("data have been updated you can check out processed");
+                  //alert("data have been updated you can check out processed");  
+                //}
+        },
+            error: function (response) {
+              swal("Data got Error"+response);
+              console.log("Data got Error, Please feel free to contract Adimn for Your Coupon! Thank you");
+        },
+        });  // end ajax  
+      }//end if else check length input promot code  
+        });
+      });  
+  
+    </script>
+      <!-- btncompleted for order check out completed -->
+<script>
+        
+
+        $(document).ready(function(){
+          //$("#btncompleted1").click(function(e){  
+          $("#idfrmcheckout").submit(function(e){  
+            //e.preventDefault();
+            //var getpromo_=$("input[name='promocode']").val();
+            var address_=$("input[name='address']").val();
+            var phone_=$("input[name='phone']").val();
+            var email_=$("input[name='email']").val();
+            var latlng_=$("input[name='locationlatlng']").val();
+            var paymentmethod_=$('input[name="paymentinfo"]:checked').val();
+            //swal("latlng "+latlng_);
+            //alert("Hello");
+            console.log(address_);
+            console.log(phone_);
+            console.log(email_);
+            console.log(latlng_);
+            console.log(paymentmethod_);
+            console.log(address_,phone_,email_,latlng_,paymentmethod_);
+            //x=getpromo_.length;
+            
+            /*if ( address_ == "" || phone_ == "" || email_ == "" || latlng_ == "" || paymentmethod_ == "" ) { */
+            if (latlng_ == ""  ) {
+            //  alert("please input in the required ");
+              swal("Please input in the required in RED Box");
+              $("input[name='locationlatlng']").css("border-color","red");
+              //return false;
+              e.preventDefault();
+              return false;
+            } 
+            else if(address_ == "") {
+              swal("Please input in the required in RED Box");
+              $("input[name='address']").css("border-color","red");
+              e.preventDefault();
+              return false;
+            }
+            else if(phone_ == "") {
+              swal("Please input in the required in RED Box");
+              $("input[name='phone']").css("border-color","red");
+              e.preventDefault();
+              return false;
+            }
+            else if(email_ == "") {
+              swal("Please input in the required in RED Box");
+              $("input[name='email']").css("border-color","red");
+              e.preventDefault();
+              return false;
+            }
+            else if($("input[name='paymentinfo']:checked").size()== 0) {
+              swal("Please input in the required in RED Box");
+              $('.cheque').css("background-color","red");
+              e.preventDefault();
+              return false;
+            }
+            else if( address_ =="" || phone_ == "" || email_ == "" || latlng_ == "" || ($("input[name='paymentinfo']:checked").size()== 0) ) {
+              swal("Please input in the required in RED Box");
+              $("input[name='address']").css("border-color","red");
+              $("input[name='phone']").css("border-color","red");
+              $("input[name='email']").css("border-color","red");
+              $("input[name='locationlatlng']").css("border-color","red");
+              $('.cheque').css("background-color","red");
+              e.preventDefault();
+              return false;
+            } 
+            else {
+              //swal("Hello world! Your have input all the required:"+address_+phone_+email_+latlng_+paymentmethod_);
+              return true;
+              //$("#idfrmcheckout").submit();
+        /*      $.ajax({
+                type:'POST',
+                url:'{% url 'order:checkoutcompleted' %}',
+                data:{
+                    'address':address_ ,
+                    'phone':phone_ ,
+                    'email':email_ ,
+                    'locationlatlng':latlng_ ,
+                    'paymentinfo':paymentmethod_ ,
+
+                    csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+                    action: 'post',
+                },
+                dataType:'json',
+                success: function (response) {
+
+                }
+              });  */  //end Ajax
+
+            }
+           
+
+        });//end form submit idfrmcheckout
+
+      // stat session submit
+      $("#idfrmcheckout_sess").submit(function(e){  
+        //e.preventDefault();
+        //var getpromo_=$("input[name='promocode']").val();
+        var address_=$("input[name='address']").val();
+        var phone_=$("input[name='phone']").val();
+        var email_=$("input[name='email']").val();
+        var latlng_=$("input[name='locationlatlng']").val();
+        var paymentmethod_=$('input[name="paymentinfo"]:checked').val();
+        //swal("latlng "+latlng_);
+        //alert("Hello");
+        console.log(address_);
+        console.log(phone_);
+        console.log(email_);
+        console.log(latlng_);
+        console.log(paymentmethod_);
+        console.log(address_,phone_,email_,latlng_,paymentmethod_);
+        //x=getpromo_.length;
+        
+        /*if ( address_ == "" || phone_ == "" || email_ == "" || latlng_ == "" || paymentmethod_ == "" ) { */
+        if (latlng_ == ""  ) {
+        //  alert("please input in the required ");
+          swal("Please input in the required in RED Box");
+          $("input[name='locationlatlng']").css("border-color","red");
+          //return false;
+          e.preventDefault();
+          return false;
+        } 
+        else if(address_ == "") {
+          swal("Please input in the required in RED Box");
+          $("input[name='address']").css("border-color","red");
+          e.preventDefault();
+          return false;
+        }
+        else if(phone_ == "") {
+          swal("Please input in the required in RED Box");
+          $("input[name='phone']").css("border-color","red");
+          e.preventDefault();
+          return false;
+        }
+        else if(email_ == "") {
+          swal("Please input in the required in RED Box");
+          $("input[name='email']").css("border-color","red");
+          e.preventDefault();
+          return false;
+        }
+        else if($("input[name='paymentinfo']:checked").size()== 0) {
+          swal("Please input in the required in RED Box");
+          $('.cheque').css("background-color","red");
+          e.preventDefault();
+          return false;
+        }
+        else if( address_ =="" || phone_ == "" || email_ == "" || latlng_ == "" || ($("input[name='paymentinfo']:checked").size()== 0) ) {
+          swal("Please input in the required in RED Box");
+          $("input[name='address']").css("border-color","red");
+          $("input[name='phone']").css("border-color","red");
+          $("input[name='email']").css("border-color","red");
+          $("input[name='locationlatlng']").css("border-color","red");
+          $('.cheque').css("background-color","red");
+          e.preventDefault();
+          return false;
+        } 
+        else {
+          //swal("Hello world! Your have input all the required:"+address_+phone_+email_+latlng_+paymentmethod_);
+          return true;
+          //$("#idfrmcheckout").submit();
+    /*      $.ajax({
+            type:'POST',
+            url:'{% url 'order:checkoutcompleted' %}',
+            data:{
+                'address':address_ ,
+                'phone':phone_ ,
+                'email':email_ ,
+                'locationlatlng':latlng_ ,
+                'paymentinfo':paymentmethod_ ,
+
+                csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+                action: 'post',
+            },
+            dataType:'json',
+            success: function (response) {
+
+            }
+          });  */  //end Ajax
+
+        }
+       
+
+    });//end form submit idfrmcheckout_sess
+      //end session submit
+
+      }); //end document ready
+</script>
+
+{% comment %} {% if messages %}
+    {% for message in messages %}
+        <div class="alert {{ message.tags }} m-2" id="msg" role="alert">
+            <div id="alertmsg" data_smg='{{message}}'>{{ message }} </div>
+        </div>
+    {% endfor %}
+{% endif %}  {% endcomment %}
+
+ <script>
+  $(document).ready(function(){
+      // active processbar step and disabled other steps
+      $('#step1,#step2,#step4,#step5,#step6').addClass("disabled");
+      $('#step1,#step2,#step4,#step5,#step6').css('opacity','0.3');
+      $('#step3').addClass("active");
+      //end processbar
+      var info_=$('#alertmsg').attr('data_smg');
+      if($('#msg').length>0){
+        swal("Message:"+info_);
+      }
+   
+  });
+  </script>
+  
+  {% endblock %} 

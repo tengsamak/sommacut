@@ -1,0 +1,342 @@
+{% extends 'homebase.html' %}
+{% load static %}
+{% block author %} SOMMA{% endblock %}
+{% block title %} {{ setting.title }} Home SOMMA Mart Search Result{% endblock %}
+{% block keywords %} {{ setting.keywords }} {% endblock %}
+{% block description %} {{ setting.description }} {% endblock %}
+{% block head %}
+<style>
+    {% comment %} for remove border on select size {% endcomment %}
+    .dropdown-toggle::after{
+        border-top:0;   
+    }
+    .imgpro{
+        width:248px;
+        height:248px;
+    
+      }
+    .veninfo{
+        background-color: #d1e8f2;
+        border-radius: 15px;
+        padding-left: 20px;
+        border-right-width: 20px;
+        padding-right: 20px;
+        padding-top: 20px;
+    }
+    .imglogo{
+        border-radius:50%;
+        max-width:50%; 
+    }
+    .ps-mission:before {
+        /* content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 10;
+        z-index: -1; */
+        background-color: #d1e8f2;
+        border-radius: 15px;
+    }
+    .ps-mission {
+        {% comment %} position: relative; {% endcomment %}
+        {% comment %} z-index: 10; {% endcomment %}
+        {% comment %} text-align: center; {% endcomment %}
+        padding: 0px; 
+        
+    }
+    .ps-product-action{
+        padding-top:10px;
+      }
+    .vcontact{
+      margin-bottom: 0px;
+    }
+    .follower-btn{
+      padding: 0px 20px;
+      font-size: 12px;
+      color: white !important;
+    }
+    .breadcrumb>li+li::before {
+      content:"";
+    }
+</style>
+<!--សាកល្បង JQuery JS autocomplete script for vendor-->
+<script>
+  $(function() {
+      var availableTags = [
+      "ActionScript",
+      "AppleScript",
+      "Asp",
+      "BASIC",
+      "C",
+      "C++",
+      "Clojure",
+      "COBOL",
+      "ColdFusion",
+      "Erlang",
+      "Fortran",
+      "Groovy",
+      "Haskell",
+      "Java",
+      "JavaScript",
+      "Lisp",
+      "Perl",
+      "PHP",
+      "Python",
+      "Ruby",
+      "Scala",
+      "Scheme"
+    ];  
+  $("#vendorsearch").autocomplete({
+      
+      source:"{% url 'home:vendorsearch_auto' %}",
+      //source: availableTags,
+      select: function (event, ui) { //item selected
+        AutoCompleteSelectHandler(event, ui)
+      },
+      minLength: 1,
+    });
+  });
+  
+  function AutoCompleteSelectHandler(event, ui)
+  {
+    var selectedObj = ui.item;
+    //console.log(selectedObj);
+  }
+  
+</script>
+<!--            end autocomplete-->
+{% endblock %}
+
+{% load mptt_tags %}
+
+
+{% block breadcrumb %}
+{% include 'breadcrumb.html' %}
+{% endblock%}
+{% block messagealert %}{% include 'messagealert.html' %} {% endblock %}
+
+{% block search_products %}
+<div class="ps-blog-grid pt-80 pb-80">
+  <div class="ps-container">
+    <div class="row">
+      <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 ">
+            {% for vendor in vendors %}
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 ">
+                  <div class="ps-post mb-30">
+                    <div class="ps-post__thumbnail" style="text-align: center;"><a class="ps-post__overlay" href="{% url 'home:searchvendor' vendor.id 63 %}"></a><img class="imglogo" src="{{vendor.logo.url}}"  alt="{{vendor.companyname}}"style="width:100px;height:100px;border-radius: 50%;"></div>
+                    <div class="ps-post__content"><a class="ps-post__title" href="{% url 'home:searchvendor' vendor.id 63 %}">{{vendor.companyname}}</a>
+                      <select class="ps-rating" name="rate">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                      </select>
+                      <!--a class="ps-btn follower-btn" href="#">Follower</a-->
+                      <!--p class="ps-post__meta"><span><a class="mr-5">12345</a></span> -<span class="ml-6"><a class="ps-btn follower-btn" href="#">Follower</a></span></p-->
+                      <p class="ps-post__meta"><span>By:<a class="mr-1">{{vendor.contactname}}</a></span> -<span class="ml-0">{{vendor.create_at|date}}</span></p><hr>
+                      <p><i class="fa fa-info-circle"></i>:<span>{{vendor.companydetail}}</span></p>
+                      <p class="vcontact"><i class="fa fa-map-marker"></i>: <a href="" target="_blank" rel="noopener noreferrer">{{vendor.address1}}-{{vendor.address2}}</a></p>
+                      <p class="vcontact"><i class="fa fa-envelope-o"></i>: <a href="{{vendor.email}}">{{vendor.email}}</a></p>
+                      <p class="vcontact"><i class="fa fa-phone"></i>: ( +855 ) {{vendor.phone1}}  - {{vendor.phone2}}</p>
+                      <p class="vcontact"><i class="fa fa-user"></i>: <a href="#">{{vendor.contactname}}</a></p>
+                      <p class="vcontact"><i class="fa fa-facebook-square"></i>: <a href="#">facebook.com/shop</a></p>
+                      <p class="vcontact"><i class="fa fa-instagram"></i>: <a href="#">instagram.com</a></p>
+                      
+                      <!--a class="ps-morelink" href="blog-detail.html">Read more<i class="fa fa-long-arrow-right"></i></a-->
+                    </div>
+                  </div>
+                </div>
+                {%endfor%}   
+                <!--      
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 ">
+                  <div class="ps-post mb-30">
+                    <div class="ps-post__thumbnail"><a class="ps-post__overlay" href="blog-detail.html"></a><img src="images/blog/2.jpg" alt=""></div>
+                    <div class="ps-post__content"><a class="ps-post__title" href="blog-detail.html">Unpacking the Breaking2 Race Strategy</a>
+                      <p class="ps-post__meta"><span>By:<a class="mr-5" href="blog.html">Alena Studio</a></span> -<span class="ml-5">Jun 10, 2017</span></p>
+                      <p>Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further…</p><a class="ps-morelink" href="blog-detail.html">Read more<i class="fa fa-long-arrow-right"></i></a>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 ">
+                  <div class="ps-post mb-30">
+                    <div class="ps-post__thumbnail"><a class="ps-post__overlay" href="blog-detail.html"></a><img src="images/blog/3.jpg" alt=""></div>
+                    <div class="ps-post__content"><a class="ps-post__title" href="blog-detail.html">Nike’s Latest Football Cleat Breaks the Mold</a>
+                      <p class="ps-post__meta"><span>By:<a class="mr-5" href="blog.html">Alena Studio</a></span> -<span class="ml-5">Jun 10, 2017</span></p>
+                      <p>Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further…</p><a class="ps-morelink" href="blog-detail.html">Read more<i class="fa fa-long-arrow-right"></i></a>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 ">
+                  <div class="ps-post mb-30">
+                    <div class="ps-post__thumbnail"><a class="ps-post__overlay" href="blog-detail.html"></a><img src="images/blog/1.jpg" alt=""></div>
+                    <div class="ps-post__content"><a class="ps-post__title" href="blog-detail.html">An Inside Look at the Breaking2 Kit</a>
+                      <p class="ps-post__meta"><span>By:<a class="mr-5" href="blog.html">Alena Studio</a></span> -<span class="ml-5">Jun 10, 2017</span></p>
+                      <p>Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further…</p><a class="ps-morelink" href="blog-detail.html">Read more<i class="fa fa-long-arrow-right"></i></a>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 ">
+                  <div class="ps-post mb-30">
+                    <div class="ps-post__thumbnail"><a class="ps-post__overlay" href="blog-detail.html"></a><img src="images/blog/2.jpg" alt=""></div>
+                    <div class="ps-post__content"><a class="ps-post__title" href="blog-detail.html">Unpacking the Breaking2 Race Strategy</a>
+                      <p class="ps-post__meta"><span>By:<a class="mr-5" href="blog.html">Alena Studio</a></span> -<span class="ml-5">Jun 10, 2017</span></p>
+                      <p>Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further…</p><a class="ps-morelink" href="blog-detail.html">Read more<i class="fa fa-long-arrow-right"></i></a>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 ">
+                  <div class="ps-post mb-30">
+                    <div class="ps-post__thumbnail"><a class="ps-post__overlay" href="blog-detail.html"></a><img src="images/blog/3.jpg" alt=""></div>
+                    <div class="ps-post__content"><a class="ps-post__title" href="blog-detail.html">Nike’s Latest Football Cleat Breaks the Mold</a>
+                      <p class="ps-post__meta"><span>By:<a class="mr-5" href="blog.html">Alena Studio</a></span> -<span class="ml-5">Jun 10, 2017</span></p>
+                      <p>Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further…</p><a class="ps-morelink" href="blog-detail.html">Read more<i class="fa fa-long-arrow-right"></i></a>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 ">
+                  <div class="ps-post mb-30">
+                    <div class="ps-post__thumbnail"><a class="ps-post__overlay" href="blog-detail.html"></a><img src="images/blog/1.jpg" alt=""></div>
+                    <div class="ps-post__content"><a class="ps-post__title" href="blog-detail.html">An Inside Look at the Breaking2 Kit</a>
+                      <p class="ps-post__meta"><span>By:<a class="mr-5" href="blog.html">Alena Studio</a></span> -<span class="ml-5">Jun 10, 2017</span></p>
+                      <p>Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further…</p><a class="ps-morelink" href="blog-detail.html">Read more<i class="fa fa-long-arrow-right"></i></a>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 ">
+                  <div class="ps-post mb-30">
+                    <div class="ps-post__thumbnail"><a class="ps-post__overlay" href="blog-detail.html"></a><img src="images/blog/2.jpg" alt=""></div>
+                    <div class="ps-post__content"><a class="ps-post__title" href="blog-detail.html">Unpacking the Breaking2 Race Strategy</a>
+                      <p class="ps-post__meta"><span>By:<a class="mr-5" href="blog.html">Alena Studio</a></span> -<span class="ml-5">Jun 10, 2017</span></p>
+                      <p>Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further…</p><a class="ps-morelink" href="blog-detail.html">Read more<i class="fa fa-long-arrow-right"></i></a>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 ">
+                  <div class="ps-post mb-30">
+                    <div class="ps-post__thumbnail"><a class="ps-post__overlay" href="blog-detail.html"></a><img src="images/blog/3.jpg" alt=""></div>
+                    <div class="ps-post__content"><a class="ps-post__title" href="blog-detail.html">Nike’s Latest Football Cleat Breaks the Mold</a>
+                      <p class="ps-post__meta"><span>By:<a class="mr-5" href="blog.html">Alena Studio</a></span> -<span class="ml-5">Jun 10, 2017</span></p>
+                      <p>Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further…</p><a class="ps-morelink" href="blog-detail.html">Read more<i class="fa fa-long-arrow-right"></i></a>
+                    </div>
+                  </div>
+                </div>
+                --> 
+            <!--div class="mt-30"-->
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 "style="margin-bottom: 20px;">
+              {% include 'pagination.html' %}
+              <!--div class="ps-pagination">
+                <ul class="pagination">
+                  <li><a href="#"><i class="fa fa-angle-left"></i></a></li>
+                  <li class="active"><a href="#">1</a></li>
+                  <li><a href="#">2</a></li>
+                  <li><a href="#">3</a></li>
+                  <li><a href="#">...</a></li>
+                  <li><a href="#"><i class="fa fa-angle-right"></i></a></li>
+                </ul>
+              </div-->
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 ">
+            <!--aside class="ps-widget--sidebar ps-widget--search">
+              <form class="ps-search--widget" action="do_action" method="post">
+                <input class="form-control" type="text" placeholder="Search posts...">
+                <button><i class="ps-icon-search"></i></button>
+              </form>
+            </aside-->
+            <!--aside class="ps-widget--sidebar">
+              <div class="ps-widget__header">
+                <h3>Archive</h3>
+              </div>
+              <div class="ps-widget__content">
+                <ul class="ps-list--arrow">
+                  <li class="current"><a href="product-listing.html">Sky(321)</a></li>
+                  <li><a href="product-listing.html">Amazin’ Glazin’</a></li>
+                  <li><a href="product-listing.html">The Crusty Croissant</a></li>
+                  <li><a href="product-listing.html">The Rolling Pin</a></li>
+                  <li><a href="product-listing.html">Skippity Scones</a></li>
+                  <li><a href="product-listing.html">Mad Batter</a></li>
+                  <li><a href="product-listing.html">Confection Connection</a></li>
+                </ul>
+              </div>
+            </aside-->
+            <!--aside class="ps-widget--sidebar">
+              <div class="ps-widget__header">
+                <h3>Ads Banner</h3>
+              </div>
+              <div class="ps-widget__content"><a href="product-listing"><img src="images/offer/sidebar.jpg" alt=""></a></div>
+            </aside-->
+            <aside class="ps-widget--sidebar">
+              <div class="ps-widget__header">
+                <h3>Recent Posts</h3>
+              </div>
+              <div class="ps-widget__content">
+                {%for rs in p_recent_post %}
+                <div class="ps-post--sidebar">
+                  <div class="ps-post__thumbnail"><a href="/product/{{ rs.id}}/{{ rs.slug}}"></a><img src="{{ rs.image.url }}" alt=""></div>
+                  <div class="ps-post__content"><a class="ps-post__title" href="/product/{{ rs.id}}/{{ rs.slug}}">{{ rs.title|truncatechars:30|capfirst }}</a><span>{{rs.update_at|date}}</span></div>
+                </div>
+                {%endfor%}
+                <!--div class="ps-post--sidebar">
+                  <div class="ps-post__thumbnail"><a href="#"></a><img src="images/blog/sidebar/2.jpg" alt=""></div>
+                  <div class="ps-post__content"><a class="ps-post__title" href="#">Micenas Placerat Nibh Loreming Fentum</a><span>SEP 29, 2017</span></div>
+                </div-->
+                <!--div class="ps-post--sidebar">
+                  <div class="ps-post__thumbnail"><a href="#"></a><img src="images/blog/sidebar/3.jpg" alt=""></div>
+                  <div class="ps-post__content"><a class="ps-post__title" href="#">Micenas Placerat Nibh Loreming Fentum</a><span>SEP 29, 2017</span></div>
+                </div-->
+              </div>
+            </aside>
+            <aside class="ps-widget--sidebar">
+              <div class="ps-widget__header">
+                <h3>Best Seller</h3>
+              </div>
+              <div class="ps-widget__content">
+                {%for rs in p_best_seller %}
+                <div class="ps-shoe--sidebar">
+                  <div class="ps-shoe__thumbnail"><a href="/product/{{ rs.id}}/{{ rs.slug}}"></a><img src="{{ rs.image.url }}" alt=""></div>
+                  <div class="ps-shoe__content"><a class="ps-shoe__title" href="/product/{{ rs.id}}/{{ rs.slug}}">{{ rs.title|truncatechars:30|capfirst }}</a>
+                    <p><del style="color:orange;">$ {{ rs.m_price }}</del> <strong style="color: #27b574;"> $ {{ rs.price }}</strong></p><a class="ps-btn" href="/product/{{ rs.id}}/{{ rs.slug}}">PURCHASE</a>
+                  </div>
+                </div>
+                {%endfor%}
+                <!--div class="ps-shoe--sidebar">
+                  <div class="ps-shoe__thumbnail"><a href="#"></a><img src="images/shoe/sidebar/2.jpg" alt=""></div>
+                  <div class="ps-shoe__content"><a class="ps-shoe__title" href="#">Nike Flight Bonafide</a>
+                    <p><del> £253.00</del> £152.00</p><a class="ps-btn" href="#">PURCHASE</a>
+                  </div>
+                </div-->
+                <!--div class="ps-shoe--sidebar">
+                  <div class="ps-shoe__thumbnail"><a href="#"></a><img src="images/shoe/sidebar/3.jpg" alt=""></div>
+                  <div class="ps-shoe__content"><a class="ps-shoe__title" href="#">Nike Sock Dart QS</a>
+                    <p><del> £253.00</del> £152.00</p><a class="ps-btn" href="#">PURCHASE</a>
+                  </div>
+                </div-->
+              </div>
+            </aside>
+            <aside class="ps-widget--sidebar">
+              <div class="ps-widget__header">
+                <h3>Tags</h3>
+              </div>
+              <div class="ps-widget__content">
+                <ul class="ps-tags">
+                  {% for tag in tags %}
+                  <li><a href="{%url 'home:pro_filter_tag' tag %}">{{tag}}</a></li>
+                  {%endfor%}
+                  {% comment %} <li><a href="product-listing.html">Female</a></li>
+                  <li><a href="product-listing.html">B&G</a></li>
+                  <li><a href="product-listing.html">ugly fashion</a></li>
+                  <li><a href="product-listing.html">Nike</a></li>
+                  <li><a href="product-listing.html">Dior</a></li>
+                  <li><a href="product-listing.html">Adidas</a></li>
+                  <li><a href="product-listing.html">Diour</a></li> {% endcomment %}
+                </ul>
+              </div>
+            </aside>
+          </div>
+    </div>
+  </div>
+</div>
+{% endblock%}

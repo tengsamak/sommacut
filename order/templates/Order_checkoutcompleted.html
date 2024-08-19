@@ -1,0 +1,545 @@
+{% extends 'homebase.html' %}
+{% load static %}
+{% load humanize %}
+{% load myapptags %}
+
+{% block author %} SOMMA STORE{% endblock %}
+{% block title %} Order Completed {{ setting.title }} {% endblock %}
+{% block keywords %} {{ setting.keywords }} {% endblock %}
+{% block description %} {{ setting.description }} {% endblock %}
+{% block head%}
+
+<style>
+  * {
+    font-family: "Archivo Narrow", sans-serif;
+  }
+  button.ps-btn--gray {
+    background-color: #ad7;
+  }
+@media (min-width: 992px){
+    .modal-lg {
+        width: 100%;
+    }
+  } 
+@media (min-width: 992px){ 
+  .modal-lg, .modal-xl {
+      max-width: 100%;
+  }  
+}
+span{
+  color:#2ac37d;
+}
+span .kh .code{
+  color:blue;
+}
+.ps-checkout__order {
+  border-radius: 10px;
+  background-color: #ce7dde;
+}
+.proven{
+  font-size:14px;
+}
+
+.couponapply{
+  border-style: solid;
+  border-color:#27b574;
+  border-width: thick;
+}
+/* from invoice_prince*/
+.table>tbody>tr>td {
+  vertical-align: middle;
+  }
+  tfoot>tr>td{
+  /* font-family: "Archivo Narrow", sans-serif; */
+  font-size: 18px;
+  font-weight: bold;
+  color: #515356;
+  text-transform: uppercase;
+
+  /* border-bottom: 1px solid #e5e5e5; */
+  }
+  .ftcolor{
+    color:#27b574;
+    font-weight: bolder;
+    /* font-size: 18px; */
+
+  }
+  .form-group--number button{
+    background-color: #27b574;
+  }
+  .mr-15{
+    width:70px;
+    height: 70px;
+  }
+  h3 {
+    font-size: 18px;
+  }
+  .ps-cart__actions {
+    padding-top: 0px;
+  }
+  thead {
+    font-size: large;
+    background-color: #c4cef0;
+    box-shadow: 0px 0px 0px #c4cef0 inset;
+  }
+  .list-group-flush .list-group-item {
+    border-color: #8d8d8d;
+}
+.breadcrumb>li+li::before{
+  content:"";
+}
+.footrow{
+  flex-wrap:wrap-reverse;
+}
+</style>
+{%endblock%}
+
+{% block breadcrumb %}
+
+{% include 'breadcrumb.html' %}
+
+{% endblock %}
+
+{% block checkout %} 
+{% load myapptags %}
+<!--start checkout-->
+<div class="ps-checkout pt-20 pb-20">
+    <div class="ps-container" style="margin-right: 0px;padding-right: 30px;padding-left: 30px;">
+      <div class="row">
+        <div class="col-lg-12 col-md-4 col-sm-12 col-xs-12 "><p style="text-align: center;font-size:32px;color:#2ac37d;"><strong >YOUR ORDER COMPLETED</strong></p></div><br /><hr/>
+      </div>
+      <header class="mb-50">
+        <div style="padding-bottom: 10px;"><img src="{{setting.logo.url}}" class="rounded float-start" alt="" style="float:left;width:200px;"><h1 class="ftcolor" style="font-size:48px;margin-top: 5px;float:right;">INVOICE </h1></div>
+        
+        {% comment %} <p style="float:right;">Today Exchange Rate: 1$ = {{paymentrate.ratetoday}}</p> {% endcomment %}
+      </header>
+      <div class="row" style="margin-left: 0px;margin-right: 0px;" >
+        <div class="col-lg-12 col-md-4 col-sm-12 col-xs-12 "><p style="margin-bottom: 0px;"><strong  style="font-size:18px;color:#ce7dde;">{{setting.company| upper  }}</strong><strong style="float: right; font-size:18px;color:orange;">{{orderinfo.create_at|date:"D d M Y" }}</strong></p></div><!--hr style="border-top: 2px solid #27b574;margin-bottom: 0px;"/-->
+      </div>
+      <div class="row" style="display:block;padding-bottom: 10px;padding-top: 10px;margin-left: 0px;margin-right: 0px;border-left: 2px solid #27b574;border-right: 2px solid #27b574;border-top:2px solid #27b574;">
+            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 ">
+              <div class="ps-post mb-0">
+                <div class="ps-post__content">
+                  <p>
+                    <strong class="ftcolor">FROM:</strong>
+                        <strong class="ftcolor">{{setting.company|upper }}</strong><br>
+                        Address:{{setting.address}}<br>
+                        Phone: (855) {{setting.phone}}<br>
+                        Email: {{setting.email}}
+                  </p>
+
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 ">
+              <div class="ps-post mb-0">
+
+                <div class="ps-post__content">
+                    <p>
+                      <strong class="ftcolor">SHIP TO:</strong>
+                      Customer:<strong class="ftcolor">{{orderinfo.first_name|upper }}-{{orderinfo.last_name|upper }}</strong><br>
+                      Shipping To Address:{{orderinfo.address}}<br>
+                      Location:{{orderinfo.adminnote}}<br>
+                      Phone: (855) {{orderinfo.phone}}<br>
+                      Email:  {{orderinfo.email}}
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 ">
+              <div class="ps-post mb-0">
+              <div class="ps-post__content">
+                <p>
+                  <strong class="ftcolor">PAYMENT DETAILS:</strong><br>
+                  Invoice:<b class="ftcolor"> #SOMMA00-{{ordercode}}</b><br>
+                  <!--OrderCode:&nbsp;<b class="ftcolor">{{ordercode}}</b><br> -->
+                  Order Date:<b class="ftcolor">&nbsp; {{orderinfo.create_at}}</b><br>
+                  <!--Payment Methods:<b class="ftcolor"> &nbsp;{{orderinfo.paymentinfo}}</b><br>-->
+                  Payment Status:{% if orderinfo.paymentstatus == "UNPAID" %}<b class="ftcolor" style="color:red !important;">&nbsp; {{orderinfo.paymentstatus}}</b>{%else%}<b class="ftcolor">&nbsp; {{orderinfo.paymentstatus}}</b>{%endif%}
+                  </p>
+              </div>
+              </div>
+            </div>
+
+      </div>
+        <div class="ps-cart-listing" style="border: 2px solid #27b574;">
+
+          <table class="table 1ps-cart__table"style="margin-bottom: 0px;">
+            <thead>
+              <tr >
+                <th>Images</th>
+                <th>Product Details</th>
+                <th>Price</th>
+                <th>Qty</th>
+                <th>Total</th>
+                <!-- <th></th> -->
+              </tr>
+            </thead>
+            <tbody style="font-size: 18px;">
+                {% for rs in order_product %}
+               
+              <tr>
+                {% if rs.variant.image_id > 0 %}
+                <td><a class="ps-product__preview" ><img class="mr-15" src="{{rs.variant.image }}" style="width:100px;height:100px;" alt=""></a></td>
+                <td>{{rs.product}}<span class="kh">{{rs.product.title_kh}}</span>{% if rs.product.variant == "Color" %}({{ rs.variant.color }}){%elif rs.product.variant == "Size"%} ({{ rs.variant.size}}) {% else%}({{ rs.variant.size }}/{{ rs.variant.color }}) {%endif%}(<span class="ftcolor">-DISC&nbsp;{{rs.product.discount_percentage}}</span>)<br><span class="proven">By:{{rs.product.vendor.companyname | upper}}</span><br><span>Code:{{rs.product.pro_code}}</span></td>
+                {% else %}
+                <td><a class="ps-product__preview" ><img class="mr-15" src="{{rs.product.image.url}}" style="width:100px;height:100px;"  alt=""></a></td>
+                <td> {{rs.product}}<span class="kh">{{rs.product.title_kh}}</span>(<span class="ftcolor">-DISC&nbsp;{{rs.product.discount_percentage}}</span>)<br><span class="proven">By:{{rs.product.vendor.companyname | upper}}</span><br><span>Code:{{rs.product.pro_code}}</span></td>
+                {%endif%}
+                <td>$
+                    {% if rs.product.variant == 'None' %}
+                        {{ rs.product.price }}<br><del style="color:orange;">${{rs.product.m_price}}</del>
+                    {% else %}
+                        {{ rs.variant.price }}<br><del style="color:orange;">${{rs.product.m_price}}</del>
+                    {% endif %}
+                </td>
+                <td>
+                    {{rs.quantity}}
+                  <!-- <div class="form-group--number">
+                    <button class="minus"><span>-</span></button>
+                    <input class="form-control" type="text" value="2">
+                    <button class="plus"><span>+</span></button>
+                  </div> -->
+                </td>
+                <td>$ {{ rs.amount|floatformat:2 |intcomma}}<br><del style="color:orange;">${% multiply rs.quantity rs.product.m_price %}</del>
+                  {% comment %} {% if rs.product.variant == 'None' %}
+                    {{ rs.amount}}
+                  {% else %}
+                    {{ rs.varamount }}
+                  {% endif %} {% endcomment %}
+                
+                </td>
+                <!--td>
+                  <div class="ps-remove"></div> 
+                </td-->
+              </tr>
+              
+              {% endfor %}
+            </tbody>
+            <tfoot>
+              {% itemcount ordercode as count %}
+              <tr>
+                <td></td>
+                <td colspan=2 style="text-align: right;">Amount of items</td>
+                <td></td>
+                <td>{{count}}</td>
+               
+              </tr>
+            </tfoot>
+          </table>    
+        <div class="ps-cart__actions" style="border-top: solid 0px #27b574;padding-top: 10px;">
+          <div class="ps-cart__promotion">
+
+
+          </div> <!--End ps-cart__promotion-->
+
+        </div> <!--End ps-cart__actions-->
+
+        </div>
+        <div class="row footrow">
+          <div class="col-lg-6 col-md-4 col-sm-12 col-xs-12 ">
+            <div class="form-group">
+              <h4 class="ftcolor">Scan for Payment</h4>
+            </div>
+            <div class="form-group">
+              <p>
+                <img src="{{paymentrate.image_khqr.url}}" alt="{{paymentrate.bankname}}" style="width:20%;" >
+                {% comment %} <img src="{% static ''%}images/payment/ABABANK.png" alt="ABA BANK" style="width:88px;height:45px;">
+                <img src="{% static ''%}images/payment/ACLEDA.png" alt="ACLEDA BANK"style="width:88px;height:45px;">
+                <img src="{% static ''%}images/payment/WING.png" alt="WING PAY" style="width:88px;height:45px;"> {% endcomment %}
+              </p>
+            </div>
+            <!--div class="form-group">
+              <strong>NOTE:</strong>
+              <p>
+                Please feel free to contact us for Payment and Shipping by Click on button below for chat telgram with us:
+              </p>
+              <p>
+                Invoice was created on a computer and is valid without the signature and seal.
+                Thank you for your order!
+              </p>
+              <p>
+                QR CODE<i class="fa fa-qrcode" style="font-size:56px"></i>
+              </p>
+
+            </div-->
+
+          </div>
+          <div class="col-lg-6 col-md-4 col-sm-12 col-xs-12 ">
+            <div class="form-group">
+            <!--h2 class="ftcolor">Payment Due:<span>&nbsp;{{orderinfo.create_at|date:"D d M Y"}}</span></h2-->
+            <p style="color:orange;">Exchange Rate: 1$ = {{orderinfo.rate_by_ordered }}៛</p>
+            </div>
+            <div class="form-group">
+            <ul class="list-group list-group-flush" style="border: 1px solid #2ac37d;">
+              {% if orderinfo.discount %}
+              <li class="list-group-item"><h3 >Sub Total: <span class="totals-value" id="cart-subtotal" style="float:right;"><b class="ftcolor"> ${{orderinfo.total|floatformat:2|intcomma}} </b></span></h3></li>
+              <li class="list-group-item"><h3 >Discount: <span class="totals-value" id="cart-subtotal" style="float:right;"><b class="ftcolor">{% if orderinfo.discount < 1 %} {{orderinfo.discount|percentage }} {%else%}${{orderinfo.discount}}{%endif%}</b></span></h3></li>
+              <li class="list-group-item"><h3 >Sub Total after Discount: <span class="totals-value" id="cart-subtotal" style="float:right;"><b class="ftcolor"> {{orderinfo.totalafterdiscount|floatformat:2|intcomma}} </b></span></h3></li>
+              <li class="list-group-item"><h6 >Included VAT<!--span class="totals-value" id="cart-tax" style="float:right;"><b class="ftcolor  "> {{orderinfo.vat10afterdiscount|floatformat:2|intcomma}} $</b></span--></h6></li>
+              <li hidden class="list-group-item"><h3 >VAT 10%: <span class="totals-value" id="cart-tax" style="float:right;"><b class="ftcolor  "> ${{orderinfo.vat10afterdiscount|floatformat:2|intcomma}} </b></span></h3></li>
+              <li class="list-group-item"style="background-color: #dee2e6;"><h3>Grand Total ($): <span class="totals-value" style="float:right;" ><b class="ftcolor " > ${{orderinfo.grandtotalafterdiscount|floatformat:2|intcomma }} </b></span></h3></li>
+              {% comment %} <li class="list-group-item"style="background-color: #dee2e6;"><h3>Grand Total (៛): <span class="totals-value" style="float:right;" ><b class="ftcolor " > {% multiply orderinfo.grandtotalafterdiscount paymentrate.ratetoday %} ៛ (រៀល)</b></span></h3></li> {% endcomment %}
+              <li class="list-group-item"style="background-color: #dee2e6;"><h3>Grand Total (៛): <span class="totals-value" style="float:right;" ><b class="ftcolor " > ៛{{orderinfo.grandtotal_in_kh_real |floatformat:2|intcomma}} (រៀល)</b></span></h3></li>
+              {%else%}
+              <li class="list-group-item"><h3 >Sub Total: <span class="totals-value" id="cart-subtotal" style="float:right;"><b class="ftcolor">  ${{orderinfo.total|floatformat:2|intcomma}} </b></span></h3></li>
+              <li class="list-group-item"><h3 >Indcluded VAT<!--span class="totals-value" id="cart-tax" style="float:right;"><b class="ftcolor  "> {{orderinfo.vat10|floatformat:2|intcomma}} $</b></span--></h3></li>
+              <li hidden class="list-group-item"><h3 >VAT 10%: <span class="totals-value" id="cart-tax" style="float:right;"><b class="ftcolor  "> ${{orderinfo.vat10|floatformat:2|intcomma}} </b></span></h3></li>
+              <li class="list-group-item"style="background-color: #dee2e6;"><h3>Grand Total ($): <span class="totals-value" style="float:right;" ><b class="ftcolor " > ${{orderinfo.grandtotal|floatformat:2 |intcomma}}</b></span></h3></li>
+              {% comment %} <li class="list-group-item"style="background-color: #dee2e6;"><h3>Grand Total (៛): <span class="totals-value" style="float:right;" ><b class="ftcolor " > {% multiply orderinfo.grandtotal paymentrate.ratetoday %} ៛ (រៀល)</b></span></h3></li> {% endcomment %}
+              <li class="list-group-item"style="background-color: #dee2e6;"><h3>Grand Total (៛): <span class="totals-value" style="float:right;" ><b class="ftcolor " > ៛{{orderinfo.grandtotal_in_kh_real |floatformat:2|intcomma}} (រៀល)</b></span></h3></li>
+              {%endif%}
+            </ul>
+            </div>
+          </div>
+        </div>
+        <!-- btn PrintPDF  -->
+
+        <div class="row ">
+            <div class="col-lg-6 col-md-4 col-sm-12 col-xs-12 "style="margin-top: 10px;">
+              {% comment %} <a href="{% url 'order:generate_pdf'  ordercode  %}" ><button class="ps-btn ps-btn--gray" >Generate PDF</button></a> {% endcomment %}
+              {% if request.user.is_authenticated %} 
+              <button class="ps-btn ps-btn--gray" onclick="location.href='{%url 'order:invoiceprint' ordercode %}';"><i class="fa fa-print"></i></button> 
+              <!--button class="ps-btn ps-btn--gray" onclick="location.href='{%url 'order:receiptprint' ordercode %}';">Receipt</button-->
+              {%else%}
+              <button class="ps-btn ps-btn--gray" onclick="location.href='{%url 'order:invoiceprint_sess' ordercode %}';">View<i class='fa fa-print'style="font-size: 24px;"></i> & Save<i class='fa fa-file-pdf-o'style="font-size: 24px;"></i><!--i class="fa fa-print"></i--></button> 
+              <a type="button" >
+                <svg xmlns="http://www.w3.org/2000/svg" style="color:#0088cc;" width="40" height="40" fill="currentColor" class="bi bi-telegram" viewBox="0 0 16 16">
+                  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.287 5.906c-.778.324-2.334.994-4.666 2.01-.378.15-.577.298-.595.442-.03.243.275.339.69.47l.175.055c.408.133.958.288 1.243.294.26.006.549-.1.868-.32 2.179-1.471 3.304-2.214 3.374-2.23.05-.012.12-.026.166.016.047.041.042.12.037.141-.03.129-1.227 1.241-1.846 1.817-.193.18-.33.307-.358.336a8.154 8.154 0 0 1-.188.186c-.38.366-.664.64.015 1.088.327.216.589.393.85.571.284.194.568.387.936.629.093.06.183.125.27.187.331.236.63.448.997.414.214-.02.435-.22.547-.82.265-1.417.786-4.486.906-5.751a1.426 1.426 0 0 0-.013-.315.337.337 0 0 0-.114-.217.526.526 0 0 0-.31-.093c-.3.005-.763.166-2.984 1.09z"/>
+                </svg>
+              </a>
+              <!--button class="ps-btn ps-btn--gray" onclick="location.href='{%url 'order:receiptprint_sess' ordercode %}';">Receipt<i class='fa fa-file-text-o'></i></button-->
+              {%endif%}
+            </div>
+            <div class="col-lg-6 col-md-4 col-sm-12 col-xs-12 "style="margin-top: 10px;">
+              <!--button class="ps-btn ps-btn--gray" style="float:right;" >Shopping</button-->
+              <a href="/" class="ps-btn ps-btn--gray btn"  onclick="GetHome()"style="background-color: orange;font-size:16px;" >Continues Shopping<i class='fa fa-shopping-cart' style="font-size: 24px;"></i></a>
+            </div>
+
+          </div>
+        <!-- end btn PrintPDF -->
+    </div>
+  </div>
+  <!-- The Modal Map point-->
+  <div class="modal fade" id="myModal">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h2 class="modal-title">Please Point or Click on your location</h2>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+        <!-- Modal body -->
+        <div class="modal-body">
+          <div id="map" style="height:450px;"></div>
+          {% comment %} <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d250151.45210707132!2d104.75010084181018!3d11.579330574994277!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3109513dc76a6be3%3A0x9c010ee85ab525bb!2sPhnom%20Penh!5e0!3m2!1sen!2skh!4v1619502495418!5m2!1sen!2skh" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe> {% endcomment %}
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" data-dismiss="modal">OK</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+                  <!-- end test modals map point-->
+
+  <!-- The Modal viewcart -->
+  <div class="modal fade" id="viewcart">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Your Shop Cart View</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+        <!-- Modal body -->
+        <div class="modal-body">
+          <!-- <div id="map" style="height: 400px;"></div> -->
+          {% include 'cartview.html'%}
+          
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" data-dismiss="modal">OK</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+                  <!-- end test modals viewcart -->       
+                  
+   <!-- Modal Header Modal for alert Coupon -->
+   <!-- The Modal -->
+   <div class="modal fade" id="myModalcoupon">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+   <div class="modal-header">
+    <h4 class="modal-title" id="md_head">Modal Heading</h4>
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+  </div>
+
+  <!-- Modal body -->
+  <div class="modal-body" id="md_body">
+    Modal body..
+  </div>
+
+  <!-- Modal footer -->
+  <div class="modal-footer">
+    <button type="button" class="btn" id="btn" data-dismiss="modal">Close</button>
+  </div>
+
+</div>
+</div>
+</div>
+            <!-- end test modals alert coupon -->                
+  <!--End checkout-->
+<script type="text/javascript">
+    function initMap() {
+      const myLatlng = { lat: 11.5564, lng: 104.9282 };
+      const map = new google.maps.Map(document.getElementById("map"), {
+        zoom: 12,
+        center: myLatlng,
+      });
+      // Create the initial InfoWindow.
+      let infoWindow = new google.maps.InfoWindow({
+        content: "Click the map to get Lat/Lng!",
+        position: myLatlng,
+      });
+      infoWindow.open(map);
+      // Configure the click listener.
+      map.addListener("click", (mapsMouseEvent) => {
+        // Close the current InfoWindow.
+        infoWindow.close();
+        // Create a new InfoWindow.
+        infoWindow = new google.maps.InfoWindow({
+          position: mapsMouseEvent.latLng,
+        });
+        infoWindow.setContent(
+          JSON.stringify(mapsMouseEvent.latLng.toJSON(), null, 2)
+        );
+        document.getElementById('DisplayLatLng').value = mapsMouseEvent.latLng;
+        infoWindow.open(map);
+      });
+    }
+</script>
+    <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
+    <script 
+    src="https://maps.googleapis.com/maps/api/js?AIzaSyAdXk5HB1EysqKPjd3qiO8a45ryyUJO0QI&callback=initMap"
+    async
+  ></script>
+  {% comment %} <script 
+  src="https://maps.googleapis.com/maps/api/js?AIzaSyAdXk5HB1EysqKPjd3qiO8a45ryyUJO0QI&callback=initMap&libraries=&v=weekly"
+  async
+></script> {% endcomment %}
+
+<script>
+      //for promocode
+      $(document).ready(function(){
+         // active processbar step and disabled other steps
+        $('#step1,#step2,#step3,#step5,#step6').addClass("disabled");
+        $('#step1,#step2,#step3,#step5,#step6').css('opacity','0.3');
+        $('#step4').addClass("active");
+      //end processbar
+        $("#btnpromo").click(function(e){
+          e.preventDefault();
+          var getpromo_=$("input[name='promocode']").val();
+          //alert("Hello");
+          console.log(getpromo_);
+          x=getpromo_.length;
+          if (x<=0) {
+            alert("please input your promo code");
+          } else {
+            //alert("start ajax");
+          
+  
+          $.ajax({
+            type:'POST',
+            url:'{% url 'order:promoapply' %}',
+            data:{
+                'get_promocode' : getpromo_,
+                csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+                action: 'post',
+            },
+            dataType:'json',
+            success: function (response) {
+
+                //if(response.success){
+                  //Call modal by toggle
+                  //$('#couponapply').html("<td>Your Discount Coupon</td><td>$3.00</td>"
+                  //+"<td>Your Discount Coupon</td><td>$4.00</td>"); 
+
+                //alert(response);
+                if (response.status){
+                  $('#md_head').html('<h4 class="modal-title" id="md_head">Your Coupons Apply Succeeded</h4>');
+                  //$('#md_body').html('<div class="modal-body" id="md_body">Succeeded! Please look at your order summary</div>');
+                  $('#md_body').html(response.rendered_table_alert);
+                  $('#btn').addClass('btn-success');
+                  $('#myModalcoupon').modal('toggle');
+                  $('#couponapply').addClass('couponapply');
+                  $('#couponapply').html(response.rendered_table);
+                  $('#alertpromo').html(response.rendered_table_alert);
+                  $('#formpromo').hide();
+
+                 
+                }else {
+                  $('#md_head').html('<h4 class="modal-title" id="md_head">Your Coupons False</h4>');
+                  //$('#md_body').html('<div class="modal-body" id="md_body">Your Code:"+{{getpromocode}}+"<br> Status:{{checkcoupon.valid}}<br> Message:{{checkcoupon.message}} </div>');
+                  $('#md_body').html(response.rendered_table);
+                  $('#btn').addClass('btn-info');
+                  $('#myModalcoupon').modal('toggle');
+                  $('#alertpromo').html(response.rendered_table);
+                  
+                };
+        
+                  
+                 
+                  //alert(response);
+                  //alert(response.rendered_table);
+                  
+                  
+                  
+                  //console.log("data have been updated you can check out processed");
+                  //alert("data have been updated you can check out processed");  
+                //}
+        },
+            error: function (response) {
+              
+              console.log("Data got Error, Please feel free to contract Adimn for Your Coupon! Thank you");
+        },
+        });  // end ajax  
+      }//end if else check length input promot code  
+        });
+      });  
+  
+    </script>
+    <script>
+      //for print invoice PDF
+      function GetPrint(){
+        window.print();
+      }
+    </script>
+
+    <!--script>
+      // fro refresh page link to invoice_prince
+      $(document).ready(function() {
+        if (window.history.go(0)) {
+          refreshPage();
+        };
+        function refreshPage() {
+          // Replace the current URL with itself to refresh the page
+          window.location.replace("{% url 'order:invoiceprint' ordercode %}");
+      }
+      });
+      
+    </script-->
+    
+  
+  {% endblock %} 

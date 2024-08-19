@@ -4,17 +4,23 @@
 {% block title %} About Us{{ setting.title }} {% endblock %}
 {% block keywords %} {{ setting.keywords }} {% endblock %}
 {% block description %} {{ setting.description }} {% endblock %}
-
+{% block head %}
+<style>
+.ps-mission:before{
+  background-color:rgb(166 210 233);
+}
+</style>
+{%endblock%}
 {% block about %}
 
-     <div class="ps-mission bg-cover" style='background: url("{% static '' %}images/parallax/home-testimonial.jpg");' data-background="images/parallax/home-testimonial.jpg">
+     <!--div class="ps-mission bg-cover" style="padding:40px;background-color:rgb(166 210 233);">
         <div class="ps-container">
           <h3>our mission</h3>
-          <h2>Your success is our ambition. <br> Your defeat spurs us on to be better.</h2>
+          <h2>Your success is our ambition. <br> Bring your products reach to customers.</h2>
         </div>
-     </div>
+     </div-->
         <div class="ps-section ps-ourteam pt-80 pb-80">
-        <div class="ps-container">
+          <div class="ps-container">
           <div class="ps-section__header mb-50">
             <h2 class="ps-section__title" data-mask="TEAM">- OUR STAFF</h2>
           </div>
@@ -82,9 +88,65 @@
                   </div>
             </div>
           </div>
+          </div>
+        </div>
+        <!-- test-ceo  -->
+      <div class="ps-home-testimonial bg--parallax pb-80" data-background="{% static '' %}images/background/parallax.jpg">
+        <div class="container">
+          <div class="owl-slider" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="0" data-owl-nav="false" data-owl-dots="true" data-owl-item="1" data-owl-item-xs="1" data-owl-item-sm="1" data-owl-item-md="1" data-owl-item-lg="1" data-owl-duration="1000" data-owl-mousedrag="on" data-owl-animate-in="fadeIn" data-owl-animate-out="fadeOut">
+            <div class="ps-testimonial">
+              <div class="ps-testimonial__thumbnail"><img src="{% static '' %}images/testimonial/1.jpg" alt=""><i class="fa fa-quote-left"></i></div>
+              <header>
+                <select class="ps-rating">
+                  <option value="1">1</option>
+                  <option value="1">2</option>
+                  <option value="1">3</option>
+                  <option value="1">4</option>
+                  <option value="5">5</option>
+                </select>
+                <p>Logan May - CEO & Founder Invision</p>
+              </header>
+              <footer>
+                <p>“Dessert pudding dessert jelly beans cupcake sweet caramels gingerbread. Fruitcake biscuit cheesecake. Cookie topping sweet muffin pudding tart bear claw sugar plum croissant. “</p>
+              </footer>
+            </div>
+            <div class="ps-testimonial">
+              <div class="ps-testimonial__thumbnail"><img src="{% static '' %}images/testimonial/2.jpg" alt=""><i class="fa fa-quote-left"></i></div>
+              <header>
+                <select class="ps-rating">
+                  <option value="1">1</option>
+                  <option value="1">2</option>
+                  <option value="1">3</option>
+                  <option value="1">4</option>
+                  <option value="5">5</option>
+                </select>
+                <p>Logan May - CEO & Founder Invision</p>
+              </header>
+              <footer>
+                <p>“Dessert pudding dessert jelly beans cupcake sweet caramels gingerbread. Fruitcake biscuit cheesecake. Cookie topping sweet muffin pudding tart bear claw sugar plum croissant. “</p>
+              </footer>
+            </div>
+            <div class="ps-testimonial">
+              <div class="ps-testimonial__thumbnail"><img src="{% static '' %}images/testimonial/3.jpg" alt=""><i class="fa fa-quote-left"></i></div>
+              <header>
+                <select class="ps-rating">
+                  <option value="1">1</option>
+                  <option value="1">2</option>
+                  <option value="1">3</option>
+                  <option value="1">4</option>
+                  <option value="5">5</option>
+                </select>
+                <p>Logan May - CEO & Founder Invision</p>
+              </header>
+              <footer>
+                <p>“Dessert pudding dessert jelly beans cupcake sweet caramels gingerbread. Fruitcake biscuit cheesecake. Cookie topping sweet muffin pudding tart bear claw sugar plum croissant. “</p>
+              </footer>
+            </div>
+          </div>
         </div>
       </div>
-    <div class="ps-all-user pt-25 pb-50">
+      <!-- endtest -->
+        <div class="ps-all-user pt-25 pb-50">
         <div class="ps-container">
           <div class="row ps-col-tiny">
                 <div class="col-lg-2 col-md-2 col-sm-3 col-xs-12 ">
@@ -133,12 +195,12 @@
                 </div>
                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 ">
                   <div class="ps-join-team">
-                    <h3>Would you like to join team &amp; build your dream NOW?</h3><a class="ps-btn" href="#">JOIN OUR TEAM<i class="ps-icon-arrow-left"></i></a>
+                    <h3>Would you like to join team &amp; build your dream NOW?</h3><a class="ps-btn" href="{% url 'home:contactus' %}">Contact Us<i class="ps-icon-arrow-left"></i></a>
                   </div>
                 </div>
           </div>
         </div>
       </div>
  <!--test from database-->
-       <div> {{ setting.aboutus|safe }}</div>
+      
 {% endblock %}

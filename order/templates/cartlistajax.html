@@ -1,0 +1,90 @@
+{% load humanize %}
+<!--For header content -->
+<div class="ps-cart__listing">
+    <div class="ps-cart__content"> <!--start div content -->
+      {% for rs in shopcart %}
+      <div class="ps-cart-item"><a class="ps-cart-item__close delete-cartlist" data-cartid="{{rs.id}}" ></a>
+      {% comment %} <div class="ps-cart-item"><a class="ps-cart-item__close" href="{% url 'order:deletefromcart' rs.id %}"></a> {% endcomment %}
+        {% if rs.variant.image_id  > 0 %}
+        <div class="ps-cart-item__thumbnail"><a href="/product/{{rs.product.id}}/{{rs.product.slug}}"></a><img src="{{rs.variant.image }}" alt=""></div>
+        {% else %}
+        <div class="ps-cart-item__thumbnail"><a href="/product/{{rs.product.id}}/{{rs.product.slug}}"></a><img src="{{rs.product.image.url}}" alt=""></div>
+        {% endif %}
+        <div class="ps-cart-item__content"><a class="ps-cart-item__title" href="/product/{{rs.product.id}}/{{rs.product.slug}}" style="margin-bottom: 0px;">{{rs.product.title}}&nbsp;(<i class="ftcolor">-{{rs.product.discount_percentage}}</i>)</a>
+          
+          <p><span>Qty:<i>{{rs.quantity}}</i></span><span>Total:<i>$
+            {% if rs.product.variant == 'None' %}
+              {{ rs.amount|intcomma}}&nbsp;<del style="color:orange;">${{rs.m_amount|intcomma}}</del></i></span>
+            {% else %}
+              {{ rs.varamount |intcomma}}&nbsp;<del style="color:orange;">${{rs.m_amount|intcomma}}</del></i></span>
+            {% endif %}  
+          {% comment %} </i></span> {% endcomment %}
+        </p>
+        </div>
+      </div>
+      {% endfor %}
+      
+    </div> <!--end div content -->
+    <div class="ps-cart__total">
+      <p>Number of items:<span>{{ count }}</span></p>
+      {% comment %} <p>Sub Total<span>${{total|floatformat:2}}</span></p> {% endcomment %}
+      <p>Sub Total<span>${{total|floatformat:2 |intcomma}}</span></p>
+      {% comment %} <p>VAT 10%:<span>${{vat10|floatformat:2}}</span></p> {% endcomment %}
+      <p hidden>VAT 10%:<span>${{vat10|floatformat:2 |intcomma}}</span></p>
+      <p>included VAT <!--span>${{vat10|floatformat:2 |intcomma}}</span--></p>
+      <p>Total of Items:<span>${{ grandtotal|floatformat:2 |intcomma}}</span></p> 
+      {% comment %} <p>Item GrandTotal:<span>${{ grandtotal}}</span></p> {% endcomment %}
+    </div>
+    <div class="ps-cart__footer"><a class="ps-btn" style="background-color:orange;" href="{% url 'order:shopcart' %}">View Cart<i class="ps-icon-arrow-left"></i></a></div>
+  </div>
+
+
+
+  <!--script>
+    //Deleted Cartlist by ajax request
+            $(document).on('click','.ps-cart-item__close',function(){ 
+              var _cartId=$(this).attr('data-cartid');
+              var _vmdel=$(this);
+              console.log(_cartId);
+                // Ajax
+              $.ajax({
+                type:'POST',
+                url:'{% url 'order:delete_from_cartlist' %}',
+                data:{
+                    'cartid':_cartId,
+                    csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+                    action: 'post',
+                },
+                dataType:'json',
+    
+                beforeSend:function(){
+                  _vmdel.attr('disabled',true);
+                  },
+                success:function(res){
+                  console.log(res);
+                  if(res.status==1){
+                      console.log("delete success");
+                          //alert("your product was deleted from Cart List");
+                      console.log(res.cartlistcount);
+                      $(".cartlistcount").text(res.cartlistcount);
+                      $('#md_head').html('<h4 class="modal-title" id="md_head">Your product Deleted succeeded!</h4>');
+                      $('#md_body').html('<div class="modal-body" id="md_body">Succeeded ! Deleted product</div>');
+                      $('#btn').addClass('btn-success');
+                      $('#myModal').modal('toggle');
+                      $('#cartlistajax').html(res.rendered_table);
+                      $(_vmdel).closest("tr").fadeOut();
+                      if (res.cartlistcount == 0){
+                        $('#btnupdatecart').attr('hidden',true);
+                      }    
+                    }
+                  }
+                
+              });// End Ajax
+    
+              //start Ajax
+              
+              //end Ajax
+              
+            });
+                
+    </script-->  

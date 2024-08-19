@@ -4,7 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 
 # Create your views here.
-from vendors.models import Vendor
+from vendors.models import Vendor,CommentForm_v,Comment_v
 
 from products.models import Category
 from vendors.forms import VendorUserUpdateForm, VendorProfileUpdateForm
@@ -320,3 +320,41 @@ def vendorstatisticlistinvoicebyid(request,uid):
                }
     return render(request, 'vendor_summary_statistic_bar_by_user_ordercode.html', context)
 
+from home.my_recaptcha import FormWithCaptcha
+#add comment to vendor on product and services
+def addcomment_v(request,vid):
+    url=request.META.get('HTTP_REFERER') #CHECK the last url to return the same page
+    #return HttpResponse(url)
+    if request.method == 'POST':# check post
+        form = CommentForm_v(request.POST)
+        captcha=FormWithCaptcha(request.POST)
+        if form.is_valid() and captcha.is_valid():
+            data = Comment_v()  # create relation with model
+            data.subject_v = form.cleaned_data['subject_v']
+            data.rate_v = form.cleaned_data['rate_v']     #add get for select
+            data.comment_v = form.cleaned_data['comment_v']
+            data.ip = request.META.get('REMOTE_ADDR')
+            data.vendor_id = vid
+            current_user = request.user
+            data.user_id = current_user.id
+            data.save()  # save data to table
+            print("Your review has ben sent. Thank you for your interest")
+            messages.success(request, "Your review has ben sent. Thank you for your interest.")
+            return HttpResponseRedirect(url)
+        else:
+            for key, error in list(captcha.errors.items()):
+                if key == 'captcha' and error[0] == 'This field is required.':
+                    messages.error(request, "You must pass the reCAPTCHA ")
+                    continue
+                messages.error(request,error)
+    captcha=FormWithCaptcha()
+    return HttpResponseRedirect(url)
+
+# def add_follower(request):
+#     if request.is_ajax:
+#         user_id=int(request.GET['userid'])
+#         userfollow=Vendor.objects.get(user_id=user_id)
+        
+#         print("User id:",user_id)
+        
+#     return None

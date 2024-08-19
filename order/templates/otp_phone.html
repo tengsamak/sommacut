@@ -1,0 +1,67 @@
+{% extends 'homebase.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block author %} SOMMA{% endblock %}
+{% block title %} {{ setting.title }} Home SOMMA Mart Product Detail{% endblock %}
+{% block keywords %} {{ setting.keywords }} {% endblock %}
+{% block description %} {{ setting.description }} {% endblock %}
+{% block head %}
+<style>
+  .otpbk{
+    background-color:#e9ecef;
+  }
+</style>
+{% endblock %}
+
+{% block otpverify %}
+  <!-- Copy from OTP verify code -->
+  <div class="ps-subscribe otpbk pt-80 pb-80">
+    <div class="ps-container">
+      <div class="row">
+            <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12 ">
+              <h3 style="color:orange;"><i class="fa fa-envelope"></i>Input Verify Code</h3>
+            </div>
+            <div class="col-lg-5 col-md-7 col-sm-12 col-xs-12 ">
+              <form class="ps-subscribe__form" method="post">
+                  {% csrf_token %}
+                <input class="form-control" type="text" name="otp" placeholder=""style="font-size: 20px;">
+                <button type="submit">Apply Code</button>
+              </form>
+            </div>
+            <div class="col-lg-4 col-md-5 col-sm-12 col-xs-12 ">
+              <h3 style="color:orange;"><i class="fa fa-phone-square mr-2"></i>Code you received in SMS phone</h3>
+            </div>
+            <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12 "></div>
+            <div class="col-lg-5 col-md-7 col-sm-12 col-xs-12 ">
+              <h4 style="color:red;">{% if error_message %}{{error_message}}{%endif%}</h4></div>
+            <div class="col-lg-4 col-md-5 col-sm-12 col-xs-12"></div>
+
+      </div>
+    </div>
+  </div>
+  <!--End OTP -->
+
+{% comment %} <h1>OTP phone</h1>
+<form method='POST'>
+  {% csrf_token %}
+    <div class="mb-3">
+      <label for="exampleInputOTP" class="form-label">OTP CODE</label>
+      <input type="text" name="otp" class="form-control" id="exampleInputOTP" aria-describedby="OTPHelp">
+      <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+    </div>
+
+    {% comment %} <div class="mb-3">
+      <label for="exampleInputPassword1" class="form-label">Password</label>
+      <input type="password" class="form-control" id="exampleInputPassword1">
+    </div> {% endcomment %}
+    {% comment %} <div class="mb-3 form-check">
+      <input type="checkbox" class="form-check-input" id="exampleCheck1">
+      <label class="form-check-label" for="exampleCheck1">Check me out</label>
+    </div> {% endcomment %}
+
+    {% comment %} <button type="submit" class="btn btn-primary">Confirm Code</button>
+  </form>
+  
+  <h1>{% if error_message %}Error:{{error_message}}{%endif%}</h1> {% endcomment %} 
+  {% endblock %}

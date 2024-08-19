@@ -1,0 +1,822 @@
+{% extends 'homebase.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block author %} SOMMA{% endblock %}
+{% block title %} Shop Cart List {{ setting.title }} {% endblock %}
+{% block keywords %} {{ setting.keywords }} {% endblock %}
+{% block description %} {{ setting.description }} {% endblock %}
+
+{% block head %}
+{% comment %} <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"> {% endcomment %}
+<!--boostrap new version from shopcart-->
+    <!--link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.css"-->
+    <!--link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous"-->
+    <!--/boostrap new version from shopcart-->
+    <!--link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.css"-->
+    <style>
+        tfoot>tr>td{
+        /* font-family: "Archivo Narrow", sans-serif; */
+        font-size: 18px;
+        font-weight: bold;
+        color: #515356;
+        text-transform: uppercase;
+        /* border-bottom: 1px solid #e5e5e5; */
+        }
+        .ftcolor{
+          color:#27b574;
+          font-weight: bolder;
+          /* font-size: 18px; */
+    
+        }
+        .form-group--number button{
+          background-color: #27b574;
+        }
+        .hidecol{
+          visibility:collapse;
+          display: none;
+    
+        }
+        .proven{
+          font-size:14px;
+          color: #27b574;
+        }
+        </style>
+    {% endblock %}
+  {% block breadcrumb %}
+<!-- for everypage excepte index page-->
+<nav aria-label="breadcrumb ">
+    <ol class="breadcrumb" style="background-color:#e9ecef;color: #009c91;display: block;">
+        <li class="breadcrumb-item"><a href="/"><strong>Home</strong></a></li>
+        <li class="breadcrumb-item active" aria-current="page"><strong>Products Shop Cart</strong></li>
+        <ol style="float: right;"><strong style="font-family: monospace;">Today:&nbsp;{% now "jS F Y " %}</strong></ol> 
+    </ol>
+</nav>
+<!-- end for page -->
+{% endblock %}
+{% load myapptags %}
+{% block shopcart %}
+<div class="ps-content pt-80 pb-30" style="padding-top: 0px;">
+    {% comment %} <div class="ps-container" style="width:1170px;"> {% endcomment %}
+    <div class="ps-container" >  
+        <header class="mb-50" style="float:right;margin-bottom: 30px;" >
+        <h1 style="font-size:48px;color: #f0ad4e;margin-top: 0px;"> Your Cart</h1>
+        
+        {% shopcartcount user.id as count %}
+        <h4 style="color:gray;">There are <b style="color:#2ac37d;" class="cartlistcount">{{count}}</b> products in your cart</h4>
+        {% comment %} <h4 style="color:gray;">There are <b style="color:#2ac37d;">{{shopcart.count}}</b> products in your cart</h4> {% endcomment %}
+        </header>
+      <div class="ps-cart-listing">
+        <table class="table ps-cart__table">
+          <thead style="background-color:#ececec;">
+            <tr​​>
+              <th class="hidecol">#</th>
+              <th>Image</th>
+              <th>Description</th>
+              <th>Unit Price</th>
+              <th>Quantity</th>
+              <th>Subtotal($)</th>
+              <th></th>
+
+            </tr>
+          </thead>
+          <tbody>
+          {% if request.user.is_authenticated %}   
+            {% for rs in shopcart %}
+            <tr class="cart-item" id="cart-item">
+              <td class="hidecol">{{ forloop.counter }}<input type="checkbox" class="cart-item-check" checked /></td>
+              {% if rs.variant.image_id > 0 %}
+              <td><a class="ps-product__preview" href="/product/{{rs.product.id}}/{{rs.product.slug}}"><img class="mr-15" src="{{rs.variant.image }}" style="height: 100px;" alt=""></a></td>
+              <td><a class="ps-product__preview" href="/product/{{rs.product.id}}/{{rs.product.slug}}">{{product.title}}{{rs.product}}-{{rs.product.title_kh}} <span class="ftcolor">{% if rs.product.variant == "Color" %}{{ rs.variant.color }}{%elif rs.product.variant == "Size"%} {{ rs.variant.size}} {% else%}{{ rs.variant.size }}/{{ rs.variant.color }} {%endif%}(-DISC&nbsp;{{rs.product.discount_percentage}})</span></a><br><span class="proven">By:{{rs.product.vendor.companyname | upper}}<br>Code:{{rs.product.pro_code}}</span> </td>
+              {% else %}
+              <td><a class="ps-product__preview" href="/product/{{rs.product.id}}/{{rs.product.slug}}"><img class="mr-15" src="{{rs.product.image.url}}" style="height: 100px;" alt=""></a></td>
+              <td><a class="ps-product__preview" href="/product/{{rs.product.id}}/{{rs.product.slug}}">{{product.title}}{{rs.product}}-{{rs.product.title_kh}}<span class="ftcolor">(-DISC&nbsp;{{rs.product.discount_percentage}} )</span></a><br><span class="proven">By:{{rs.product.vendor.companyname | upper}}<br>Code:{{rs.product.pro_code}}</span></td>
+
+
+              {%endif%}
+
+
+
+
+              <td class="ftcolor">$
+                {% if rs.product.variant == 'None' %}
+                    {{ rs.product.price }}<br><del style="color:orange;">${{rs.product.m_price}}</del>
+                {% else %}
+                    {{ rs.variant.price }}<br><del style="color:orange;">${{rs.product.m_price}}</del>
+                {% endif %}
+
+              </td>
+              <td>
+                <div class="form-group--number">
+                  <!-- <button class="minus" data-quantity="minus" data-field="quantity"><span>-</span></button> -->
+                  <input class="form-control cart-item-qty " type="number" id="{{rs.id}}" data-cartid="{{rs.id}}" value="{{rs.quantity}}" min=1 name="quantity" data-price="{% if rs.product.variant == 'None' %}
+                  {{ rs.product.price }}
+                {% else %}
+                  {{ rs.variant.price }}
+                {% endif %}">
+                  <!-- <button class="plus" data-quantity="plus" data-field="quantity"><span>+</span></button> -->
+                  <!-- <button class="minus"><span>-</span></button>
+                  <input class="form-control cart-item-qty" data-price="150" type="text" value="2" min=0>
+                  <button class="plus"><span>+</span></button> -->
+                </div>
+              </td>
+              <td class="cart-item-total ftcolor " id="cart-item-total">${% if rs.product.variant == 'None' %}
+                {{ rs.amount|intcomma}}<br><del style="color:orange;">${{rs.m_amount|intcomma}}</del></i></span>
+            {% else %}
+                {{ rs.varamount|intcomma }}<br><del style="color:orange;">${{rs.m_amount|intcomma}}</del></i></span>
+            {% endif %}</td>
+              <td><a type="button" class="delete-cartlist button" data-cartid={{rs.id}} ><i class="fa fa-trash-o" ></i></a></td>
+              <!-- <td>
+                <div class="ps-remove"></div>
+              </td> -->
+            </tr>
+    {% endfor %}
+    {%else%} <!--Not login-->
+            
+            {% for rs in cart_sess_products_var %}
+            <tr class="cart-item" id="cart-item">
+              <td class="hidecol">{{ forloop.counter }}<input type="checkbox" class="cart-item-check" checked /></td>
+              
+              {% comment %} {% if rs.variant.image_id > 0 %} {% endcomment %}
+              {% if rs.variant != 'None' %}
+              <td><a class="ps-product__preview" href="/product/{{rs.product.id}}/{{rs.product.slug}}"><img class="mr-15" src="{{rs.image}}" style="height: 100px;" alt=""></a></td>
+              <td><a class="ps-product__preview" href="/product/{{rs.product.id}}/{{rs.product.slug}}">{{rs.title}}-{{rs.product.title_kh}} <span class="ftcolor">{% if rs.product.variant == "Color" %}{{ rs.color }}{%elif rs.product.variant == Size %} {{ rs.size}} {% else%}{{ rs.size }}/{{ rs.color}} {%endif%}(-DISC&nbsp;{{rs.product.discount_percentage}})</span></a><br><span class="proven">By:{{rs.product.vendor.companyname | upper}}<br>Code:{{rs.product.pro_code}}</span> </td>
+              {% else %}
+                
+              <td><a class="ps-product__preview" href="/product/{{rs.id}}/{{rs.slug}}"><img class="mr-15" src="{{rs.image.url}}" style="height: 100px;" alt=""></a></td>
+              <td><a class="ps-product__preview" href="/product/{{rs.id}}/{{rs.slug}}">{{rs.title}}-{{rs.title_kh}}<span class="ftcolor">(-DISC&nbsp;{{rs.discount_percentage}} )</span></a><br><span class="proven">By:{{rs.vendor.companyname | upper}}<br>Code:{{rs.pro_code}}</span></td>
+                 
+              {%endif%}
+
+              <td class="ftcolor">$
+                {% if rs.product.variant == 'None' %}
+
+                    {{ rs.product.price }}<br><del style="color:orange;">${{rs.product.m_price}}</del>
+                
+                    {% else %}
+                    {{ rs.price }}<br><del style="color:orange;">${{rs.product.m_price}}</del>
+                {% endif %}
+                {% comment %} test:{%for key, value in cart_pro_qty.items %}{%if key == rs.id|stringformat:"i" %}{{key}},{{value}}{%endif%}{%endfor%} {% endcomment %}
+              </td>
+              <td>
+                <div class="form-group--number">
+                  <!-- <button class="minus" data-quantity="minus" data-field="quantity"><span>-</span></button> -->
+                  <input class="form-control cart-item-qty " type="number" id="{{rs.id}}" data-cartid="{{rs.id}}" value="{%for key, values in cart_pro_qty.items %}{%if key == rs.product.id|stringformat:"i" %}{{values}}{%endif%}{%endfor%}" min=1 name="quantity" data-price="{% if rs.product.variant == 'None' %}
+                  {{ rs.product.price }}
+                {% else %}
+                  {{ rs.price }}
+                {% endif %}">
+                  
+                </div>
+              </td>
+              <td class="cart-item-total ftcolor " id="cart-item-total">${% if rs.product.variant == 'None' %}
+                {%for key, values in cart_pro_qty.items %}{%if key == rs.product.id|stringformat:"i" %}{% multiply values|floatformat:2 rs.product.price   %}{%endif%}{%endfor%}<br><del style="color:orange;">$ {%for key, values in cart_pro_qty.items %}{%if key == rs.product.id|stringformat:"i" %}{% multiply values|floatformat:2 rs.product.m_price   %}{%endif%}{%endfor%}</del></i></span>
+            {% else %}
+                {%for key, values in cart_pro_qty.items %}{%if key == rs.product.id|stringformat:"i" %}{% multiply values|floatformat:2 rs.price %}{%endif%}{%endfor%}<br><del style="color:orange;">${%for key, values in cart_pro_qty.items %}{%if key == rs.product.id|stringformat:"i" %}{% multiply values|floatformat:2 rs.product.m_price %}{%endif%}{%endfor%}</del></i></span>
+            {% endif %}</td>
+              <td><a type="button" class="del_cart_sess_var button" data-cartid={{rs.product.id}} ><i class="fa fa-trash-o" ></i></a></td>
+              
+            </tr>
+
+            {% if forloop.last %} <!--check lass loop-->
+            {%if cart_list_sess_prods_no_var%}<!--check no variant-->
+            {% for rs in cart_list_sess_prods_no_var %}
+            <tr class="cart-item" id="cart-item">
+              <td class="hidecol">{{ forloop.counter }}<input type="checkbox" class="cart-item-check" checked /></td>
+              
+              {% comment %} {% if rs.variant.image_id > 0 %} {% endcomment %}
+        <!--      {% if rs.variant != 'None' %}
+              <td><a class="ps-product__preview" href="/product/{{rs.product.id}}/{{rs.product.slug}}"><img class="mr-15" src="{{rs.image}}" style="height: 100px;" alt=""></a></td>
+              <td><a class="ps-product__preview" href="/product/{{rs.product.id}}/{{rs.product.slug}}">{{rs.title}}-{{rs.product.title_kh}} <span class="ftcolor">{% if rs.product.variant == "Color" %}{{ rs.color }}{%elif rs.product.variant == Size %} {{ rs.size}} {% else%}{{ rs.size }}/{{ rs.color}} {%endif%}(-DISC&nbsp;{{rs.product.discount_percentage}})</span></a><br><span class="proven">By:{{rs.product.vendor.companyname | upper}}<br>Code:{{rs.product.pro_code}}</span> </td>
+              {% else %}
+        -->        
+              <td><a class="ps-product__preview" href="/product/{{rs.id}}/{{rs.slug}}"><img class="mr-15" src="{{rs.image.url}}" style="height: 100px;" alt=""></a></td>
+              <td><a class="ps-product__preview" href="/product/{{rs.id}}/{{rs.slug}}">{{rs.title}}-{{rs.title_kh}}<span class="ftcolor">(-DISC&nbsp;{{rs.discount_percentage}} )</span></a><br><span class="proven">By:{{rs.vendor.companyname | upper}}<br>Code:{{rs.pro_code}}</span></td>
+                 
+        <!--  {%endif%}
+          -->
+              <td class="ftcolor">${{ rs.price }}<br><del style="color:orange;">${{rs.m_price}}</del>
+              </td>
+              <td>
+                <div class="form-group--number">
+                  <!-- <button class="minus" data-quantity="minus" data-field="quantity"><span>-</span></button> -->
+                  <input class="form-control cart-item-qty " type="number" id="{{rs.id}}" data-cartid="{{rs.id}}" value="{%for key, values in cart_pro_qty_no_var.items %}{%if key == rs.id|stringformat:"i" %}{{values}}{%endif%}{%endfor%}" min=1 name="quantity" data-price="
+                {% comment %} {% if rs.product.variant == 'None' %} {% endcomment %}
+                  {{ rs.price }}
+                {% comment %} {% else %}
+                  {{ rs.price }}
+                {% endif %} {% endcomment %}
+                ">
+                  
+                </div>
+              </td>
+              <td class="cart-item-total ftcolor " id="cart-item-total">$
+            {% comment %} {% if rs.product.variant == 'None' %} {% endcomment %}
+                {%for key, values in cart_pro_qty_no_var.items %}{%if key == rs.id|stringformat:"i" %}{% multiply values|floatformat:2 rs.price   %}{%endif%}{%endfor%}<br><del style="color:orange;">$ {%for key, values in cart_pro_qty_no_var.items %}{%if key == rs.id|stringformat:"i" %}{% multiply values|floatformat:2 rs.m_price   %}{%endif%}{%endfor%}</del></i></span>
+            {% comment %} {% else %}
+                {%for key, values in cart_pro_qty_no_var.items %}{%if key == rs.id|stringformat:"i" %}{% multiply values|floatformat:2 rs.price %}{%endif%}{%endfor%}<br><del style="color:orange;">${%for key, values in cart_pro_qty.items %}{%if key == rs.product.id|stringformat:"i" %}{% multiply values|floatformat:2 rs.product.m_price %}{%endif%}{%endfor%}</del></i></span>
+            {% endif %} {% endcomment %}
+              </td>
+              <td><a type="button" class="del_cart_sess_no_var button" data-cartid={{rs.id}} ><i class="fa fa-trash-o" ></i></a></td>
+              
+            </tr>
+            {% endfor %} <!--end check no var-->
+            {%endif%}<!--end check no var-->
+            {%endif%}<!--end check lass loop-->
+
+    {% endfor %}  
+    {%endif%} 
+    
+   
+
+          </tbody>
+           <!--tfoot>
+             <tr>
+             
+               <td colspan="5" class="ftcolor"> {% for qty1 in cart_pro_qty1.values %}-{{qty1}}- {%endfor%}</td>
+                <td class="ftcolor"></td>
+               
+               </tr>
+             </tfoot--> 
+        </table>
+
+        <!-- test -->
+        <!-- <div class="totals">
+          <div class="totals-item">
+            <label>Subtotal</label>
+            <div class="totals-value" id="cart-subtotal">￥0</div>
+          </div>
+          <div class="totals-item">
+            <label>Tax (5%)</label>
+            <div class="totals-value" id="cart-tax">￥0</div>
+          </div>
+          <div class="totals-item">
+            <label>Shipping</label>
+            <div class="totals-value" id="cart-shipping">￥0</div>
+          </div>
+          <div class="totals-item totals-item-total">
+            <label>Grand Total</label>
+            <div class="totals-value" id="cart-total">￥0</div>
+          </div>
+        </div> -->
+        <!-- end test -->
+
+        <div class="ps-cart__actions" style="padding-top: 0px;">
+          <div class="ps-cart__promotion" style="padding-top: 15px;">
+            <!--div class="form-group" id="alertpromo" style="text-align:center;">
+              <p>
+                Your Code{{getpromocode}}, Status:{{checkcoupon.valid}}, Message:{{checkcoupon.message}}
+              </p>
+            </div-->
+            <!--form method="POST">
+              {% csrf_token %}
+            <div class="form-group">
+              <div class="ps-form--icon">
+                <button class="ps-btn ps-btn--gray" type ="submit" id="btnpromo" style="width: 30%;position: absolute; right: 0%;top: -5%;" ><i class="fa fa-angle-right"></i></button>
+                <input class="form-control" name="promocode" type="text" placeholder="Promo Code">
+              </div>
+            </div> 
+          </form-->
+            <div class="form-group">
+              <a class="ps-btn ps-btn--gray" href="/" style="background-color: #ce7dde;">Continue Shopping</a>
+              
+            </div>
+            <!--div class="form-group">
+              <a class="ps-btn ps-btn--gray" href="{%url 'order:checkout'%}">Test Checkout</a>
+            </div-->
+          </div>
+          
+          <div class="ps-cart__total" {% if shopcartcount == 0%} hidden {%endif%}​>
+            <div class="" style="text-align:center;">
+              <a class="ps-btn" type="button" id="btnupdatecart" style="background-color:#f9bd0a;">Update Cart (<strong style="color:#2ac37d;font-weight:bold;" class="cartlistcount">{{count}}</strong>)<i class="ps-icon-shopping-cart"></i></a>
+              </div>
+
+            <h2 class="ftcolor"style="margin-top: 20px;margin-bottom: 10px;text-align:center;">ORDER SUMMARY</h2>
+            <div class="totals">
+                {% comment %} <h3 >Total Sub: <span class="ftcolor">$<b class="ftcolor" id="cart-subtotal"> {{total|floatformat:2}} </b></span></h3> {% endcomment %}
+                <h3 >Total Sub: <span class="ftcolor">$<b class="ftcolor" id="cart-subtotal"> {{total}} </b></span></h3>
+                        <!-- <div class="totals-item">
+                            <label>Subtotal</label>
+                            <div class="totals-value ftcolor" id="cart-subtotal">￥0</div>
+                        </div> -->
+                {% comment %} <h3 >VAT 10%: <span class="ftcolor">$<b class="ftcolor " id="cart-tax"> {{vat10|floatformat:2}} </b></span></h3>         {% endcomment %}
+                <h3 hidden >VAT 10%: <span class="ftcolor">$<b class="ftcolor " id="cart-tax"> {{vat10}} </b></span></h3>
+                <h6 >included VAT <!--span class="ftcolor">$<b class="ftcolor " id="cart-tax"> {{vat10}} </b></span--></h6>        
+                <!-- <div class="totals-item">
+                          <label>Tax (5%)</label>
+                          <div class="totals-value ftcolor" id="cart-tax">￥0</div>
+                        </div> -->
+                <!-- <h3>Shipping:<span​>$<b class="ftcolor" id="cart-shipping">1.00</b></span></h3> -->
+                        <!-- <div class="totals-item">
+                          <label>Shipping</label>
+                          <div class="totals-value ftcolor" id="cart-shipping">￥0</div>
+                        </div> -->
+                        {% if checkcoupon.valid == True %}
+                       
+                <h3 >Promo Discount: <span class="ftcolor">$<b class="ftcolor " id="cart-shipping"> {%if promodiscount.is_percentage == True%} {{promodiscount.value}}%{%else%}{{promodiscount.value}}${%endif%} </b></span></h3>
+                        {%endif%}  
+                <hr />
+                {% comment %} <h3>Grand Total: <span class="ftcolor">$<b class="ftcolor " id="cart-total"> {{grandtotal|floatformat:2}} </b></span></h3> {% endcomment %}
+                <h3>Grand Total: <span class="ftcolor">$<b class="ftcolor " id="cart-total"> {{grandtotal}} </b></span></h3>
+                        <!-- <div class="totals-item totals-item-total">
+                            <label>Grand Total</label>
+                            <div class="totals-value ftcolor" id="cart-total">￥0</div>
+                        </div> -->
+            </div>
+            <a class="ps-btn checkout" href="{%url 'order:checkout'%}">Process to checkout<i class="ps-icon-next"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% comment %} <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script> {% endcomment %}
+  <script>
+    $(document).ready(function(){
+      // console.log('hello');
+      //alert("this ajax");
+      var taxRate = 0.00; // ={{product.tax}} # No_VAT
+      var shipping = 0.00;
+      /* this is function call recalculated*/
+      function recalculateCart() {
+    
+          var subTotal = 0;
+          var grandTotal = 0;
+          var tax = 0;
+          var items = $(".cart-item");
+          $.each(items, function() {
+            var itemCheck = $(this).find(".cart-item-check");
+            var itemQuantity = $(this).find(".cart-item-qty");
+            if (itemCheck.prop("checked")) {
+              var itemTotal = itemQuantity.val() * itemQuantity.attr("data-price");
+              subTotal += itemTotal;
+            }  });
+          if (subTotal > 0) {
+            tax = subTotal * taxRate;
+            grandTotal = subTotal + tax + shipping;
+            $(".totals").show();
+            $(".checkout").hide();
+            //$(".totals,.checkout").show();
+          } else {
+            $(".totals,.checkout").hide();
+          }
+          $("#cart-subtotal").html(subTotal.toFixed(2));
+          $("#cart-total").html(grandTotal.toFixed(2));
+          $("#cart-tax").html(tax.toFixed(2));
+          $("#cart-shipping").html(shipping.toFixed(2));
+        };
+        /*end function call*/
+    
+      $(".cart-item-check").change(function() {
+          recalculateCart();
+        });
+    
+      $(".cart-item-qty").change(function() {
+          var $this = $(this);
+          var parent = $this.parent().parent().parent(); /*add this parent for retoatl*/
+          parent.find(".cart-item-check").prop("checked", "checked");
+          var price = $this.attr("data-price");
+          var quantity = $this.val();
+          var total = price * quantity;
+          // alert(price);
+          // alert(quantity);
+          // alert(total);
+          // alert(parent.find($("#cart-item-total")).html(total.toFixed(2)));
+          parent.find(".cart-item-total").html(total.toFixed(2));
+          // alert(total);
+          recalculateCart();
+        });
+    
+    
+      $(".button").click(function(){
+          var parent = $(this)
+            .parent()
+            .parent();
+          parent.fadeOut(300, function() { 
+              parent.remove();
+              recalculateCart(); 
+          });
+          //recalculateCart();
+            
+            //parent.remove();
+            //recalculateCart();
+        });
+      /*test check on change on $("#cart-subtotal") for hidden checkout btn
+      $("#cart-subtotal").change(function(){
+        $('.checkout').attr('hidden',true);
+      });
+      *///end test
+
+      });//document ready   
+    /* this is function call recalculated*/
+    function recalculateCart() {
+    
+        var subTotal = 0;
+        var grandTotal = 0;
+        var tax = 0;
+        var items = $(".cart-item");
+        $.each(items, function() {
+          var itemCheck = $(this).find(".cart-item-check");
+          var itemQuantity = $(this).find(".cart-item-qty");
+          if (itemCheck.prop("checked")) {
+            var itemTotal = itemQuantity.val() * itemQuantity.attr("data-price");
+            subTotal += itemTotal;
+          }
+        });
+        if (subTotal > 0) {
+          tax = subTotal * taxRate;
+          grandTotal = subTotal + tax + shipping;
+          //$(".totals").show();
+          //$(".checkout").hide();
+          $(".totals,.checkout").show();
+        } else {
+          $(".totals,.checkout").hide();
+        }
+        $("#cart-subtotal").html(subTotal.toFixed(2));
+        $("#cart-total").html(grandTotal.toFixed(2));
+        $("#cart-tax").html(tax.toFixed(2));
+        $("#cart-shipping").html(shipping.toFixed(2));
+      };
+      /*end function call*/
+    
+    
+   // });
+    </script>
+
+<script>
+//Deleted Cartlist by ajax request
+        $(document).on('click','.delete-cartlist',function(){ 
+          var _cartId=$(this).attr('data-cartid');
+          var _vmdel=$(this);
+          alert("click del");
+          console.log("This",+_vmdel);
+          console.log("CardId",+_cartId);
+            // Ajax
+          $.ajax({
+            type:'POST',
+            url:'{% url 'order:delete_from_cartlist' %}',
+            data:{
+                'cartid':_cartId,
+                csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+                action: 'post',
+            },
+            dataType:'json',
+
+           /* beforeSend:function(){
+              _vmdel.attr('disabled',true);
+              },*/
+            success:function(res){
+              //console.log(res);
+              if(res.status==1){
+                //console.log("delete success");
+                alert("your product was deleted from Cart List");
+                console.log("count",+res.cartlistcount);
+                //$(".cartlistcount").text(res.cartlistcount);
+                //$(_vmdel).closest("tr").fadeOut();
+                $('#md_head').html('<h4 class="modal-title" id="md_head">Your product Deleted succeeded!</h4>');
+                $('#md_body').html('<div class="modal-body" id="md_body">Succeeded ! Deleted product</div>');
+                $('#btn').addClass('btn-success');
+                $('#myModal').modal('toggle');
+                $('#cartlistajax').html(res.rendered_table);// for display at header
+                $(".cartlistcount").text(res.cartlistcount);
+                $(_vmdel).closest("tr").fadeOut();
+               
+
+                /*if (res.cartlistcount == 0){
+                  $('#btnupdatecart').attr('hidden',true);
+                }   */ 
+              }
+          /*    else {
+
+                $('#md_head').html('<h4 class="modal-title" id="md_head">Your deleted Cart Error</h4>');
+                $('#md_body').html('<div class="modal-body" id="md_body">Error! Please feel free to Click delete againt!</div>');
+                $('#btn').addClass('btn-warning');
+                $('#myModal').modal('toggle');
+              },
+            */  
+            },
+            error: function (res) {
+              $('#md_head').html('<h4 class="modal-title" id="md_head">Your deleted Cart Error</h4>');
+              $('#md_body').html('<div class="modal-body" id="md_body">Error! Please feel free to Click delete againt!</div>');
+              $('#btn').addClass('btn-warning');
+              $('#myModal').modal('toggle');
+              //$(".totals,.checkout").hide();
+                  //$('#test').html('<p>Hello</p>');
+              console.log("Data got Error, please click on update cart again! Thank you");
+            },
+            
+          });// End Ajax
+
+          //start Ajax
+          
+          //end Ajax
+          
+        });
+
+
+//Deleted Cart_session_no_var by ajax request
+        $(document).on('click','.del_cart_sess_no_var',function(){ 
+          var _cartId=$(this).attr('data-cartid');
+          var _vmdel=$(this);
+          alert("click del");
+          console.log("This",+_vmdel);
+          console.log("CardId",+_cartId);
+            // Ajax
+          $.ajax({
+            type:'POST',
+            url:'{% url 'order:del_cart_sess_no_var' %}',
+            data:{
+                'p_id':_cartId,
+                csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+                action: 'post',
+            },
+            dataType:'json',
+
+           /* beforeSend:function(){
+              _vmdel.attr('disabled',true);
+              },*/
+            success:function(res){
+              //console.log(res);
+              if(res.status==1){
+                //console.log("delete success");
+                alert("your product was deleted from Cart List session");
+                console.log("count",+res.cartlistcount);
+                //$(".cartlistcount").text(res.cartlistcount);
+                //$(_vmdel).closest("tr").fadeOut();
+                $('#md_head').html('<h4 class="modal-title" id="md_head">Your product Deleted succeeded!</h4>');
+                $('#md_body').html('<div class="modal-body" id="md_body">Succeeded ! Deleted product</div>');
+                $('#btn').addClass('btn-success');
+                $('#myModal').modal('toggle');
+                //$('#cartlistajax').html(res.rendered_table);// for display at header
+                $(".cartlistcount").text(res.cartlistcount);
+                $(_vmdel).closest("tr").fadeOut();
+               
+
+                /*if (res.cartlistcount == 0){
+                  $('#btnupdatecart').attr('hidden',true);
+                }   */ 
+              };
+          /*    else {
+
+                $('#md_head').html('<h4 class="modal-title" id="md_head">Your deleted Cart Error</h4>');
+                $('#md_body').html('<div class="modal-body" id="md_body">Error! Please feel free to Click delete againt!</div>');
+                $('#btn').addClass('btn-warning');
+                $('#myModal').modal('toggle');
+              }
+                */
+            },
+            error: function (res) {
+              $('#md_head').html('<h4 class="modal-title" id="md_head">Your deleted Cart Error</h4>');
+              $('#md_body').html('<div class="modal-body" id="md_body">Error! Please feel free to Click delete againt!</div>');
+              $('#btn').addClass('btn-warning');
+              $('#myModal').modal('toggle');
+              //$(".totals,.checkout").hide();
+                  //$('#test').html('<p>Hello</p>');
+              console.log("Data got Error, please click on update cart again! Thank you");
+            },
+            
+          });// End Ajax
+
+          //start Ajax
+          
+          //end Ajax
+          
+        });        
+
+
+//Deleted Cart_session_var by ajax request
+$(document).on('click','.del_cart_sess_var',function(){ 
+  var _cartId=$(this).attr('data-cartid');
+  var _vmdel=$(this);
+  alert("click del");
+  console.log("This",+_vmdel);
+  console.log("CardId",+_cartId);
+    // Ajax
+  $.ajax({
+    type:'POST',
+    url:'{% url 'order:del_cart_sess_var' %}',
+    data:{
+        'p_id':_cartId,
+        csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+        action: 'post',
+    },
+    dataType:'json',
+
+   /* beforeSend:function(){
+      _vmdel.attr('disabled',true);
+      },*/
+    success:function(res){
+      //console.log(res);
+      if(res.status==1){
+        //console.log("delete success");
+        alert("your product was deleted from Cart List session");
+        console.log("count",+res.cartlistcount);
+        //$(".cartlistcount").text(res.cartlistcount);
+        //$(_vmdel).closest("tr").fadeOut();
+        $('#md_head').html('<h4 class="modal-title" id="md_head">Your product Deleted succeeded!</h4>');
+        $('#md_body').html('<div class="modal-body" id="md_body">Succeeded ! Deleted product</div>');
+        $('#btn').addClass('btn-success');
+        $('#myModal').modal('toggle');
+        //$('#cartlistajax').html(res.rendered_table);// for display at header
+        $(".cartlistcount").text(res.cartlistcount);
+        $(_vmdel).closest("tr").fadeOut();
+       
+
+        /*if (res.cartlistcount == 0){
+          $('#btnupdatecart').attr('hidden',true);
+        }   */ 
+      };
+  /*    else {
+
+        $('#md_head').html('<h4 class="modal-title" id="md_head">Your deleted Cart Error</h4>');
+        $('#md_body').html('<div class="modal-body" id="md_body">Error! Please feel free to Click delete againt!</div>');
+        $('#btn').addClass('btn-warning');
+        $('#myModal').modal('toggle');
+      }
+        */
+    },
+    error: function (res) {
+      $('#md_head').html('<h4 class="modal-title" id="md_head">Your deleted Cart Error</h4>');
+      $('#md_body').html('<div class="modal-body" id="md_body">Error! Please feel free to Click delete againt!</div>');
+      $('#btn').addClass('btn-warning');
+      $('#myModal').modal('toggle');
+      //$(".totals,.checkout").hide();
+          //$('#test').html('<p>Hello</p>');
+      console.log("Data got Error, please click on update cart again! Thank you");
+    },
+    
+  });// End Ajax
+
+  //start Ajax
+  
+  //end Ajax
+  
+});          
+</script>  
+
+{% comment %} Get value quantity of each cart for update {% endcomment %}
+<script>
+  $(document).ready(function(){ 
+    $("#btnupdatecart1").click(function(){
+      var getcartid = [{%for rs in shopcart %}{{rs.id}}, {%endfor%}]
+      //getval = $('#{%for rs in shopcart %}{{rs.id}} {%endfor%}').val();
+      // we get by class name use each function jquery
+      
+      alert(getcartid);
+      var getvalueqty =[]
+      $.each($('.cart-item-qty'), function(index, value) {
+        //console.log(index + ':' + $(value).text());
+        console.log(index + ':' + $(value).val());
+        getvalueqty.push($(value).val());
+        alert(getvalueqty);
+      });
+        alert(getvalueqty);
+
+      return false;
+    });
+    
+  });
+</script>
+<script>
+  //***************
+  $(document).ready(function(){
+    $("#btnupdatecart").click(function(e){
+      //e.preventDefault();
+      var getcartid = new Array();
+      var getval = new Array();
+      var items = $(".cart-item");
+      $.each(items, function() {
+        //var itemCheck = $(this).find(".cart-item") ;
+        var itemQuantity = $(this).find(".cart-item-qty");
+        if ($(this).attr("style")!="display: none;") {
+        //var itemTotal = itemQuantity.val() * itemQuantity.attr("data-price");
+        //subTotal += itemTotal;
+
+          getval.push(itemQuantity.val());
+          getcartid.push(itemQuantity.attr("data-cartid"));
+      }
+        else {
+          
+         console.log("item was delete");
+          
+      }
+    });  // end each item
+      console.log(getval);
+      console.log(getcartid);
+      //return false; // stop run function
+      // insert ajax
+      $.ajax({
+        type:'POST',
+        url:'{% url 'order:updatecart' %}',
+        data:{
+            'get_cartid[]' : getcartid,
+            'get_val[]' : getval,
+            csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+            action: 'post',
+        },
+        dataType:'json',
+        success: function (response) {
+            if(response.success){
+              //Call modal by toggle
+              $('#md_head').html('<h4 class="modal-title" id="md_head">Your Cart Update succeeded!</h4>');
+              $('#md_body').html('<div class="modal-body" id="md_body">Succeeded! Please feel free to checkout!</div>');
+              $('#btn').addClass('btn-success');
+              $('#myModal').modal('toggle');
+              $('#cartlistajax').html(response.rendered_table);
+              $(".totals,.checkout").show();
+              $('html, body').animate({
+                scrollTop: $(".totals,.checkout").offset().top}, 1000);
+              //$('#test').html('<p>Hello</p>');
+              console.log("data have been updated you can check out processed");
+              //alert("data have been updated you can check out processed");  
+            }
+    },
+        error: function (response) {
+          $('#md_head').html('<h4 class="modal-title" id="md_head">Your Update Cart Error</h4>');
+          $('#md_body').html('<div class="modal-body" id="md_body">Error! Please feel free to Click update againt!</div>');
+          $('#btn').addClass('btn-warning');
+          $('#myModal').modal('toggle');
+          $(".totals,.checkout").hide();
+              //$('#test').html('<p>Hello</p>');
+          console.log("Data got Error, please click on update cart again! Thank you");
+    },
+    });  // end ajax
+
+  }); // end click btn
+
+  });//end document
+  
+  </script>
+
+  <script>
+    //for promocode
+    $(document).ready(function(){
+      $("#btnpromo").click(function(e){
+        e.preventDefault();
+        var getpromo_=$("input[name='promocode']").val();
+        alert("Hello");
+        console.log(getpromo_);
+        x=getpromo_.length;
+        if (x<=0) {
+          alert("please input your promo code");
+        } else {
+          alert("start ajax");
+        
+        $.ajax({
+          type:'POST',
+          url:'{% url 'order:promoapply' %}',
+          data:{
+              'get_promocode' : getpromo_,
+              csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+              action: 'post',
+          },
+          dataType:'json',
+          success: function (response) {
+              //if(response.success){
+                //Call modal by toggle
+                
+                $('#alertpromo').html(response.rendered_table);
+                
+                //console.log("data have been updated you can check out processed");
+                //alert("data have been updated you can check out processed");  
+              //}
+      },
+          error: function (response) {
+            
+            console.log("Data got Error, please click on update cart again! Thank you");
+      },
+      });  // end ajax  
+    }//end if else check length input promot code  
+      });
+    });  
+
+  </script>
+
+{% comment %} <div id="test"></div> {% endcomment %}
+  {% comment %} <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+    Open modal
+  </button> {% endcomment %}
+      <!-- The Modal -->
+      <div class="modal fade" id="myModal">
+        <div class="modal-dialog">
+          <div class="modal-content">
+  
+            <!-- Modal Header -->
+            <div class="modal-header">
+              <h4 class="modal-title" id="md_head">Modal Heading</h4>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+  
+            <!-- Modal body -->
+            <div class="modal-body" id="md_body">
+              Modal body..
+            </div>
+  
+            <!-- Modal footer -->
+            <div class="modal-footer">
+              <button type="button" class="btn" id="btn" data-dismiss="modal">Close</button>
+            </div>
+  
+          </div>
+        </div>
+      </div>
+<!-- end test modals -->{% endblock %}

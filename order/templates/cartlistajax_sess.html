@@ -1,0 +1,144 @@
+{% load humanize %}
+{% load myapptags %}
+<!--For header content -->
+<div class="ps-cart__listing"><!--start ps-cart__listing -->
+    <div class="ps-cart__content"> <!--start ps-cart__content -->
+      {% if request.user.is_authenticated %}  
+      {% for rs in shopcart %}
+      <div class="ps-cart-item"><a class="ps-cart-item__close delete-cartlist" data-cartid="{{rs.id}}" ></a>
+      {% comment %} <div class="ps-cart-item"><a class="ps-cart-item__close" href="{% url 'order:deletefromcart' rs.id %}"></a> {% endcomment %}
+        {% if rs.variant.image_id  > 0 %}
+        <div class="ps-cart-item__thumbnail"><a href="/product/{{rs.product.id}}/{{rs.product.slug}}"></a><img src="{{rs.variant.image }}" alt=""></div>
+        {% else %}
+        <div class="ps-cart-item__thumbnail"><a href="/product/{{rs.product.id}}/{{rs.product.slug}}"></a><img src="{{rs.product.image.url}}" alt=""></div>
+        {% endif %}
+        <div class="ps-cart-item__content"><a class="ps-cart-item__title" href="/product/{{rs.product.id}}/{{rs.product.slug}}" style="margin-bottom: 0px;">{{rs.product.title}}&nbsp;(<i class="ftcolor">-{{rs.product.discount_percentage}}</i>)</a>
+          
+          <p><span>Qty:<i>{{rs.quantity}}</i></span><span>Total:<i>$
+            {% if rs.product.variant == 'None' %}
+              {{ rs.amount|intcomma}}&nbsp;<del style="color:orange;">${{rs.m_amount|intcomma}}</del></i></span>
+            {% else %}
+              {{ rs.varamount |intcomma}}&nbsp;<del style="color:orange;">${{rs.m_amount|intcomma}}</del></i></span>
+            {% endif %}  
+          {% comment %} </i></span> {% endcomment %}
+        </p>
+        </div>
+      </div>
+      {% endfor %}
+      <!--englogin-->
+      {%else%}<!--Not Login-->
+       
+      {%if check_cart_sess == 'cart_var' %}
+        {% for rs in cart_sess_products_var %}
+      <div class="ps-cart-item"><a class="ps-cart-item__close delete-cartlist" data-cartid="{{rs.product.id}}" ></a>
+      
+        <div class="ps-cart-item__thumbnail"><a href="/product/{{rs.product.id}}/{{rs.product.slug}}"></a><img src="{{rs.image }}" alt=""></div>
+        
+        <div class="ps-cart-item__content"><a class="ps-cart-item__title" href="/product/{{rs.id}}/{{rs.slug}}" style="margin-bottom: 0px;">{{rs.product.title}}&nbsp;(<i class="ftcolor">-{{rs.product.discount_percentage}}</i>)</a>
+          
+          <p><span>Qty:<i>{%for key, values in cart_pro_qty.items %}{%if key == rs.product.id|stringformat:"i" %}{{values}}{%endif%}{%endfor%}</i></span><span>Total:<i class="ftcolor" style="color:#2ac37d;">$
+            
+            {%for key, values in cart_pro_qty.items %}{%if key == rs.product.id|stringformat:"i" %}{% multiply values|floatformat:2 rs.price %}{%endif%}{%endfor%}&nbsp;<del style="color:orange;">${%for key, values in cart_pro_qty.items %}{%if key == rs.product.id|stringformat:"i" %}{% multiply values|floatformat:2 rs.product.m_price %}{%endif%}{%endfor%}</del></i></span>
+            
+        </p>
+        </div>
+      </div>
+      {% endfor %} 
+    {%elif check_cart_sess == 'cart_no_var' %}<!--check no variant-->  
+      {% for rs in cart_list_sess_prods_no_var %}
+      <div class="ps-cart-item"><a class="ps-cart-item__close delete-cartlist" data-cartid="{{rs.id}}" ></a>
+        
+          <div class="ps-cart-item__thumbnail"><a href="/product/{{rs.id}}/{{rs.slug}}"></a><img src="{{rs.image.url}}" alt=""></div>
+          
+          <div class="ps-cart-item__content"><a class="ps-cart-item__title" href="/product/{{rs.id}}/{{rs.slug}}" style="margin-bottom: 0px;">{{rs.title}}&nbsp;(<i class="ftcolor">-{{rs.discount_percentage}}</i>)</a>
+            
+            <p><span>Qty:<i>{%for key, values in cart_pro_qty_no_var.items %}{%if key == rs.id|stringformat:"i" %}{{values}}{%endif%}{%endfor%}</i></span><span>Total:<i class="ftcolor" style="color:#2ac37d;">$
+              
+              {%for key, values in cart_pro_qty_no_var.items %}{%if key == rs.id|stringformat:"i" %}{% multiply values|floatformat:2 rs.price   %}{%endif%}{%endfor%}&nbsp;<del style="color:orange;">${%for key, values in cart_pro_qty_no_var.items %}{%if key == rs.id|stringformat:"i" %}{% multiply values|floatformat:2 rs.m_price   %}{%endif%}{%endfor%}</del></i></span>
+              
+          </p>
+          </div>
+        </div>
+        {% endfor %} 
+        {% elif check_cart_sess == 'both'%}
+          {% for rs in cart_sess_products_var %}<!--for var 1st-->
+          <div class="ps-cart-item"><a class="ps-cart-item__close delete-cartlist" data-cartid="{{rs.product.id}}" ></a>
+           
+              {% if rs.variant != 'None' %}
+              <div class="ps-cart-item__thumbnail"><a href="/product/{{rs.product.id}}/{{rs.product.slug}}"></a><img src="{{rs.image }}" alt=""></div>
+              {% else %}
+              <div class="ps-cart-item__thumbnail"><a href="/product/{{rs.id}}/{{rs.slug}}"></a><img src="{{rs.image.url}}" alt=""></div>
+              {% endif %}
+              <div class="ps-cart-item__content"><a class="ps-cart-item__title" href="/product/{{rs.product.id}}/{{rs.product.slug}}" style="margin-bottom: 0px;">{{rs.product.title}}&nbsp;(<i class="ftcolor">-{{rs.product.discount_percentage}}</i>)</a>
+                
+                <p><span>Qty:<i>{%for key, values in cart_pro_qty.items %}{%if key == rs.product.id|stringformat:"i" %}{{values}}{%endif%}{%endfor%}</i></span><span>Total:<i class="ftcolor" style="color:#2ac37d;">$
+                  {% if rs.product.variant == 'None' %}
+                  {%for key, values in cart_pro_qty.items %}{%if key == rs.product.id|stringformat:"i" %}{% multiply values|floatformat:2 rs.product.price   %}{%endif%}{%endfor%}&nbsp;<del style="color:orange;">${%for key, values in cart_pro_qty.items %}{%if key == rs.product.id|stringformat:"i" %}{% multiply values|floatformat:2 rs.product.m_price   %}{%endif%}{%endfor%}</del></i></span>
+                  {% else %}
+                  {%for key, values in cart_pro_qty.items %}{%if key == rs.product.id|stringformat:"i" %}{% multiply values|floatformat:2 rs.price %}{%endif%}{%endfor%}&nbsp;<del style="color:orange;">${%for key, values in cart_pro_qty.items %}{%if key == rs.product.id|stringformat:"i" %}{% multiply values|floatformat:2 rs.product.m_price %}{%endif%}{%endfor%}</del></i></span>
+                  {% endif %}  
+                
+              </p>
+              </div>
+            </div>
+            {% endfor %} 
+
+            {% for rs in cart_list_sess_prods_no_var %}<!--for no_var 2nd-->
+          <div class="ps-cart-item"><a class="ps-cart-item__close delete-cartlist" data-cartid="{{rs.id}}" ></a>
+        
+          <div class="ps-cart-item__thumbnail"><a href="/product/{{rs.id}}/{{rs.slug}}"></a><img src="{{rs.image.url}}" alt=""></div>
+          
+          <div class="ps-cart-item__content"><a class="ps-cart-item__title" href="/product/{{rs.id}}/{{rs.slug}}" style="margin-bottom: 0px;">{{rs.title}}&nbsp;(<i class="ftcolor">-{{rs.discount_percentage}}</i>)</a>
+            
+            <p><span>Qty:<i>{%for key, values in cart_pro_qty_no_var.items %}{%if key == rs.id|stringformat:"i" %}{{values}}{%endif%}{%endfor%}</i></span><span>Total:<i class="ftcolor" style="color:#2ac37d;">$
+             
+              {%for key, values in cart_pro_qty_no_var.items %}{%if key == rs.id|stringformat:"i" %}{% multiply values|floatformat:2 rs.price   %}{%endif%}{%endfor%}&nbsp;<del style="color:orange;">${%for key, values in cart_pro_qty_no_var.items %}{%if key == rs.id|stringformat:"i" %}{% multiply values|floatformat:2 rs.m_price   %}{%endif%}{%endfor%}</del></i></span>
+             
+          </p>
+          </div>
+        </div>
+        {% endfor %} 
+
+
+        {% else%}<!--dont have cart in session-->
+    {%endif%}<!--end if cart_var--> 
+  {%endif%} <!--end if authenticate-->
+
+
+      
+    </div> <!--end div content -->
+    {% if request.user.is_authenticated %} 
+    <div class="ps-cart__total">
+      <p>Number of items:<span>{{ count }}</span></p>
+      {% comment %} <p>Sub Total<span>${{total|floatformat:2}}</span></p> {% endcomment %}
+      <p>Sub Total<span>${{total|floatformat:2 |intcomma}}</span></p>
+      {% comment %} <p>VAT 10%:<span>${{vat10|floatformat:2}}</span></p> {% endcomment %}
+      <p hidden>VAT 10%:<span>${{vat10|floatformat:2 |intcomma}}</span></p>
+      <p>included VAT <!--span>${{vat10|floatformat:2 |intcomma}}</span--></p>
+      <p>Total of Items:<span>${{ grandtotal|floatformat:2 |intcomma}}</span></p> 
+      {% comment %} <p>Item GrandTotal:<span>${{ grandtotal}}</span></p> {% endcomment %}
+    </div>
+    <div class="ps-cart__footer"><a class="ps-btn" style="background-color:orange;" href="{% url 'order:shopcart' %}">View Cart<i class="ps-icon-shopping-cart"></i></a></div>
+    {%else%}
+    <div class="ps-cart__total">
+      {% comment %} <p>test total_no_var:${{gettotal_no_var}}</p>
+      <p>test total_var:${{gettotal_var}}</p>
+      <p>test total_var and no_var:${{grandtotal_sess}}</p> {% endcomment %}
+      <p>Number of items:<span>{{ count_sess }}</span></p>
+      {% comment %} <p>Sub Total<span>${{total|floatformat:2}}</span></p> {% endcomment %}
+      <p>Sub Total <span id="total_sess"class="ftcolor" style="color:#2ac37d;">${{grandtotal_sess|floatformat:2 |intcomma}}</span></p>
+      {% comment %} <p>VAT 10%:<span>${{vat10|floatformat:2}}</span></p> {% endcomment %}
+      <p hidden>VAT 10%:<span>${{vat10|floatformat:2 |intcomma}}</span></p>
+      <p>included VAT <!--span>${{vat10|floatformat:2 |intcomma}}</span--></p>
+      <p>Total of Items:<span id="grandtotal_sess"class="ftcolor" style="color:#2ac37d;">${{ grandtotal_sess|floatformat:2 |intcomma}}</span></p> 
+      {% comment %} <p>Item GrandTotal:<span>${{ grandtotal}}</span></p> {% endcomment %}
+    </div>
+    <div class="ps-cart__footer"><a class="ps-btn" style="background-color:orange;" href="{% url 'order:view_cartlist_sess' %}">View Cart<i class="ps-icon-shopping-cart"></i></a></div>
+
+    {%endif%}
+
+</div><!--End ps-cart__listing -->
+
+
+
+  

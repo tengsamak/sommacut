@@ -38,24 +38,35 @@ urlpatterns = [
 urlpatterns += i18n_patterns(
     path('admin/',admin.site.urls),
     path('ckeditor/', include('ckeditor_uploader.urls')),  # ckeditor copy from weblink
-    path('',include('home.urls')),
-    path('about/',include('home.urls'),name='about'),
-    path('contactus/',include('home.urls'),name='contactus'),
+    path('',include('home.urls'),name='index'),
+    #path('about/',include('home.urls'),name='about'),
+   # path('contactus/',include('home.urls'),name='contactus'),
     path('product/',include('products.urls')),
     path('order/',include('order.urls'),name='order'),
     path('user/',include('user.urls')),
-    path('login/',UserViews.login___form,name='login_form'),
+    path('login/',UserViews.login__form,name='login_form'),
     path('logout/',UserViews.logout_func,name='logout_func'),
-    path('signup/',UserViews.signup___form,name='signup_form'),
+    #old signup link
+    #path('signup/',UserViews.signup___form,name='signup_form'),
+    # new signup verify by email
+    path('signup/',UserViews.register,name='signup_form'),
+    
+    path('forgetpassword/',UserViews.password_reset_request,name='forgetpassword'),
     path('category/<int:id>/<slug:slug>',views.category_products,name='category_products'),
-    path('search/',views.search,name='search'), # for search normal
+    path('searchbar/',views.searchbar,name='searchbar'), # for search normal
+    path('search/',views.search,name='search'), # for search normal use SearchForm
     path('search_auto/',views.search_auto,name='search_auto'), # for search auto completed AJAX
     path('product/<int:id>/<slug:slug>',views.product_detail,name='product_detail'), # product detail link url
-    path('shopcart/',OrderViews.shopcart,name='shopcart'),
+    #path('shopcart/',OrderViews.shopcart,name='shopcart'),
     path('faq/',UserViews.faq,name='faq'),
+    
     path('ajaxcolor/', views.ajaxcolor, name='ajaxcolor'),
+    #test ajax selected pro
+    path('selectedpro/',views.selectedpro, name='selectedpro'),
+    
     path('vendors/',include('vendors.urls')),
     path('coupons/',include('coupons.urls')),
+    path('wishlist/',include('wishlist.urls')), #for wish list url
     #install socialmedial login
     path('accounts/', include('allauth.urls')),
     # add for test allauth profile

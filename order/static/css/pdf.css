@@ -1,4 +1,4 @@
-#orderhead{
+/* #orderhead{
   background-color:rgb(59, 100, 230);
   color:white;
   height:50px;
@@ -13,14 +13,14 @@
 
 }
 /*copy from invoice*/
-      table {
+      /* table {
   width: 100%;
   border-collapse: collapse;
   border-spacing: 0;
   margin-bottom: 20px;
-}
+} */
 
-table th,
+/* table th,
 table td {
   padding: 20px;
   background: #EEEEEE;
@@ -59,9 +59,9 @@ table .unit {
 }
 
 table .qty {
-}
+} */
 
-table .total {
+/* table .total {
   background: #57B223;
   color: #FFFFFF;
 }
@@ -108,7 +108,7 @@ table tfoot tr td:first-child {
 a {
   color: #0087C3;
   text-decoration: none;
-}
+} */
 /*
 body {
   position: relative;
@@ -123,7 +123,7 @@ body {
   font-family: SourceSansPro;
 }
 */
-header {
+/* header {
   padding: 10px 0;
   margin-bottom: 20px;
   border-bottom: 1px solid #AAAAAA;
@@ -181,9 +181,81 @@ h2.name {
   line-height: 1em;
   font-weight: normal;
   margin: 0  0 10px 0;
-}
+} */
 
-#invoice .date {
+/* #invoice .date {
   font-size: 1.1em;
   color: #777777;
+}  */
+
+
+/* For invoice_print */
+/* <style> */
+.table>tbody>tr>td {
+vertical-align: middle;
 }
+tfoot>tr>td{
+/* font-family: "Archivo Narrow", sans-serif; */
+font-size: 18px;
+font-weight: bold;
+color: #515356;
+text-transform: uppercase;
+
+/* border-bottom: 1px solid #e5e5e5; */
+}
+.ftcolor{
+  color:#27b574;
+  font-weight: bolder;
+  /* font-size: 18px; */
+
+}
+.form-group--number button{
+  background-color: #27b574;
+}
+.mr-15{
+  width:70px;
+  height: 70px;
+}
+@media print {
+.btnrow{
+  display:none;
+}
+.footrow {
+  text-align: center !important;
+  background-color: #27b574 !important;
+  color: white !important;
+  box-shadow:  inset 10px 10px 10px 1000px #27b574 !important;
+  text-align: center;
+  background-color: #27b574;
+  color: white;
+}
+
+/* .container img {vertical-align: middle;} */
+
+/* @page {size: A4 landscape;max-height:100%; max-width:100%} */
+@page {
+    size: A4;
+    margin: 0;
+
+}
+
+}
+h3 {
+font-size: 18px;
+}
+.ps-cart__actions {
+padding-top: 0px;
+}
+thead {
+font-size: large;
+background-color: #c4cef0;
+box-shadow: 0px 0px 0px #c4cef0 inset;
+}
+/* .valign {
+vertical-align: middle;
+} */
+/* </style> */
+/* End invoice_print */
+
+
+

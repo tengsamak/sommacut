@@ -6,7 +6,7 @@ from import_export.admin import ImportExportModelAdmin
 # Register your models here.
 from mptt.admin import DraggableMPTTAdmin
 
-from .models import Category, Product, Images, Comment, Color, Size, Variants #, ProductLang, CategoryLang
+from .models import Category, Product, Images, Comment, Color, Size, Variants,Event_timer #, ProductLang, CategoryLang
 
 
 # class CategoryLangInline(admin.TabularInline):
@@ -75,15 +75,15 @@ class ProductVariantsInline(admin.TabularInline):
     show_change_link = True
 
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ['id','title','category','vendor','status','image_tag']
-    list_filter = ['category','vendor']
+    list_display = ['id','pro_code','title','category','vendor','status','image_tag','discount_percentage','newstatus']
+    list_filter = ['category','vendor','pro_code']
     readonly_fields = ('image_tag',)
     inlines = [ProductImageInline,ProductVariantsInline,]#ProductLangInline]
     prepopulated_fields = {'slug': ('title',)} #auto slug for products admin
 
 @admin_thumbnails.thumbnail('image')
 class ImagesAdmin(admin.ModelAdmin):
-    list_display = ['image','title']
+    list_display = ['image','title','image_tag']
 
 
 
@@ -123,13 +123,16 @@ class VariantsAdmin(admin.ModelAdmin):
 #     list_display=['companyname']
 #     readonly_fields = ('id',)
 #
-# class VendorAdmin(admin.ModelAdmin):
-#     list_display  =['companyname','phone','address','contactname','status','create_at']
-#     list_filter = ['status','companyname']
-#     inlines = [ProductVendorInline]
-#
-#
-# admin.site.register(Vendor,VendorAdmin)
+class Event_timer_Admin(admin.ModelAdmin):
+    list_display  =['product','status','end_date',]
+    list_filter = ['product']
+    readonly_fields = ('status',)
+    
+    
+
+
+admin.site.register(Event_timer,Event_timer_Admin)
+
 admin.site.register(Category,CategoryAdmin2)
 admin.site.register(Product,ProductAdmin)
 admin.site.register(Comment,CommentAdmin)

@@ -1,0 +1,51 @@
+<div class="ps-content pt-80 pb-80">
+    <div class="ps-container">
+            <div class="ps-cart-listing ps-table--whishlist">
+            <table class="table ps-cart__table">
+            <thead>
+                <tr>
+                <th style="width:30px;">#</th>
+                <th>All Products</th>
+                <th>Price</th>
+                <th>View</th>
+                <th>Add To Cart</th>
+                <th>Remove</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                {%for wl in wlist %}
+                <tr>
+                <td style="width:30px;">{{forloop.counter}}</td>
+                <td><a class="ps-product__preview" href="/product/{{ wl.product.id}}/{{ wl.product.slug}}"><img class="mr-15" src="{{ wl.product.image.url }}" alt="{{wl.product.title}}"style="height:100px;width:100;">{{wl.product.title}}</a></td>
+                <td>${{wl.product.price}}</td>
+                <td><a class="ps-product-link" href="product-detail.html">View Product</a></td>
+                <td><button type="submit" class="ps-btn mb-10" style="background-color:orange;">Add to cart<i class="ps-icon-next"></i></button></td>
+                <td>
+                    <div class="ps-remove delete-wishlist" data-wid={{wl.id}}></div>
+                </td>
+                </tr>
+                <tr>
+                {%endfor%}                    
+                {% comment %} <td><a class="ps-product__preview" href="product-detail.html"><img class="mr-15" src="{% static ''%}images/product/cart-preview/2.jpg" alt=""> The Crusty Croissant</a></td>
+                <td>$150</td>
+                <td><a class="ps-product-link" href="product-detail.html">View Product</a></td>
+                <td><button type="submit" class="ps-btn mb-10" style="background-color:orange;">Add to cart<i class="ps-icon-next"></i></button></td>
+                <td>
+                    <div class="ps-remove"></div>
+                </td>
+                </tr>
+                <tr>
+                <td><a class="ps-product__preview" href="product-detail.html"><img class="mr-15" src="{% static ''%}images/product/cart-preview/3.jpg" alt="">The Rolling Pin</a></td>
+                <td>$150</td>
+                <td><a class="ps-product-link" href="product-detail.html">View Product</a></td>
+                <td><button type="submit" class="ps-btn mb-10" style="background-color:orange;">Add to cart<i class="ps-icon-next"></i></button></td>
+                <td>
+                    <div class="ps-remove"></div>
+                </td> {% endcomment %}
+                </tr>
+            </tbody>
+            </table>
+            </div>
+        </div>
+    </div>  

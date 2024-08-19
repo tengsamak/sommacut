@@ -1,0 +1,7 @@
+{% comment %} <div class="form-group" id="alertpromo" style="text-align:center;"> {% endcomment %}
+    <p style="border-style: solid;border-color:#27b574;border-width: thick;">
+    Your Code:{{getpromocode}}{%if checkcoupon.valid == True%}<i class="fa fa-check" style="font-size: x-large;color: #27b574;"></i>{%else%}<i class="fa fa-close" style="font-size: x-large;color: red;"></i>{%endif%}<br> Status:{{checkcoupon.valid}}<br> Message:{%if checkcoupon.valid == True%}Your got Discount:{%if promodiscount.is_percentage == True%} {{promodiscount.value}}%{%else%}${{promodiscount.value}}{%endif%}{%else%}{{checkcoupon.message}}{%endif%}
+    </p>
+{% comment %} </div> {% endcomment %}
+
+{% comment %} ,{% if checkcoupon.valid == True %} you get Discount :{%if promodiscount.is_percentage == True%}{{promodiscount.value}}% {%else%}{{promodiscount.value}}${%endif%} {%endif%} {% endcomment %}

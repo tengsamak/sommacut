@@ -1,7 +1,7 @@
 {% load static %}
 {% block search %}
 
-<html lang="zxx">
+<html lang="Eng">
 <head>
 	<!-- Meta Tag -->
 	<meta charset="utf-8">
@@ -109,7 +109,7 @@
 				</div>
 				<div class="col-lg-8 col-md-7 col-12">
 					<div class="search-bar-top">
-						<script>
+			<script>
 
                 $(function() {
                   $("#query").autocomplete({
@@ -127,10 +127,25 @@
                 }
 
             </script>
-						<div class="search-bar">
+
+			<div >
+				<form action="{% url 'search_auto' %}" class="ps-search--header" method="post">
+					{% csrf_token %}
+					<select name="catid"  class="form-control">
+						<option value="0">All</option>
+						{% for rs in category %}
+						<option value="{{ rs.id }}">{{ rs.title }}</option>
+						{% endfor %}
+					</select>
+					<input id="query" name="query" type="search" placeholder="Search Products Here....." class="form-control">
+
+					<button><i class="ps-icon-search"></i></button>
+				</form>
+			</div>
+						<!--div class="search-bar">
 							<form action="/search/" method="post">
 								{% csrf_token %}
-								<select name="catid" style="display: inline;">
+								<select name="catid" style="display: inline;" >
 									<option value="0">All</option>
 									{% for rs in category %}
 									<option value="{{ rs.id }}">{{ rs.title }}</option>
@@ -138,9 +153,9 @@
 								</select>
 								<input id="query" name="query" type="search" placeholder="Search Products Here....." class="search-bar">
 
-								<button class="btnn"><i class="ti-search"></i></button>
+								<button class="btnn"><i class="ti-search" ></i></button>
 							</form>
-						</div>
+						</div-->
 					</div>
 				</div>
 				{% load myapptags %}

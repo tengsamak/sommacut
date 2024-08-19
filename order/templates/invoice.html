@@ -344,8 +344,9 @@ h2.name {
           </tr>
           <tr>
             <td colspan="3"></td>
-            <td colspan="3">VAT 10%</td>
-            <td>{%for rs in orderinfo %}{{rs.vat10|floatformat:2}}{%endfor%} $</td>
+            <td colspan="3">Included VAT</td>
+            <td hidden colspan="3">VAT 10%</td>
+            <td hidden >{%for rs in orderinfo %}{{rs.vat10|floatformat:2}}{%endfor%} $</td>
           </tr>
           <tr>
             <td colspan="3"></td>

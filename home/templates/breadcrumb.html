@@ -1,11 +1,20 @@
-{% block breadcrumb %}
+{% block head%}
+<style>
+  .ps-cart__toggle:hover{
+    background-color:#ce7dde;
+  }
+</style>
+{%endblock%}
+
 <!-- for everypage excepte index page-->
-    <nav aria-label="breadcrumb">
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="#">Home</a></li>
-        <li class="breadcrumb-item"><a href="#">Library</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Data</li>
-      </ol>
-    </nav>
+<ol class="breadcrumb" style="background-color:#e9ecef;color: #009c91;display: block;margin-bottom: 0px;padding-bottom: 0px;padding-top: 5px;">
+  <!--li class="breadcrumb-item" ><a href="/" style="text-transform: capitalize;"><strong>Home</strong></a></li-->
+  <li class="breadcrumb-item"><a href="/" class="ps-cart__toggle" style="background-color:#ce7dde;"><!--span><i class="wlcount_session">2</i></span--><i class="fa fa-home"></i></a></li>
+  <!--li class="breadcrumb-item"><a href="/searchcateid/{{ product.category.id }}/{{ product.category.slug }}"><strong>{{ product.category.title }}</strong></a></li-->
+  <!--li class="breadcrumb-item"><a class="ps-cart__toggle" href="/searchcateid/{{ product.category.id }}/{{ product.category.slug }}"  style="background-color:#ce7dde;"><i class="fa fa-users"></i></a></li-->
+  <!--li class="breadcrumb-item active" aria-current="page"><strong>{{ product.title }}</strong></li-->
+  <li class="processbar" style="float: right;"><a href="#"class="ps-cart__toggle" data-toggle="collapse" data-target="#demoprobar"class="ps-btn ps-btn--gray" style="padding: 4px 10px;font-size: 12px;background-color: #2AC37D;"><i class="fa fa-sitemap"></i></a></li> 
+  {% comment %} <ol style="float: right;"><strong style="font-family: monospace;">Today:&nbsp;{% now "jS F Y " %}</strong><a data-toggle="collapse" data-target="#demo">Process Step</a>{% include 'processstepbar.html' %}</ol>  {% endcomment %}
+  <ol>{% include 'processstepbar.html' %}</ol>
+</ol>
 <!-- end for page -->
-{% endblock%}
