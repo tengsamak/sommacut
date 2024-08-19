@@ -27,9 +27,11 @@ SECRET_KEY = 'mst6!yv6=eez559kkbgsw8ui30j$9eoc-7&a41e*7nx)z&w&bt'
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'localhost'
+    'localhost',
     #'127.0.0.1' # for local host
-   # 'mydjangoajax.herokuapp.com' # add for heroku domain name
+    # 'mydjangoajax.herokuapp.com' # add for heroku domain name
+    'somma-store-test.heroku.com', # add for heroku domain name
+    'somma-store-test.herokuapp.com',# add for heroku domain name
     
 
 ]
