@@ -30,7 +30,7 @@ ALLOWED_HOSTS = [
     'localhost',
     #'127.0.0.1' # for local host
     # 'mydjangoajax.herokuapp.com' # add for heroku domain name
-    'somma-store-test.heroku.com', # add for heroku domain name
+    'somma-store-test-pr-123.herokuapp.com', # add for heroku domain name
     'somma-store-test.herokuapp.com',# add for heroku domain name
     
 
