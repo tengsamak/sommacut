@@ -28,14 +28,14 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     'localhost',
-    '.vercel.app', # add for vercel.com domain name
-    #'127.0.0.1' # for local host
+    #'.vercel.app', # add for vercel.com domain name
+    '127.0.0.1' # for local host
     # 'mydjangoajax.herokuapp.com' # add for heroku domain name
-    'somma-store-test-pr-123.herokuapp.com', # add for heroku domain name
-    'somma-store-test.herokuapp.com',# add for heroku domain name
+    #'somma-store-test-pr-123.herokuapp.com', # add for heroku domain name
+    #'somma-store-test.herokuapp.com',# add for heroku domain name
     
-
 ]
+CSRF_TRUSTED_ORIGINS = []
 
 
 # Application definition
