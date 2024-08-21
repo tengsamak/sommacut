@@ -1,6 +1,7 @@
 from django.utils import timezone
 import pytz
-from datetime import datetime,timedelta
+#from datetime import datetime,timedelta #change timezone
+from django.utils.timezone import datetime,timedelta
 from ckeditor_uploader.fields import RichTextUploadingField
 from django.contrib.auth.models import User
 from django.db import models
@@ -103,8 +104,8 @@ class Product(models.Model):
     #slug=models.SlugField()  # this will create slug by own user input when add products
     slug = models.SlugField(null=False,unique=True) # This will create auto slug by own name products
     status=models.CharField(max_length=10,choices=STATUS)
-    create_at=models.DateTimeField(auto_now_add=True,blank=True)
-    update_at=models.DateTimeField(auto_now=True,blank=True)
+    create_at=models.DateTimeField(auto_now_add=True,blank=True,null=True)
+    update_at=models.DateTimeField(auto_now=True,blank=True,null=True)
     tags = TaggableManager()
     def __str__(self):
         return self.title
@@ -196,9 +197,9 @@ class Event_timer(models.Model):
         ('Expired','Expired'), # return the price = m.price
     )
     product=models.ForeignKey(Product,on_delete=models.CASCADE,null=True) 
-    end_date=models.DateTimeField(default=timezone.now,blank=True,help_text="Please select Furture date and time from now to countdown",null=True)
+    end_date=models.DateTimeField(auto_now=True,blank=True,help_text="Please select Furture date and time from now to countdown",null=True)
     status=models.CharField(max_length=10,blank=True,default="False")
-    create_at=models.DateTimeField(default=timezone.now,blank=True)
+    create_at=models.DateTimeField(auto_now=True,blank=True,null=True)
     def __str__(self):
         return self.product.pro_code
     

@@ -31,8 +31,8 @@ class Vendor(models.Model):
     logo = models.ImageField(null=True, blank=True,upload_to='images/vendors/')
     pattern = models.ImageField(null=True,upload_to='images/vendors/', blank=True)
     status = models.CharField(max_length=10, choices=STATUS, default='True')
-    create_at = models.DateTimeField(auto_now_add=True,blank=True)
-    update_at = models.DateTimeField(auto_now=True,blank=True)
+    create_at = models.DateTimeField(auto_now_add=True,blank=True,null=True)
+    update_at = models.DateTimeField(auto_now=True,blank=True,null=True)
     email=models.EmailField(max_length=100,null=True)
     www=models.CharField(max_length=300,null=True)
     facebook=models.CharField(max_length=300,null=True)
@@ -90,8 +90,8 @@ class Comment_v(models.Model):
     rate_v = models.IntegerField(default=1)
     ip = models.CharField(max_length=20, blank=True)
     status=models.CharField(max_length=10,choices=STATUS, default='True')
-    create_at=models.DateTimeField(auto_now_add=True,blank=True)
-    update_at=models.DateTimeField(auto_now=True,blank=True)
+    create_at=models.DateTimeField(auto_now_add=True,blank=True,null=True)
+    update_at=models.DateTimeField(auto_now=True,blank=True,null=True)
 
     def __str__(self):
         return self.status

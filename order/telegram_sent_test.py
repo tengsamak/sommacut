@@ -12,10 +12,12 @@ CHAT_ID="-4159721907"
 #print(requests.get(url).json())
 
 import requests
-import datetime
+# import datetime # change datetime
+from django.utils.timezone import datetime
 def sent_to_telegram(otpcode,phonenum):
 
-        today = format(datetime.datetime.now())
+        # today = format(datetime.datetime.now()) # change datetime
+        today = format(datetime.now())
         print("todaydate:",today)
         message =today+" :OTP Verify: "+str(otpcode)+" PhoneNumber: "+str(phonenum)
         #for sent file to group

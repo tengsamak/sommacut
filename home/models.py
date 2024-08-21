@@ -9,8 +9,8 @@ class Language(models.Model):
     name= models.CharField(max_length=20)
     code= models.CharField(max_length=5)
     #flag=models.ImageField(blank=True,upload_to='images/')
-    create_at=models.DateTimeField(auto_now_add=True,blank=True)
-    update_at=models.DateTimeField(auto_now=True,blank=True)
+    create_at=models.DateTimeField(auto_now_add=True,blank=True,null=True)
+    update_at=models.DateTimeField(auto_now=True,blank=True,null=True)
 
     def __str__(self):
         return self.name
@@ -53,8 +53,8 @@ class Setting(models.Model):
     privacypolicy = RichTextUploadingField(blank=True)
     references=RichTextUploadingField(blank=True)
     status=models.CharField(max_length=10,choices=STATUS)
-    create_at=models.DateTimeField(auto_now_add=True,blank=True)
-    update_at=models.DateTimeField(auto_now=True,blank=True)
+    create_at=models.DateTimeField(auto_now_add=True,blank=True,null=True)
+    update_at=models.DateTimeField(auto_now=True,blank=True,null=True)
 
     def __str__(self):
         return self.title
@@ -81,8 +81,8 @@ class ContactMessage(models.Model):
     status=models.CharField(blank=True,max_length=20,choices=STATUS,default='New')
     ip=models.CharField(blank=True,max_length=20)
     note=models.CharField(blank=True,max_length=100)
-    create_at=models.DateTimeField(auto_now_add=True,blank=True)
-    update_at=models.DateTimeField(auto_now=True,blank=True)
+    create_at=models.DateTimeField(auto_now_add=True,blank=True,null=True)
+    update_at=models.DateTimeField(auto_now=True,blank=True,null=True)
 
     def __str__(self):
         return self.name
@@ -111,8 +111,8 @@ class FAQ(models.Model):
     question = models.CharField(max_length=200)
     answer = RichTextUploadingField()
     status=models.CharField(max_length=10, choices=STATUS)
-    create_at=models.DateTimeField(auto_now_add=True,blank=True)
-    update_at=models.DateTimeField(auto_now=True,blank=True)
+    create_at=models.DateTimeField(auto_now_add=True,blank=True,null=True)
+    update_at=models.DateTimeField(auto_now=True,blank=True,null=True)
 
     def __str__(self):
         return self.question

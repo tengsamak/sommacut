@@ -1,6 +1,6 @@
 from django import forms
-from django.contrib.auth import authenticate
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm, AuthenticationForm,PasswordChangeForm,PasswordResetForm,SetPasswordForm
+# from django.contrib.auth import authenticate
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm,PasswordChangeForm,PasswordResetForm,SetPasswordForm
 from django.contrib.auth.models import User
 from django.forms import TextInput, EmailInput, Select, FileInput
 from django.contrib.auth import get_user_model

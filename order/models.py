@@ -142,8 +142,8 @@ class Order(models.Model):
     tracking_no= models.CharField(null=True, max_length=150)
     rate_by_ordered = models.CharField(null=True,max_length=50)# record exchange rate while the date place order
     grandtotal_in_kh_real = models.FloatField(null=True,max_length=250) # record total in KH_real both discount and not discount
-    create_at=models.DateTimeField(auto_now_add=True,blank=True)
-    update_at=models.DateTimeField(auto_now=True,blank=True)
+    create_at=models.DateTimeField(auto_now_add=True,blank=True,null=True)
+    update_at=models.DateTimeField(auto_now=True,blank=True,null=True)
 
     class Meta:
         # ordering = ('-created',)
@@ -173,16 +173,16 @@ class OrderProduct(models.Model):
         ('Canceled','Canceled'),
         ('Session','Session'),
     )
-    order=models.ForeignKey(Order,on_delete=models.CASCADE)
+    order=models.ForeignKey(Order,on_delete=models.CASCADE,null=True,blank=True)
     user=models.ForeignKey(User,on_delete=models.CASCADE,null=True,blank=True)
-    product=models.ForeignKey(Product,on_delete=models.CASCADE)
+    product=models.ForeignKey(Product,on_delete=models.CASCADE,null=True,blank=True)
     variant = models.ForeignKey(Variants, on_delete=models.SET_NULL, blank=True, null=True)  # relation with varinat
     quantity=models.IntegerField(blank=True)
     price=models.DecimalField(max_digits=12, decimal_places=2,default=0)
     amount=models.FloatField(blank=True,max_length=150) #about price
     status=models.CharField(max_length=10,choices=STATUS,default='New')
-    create_at=models.DateTimeField(auto_now_add=True,blank=True)
-    update_at=models.DateTimeField(auto_now=True,blank=True)
+    create_at=models.DateTimeField(auto_now_add=True,blank=True,null=True)
+    update_at=models.DateTimeField(auto_now=True,blank=True,null=True)
 
     def __str__(self):
         return self.product.title

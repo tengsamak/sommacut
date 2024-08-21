@@ -1,6 +1,6 @@
 import pyotp
-from datetime import datetime,timedelta
-import time
+#from datetime import datetime,timedelta # change datetime
+from django.utils.timezone import datetime,timedelta
 
 from countdowntime import countdown
 #def sent_otp(request,number):

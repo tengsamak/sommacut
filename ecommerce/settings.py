@@ -30,7 +30,7 @@ ALLOWED_HOSTS = [
     'localhost',
     #'.vercel.app', # add for vercel.com domain name
     '127.0.0.1' # for local host
-    'web-production-56d4b.up.railway.app',
+    #'web-production-56d4b.up.railway.app',
     # 'mydjangoajax.herokuapp.com' # add for heroku domain name
     #'somma-store-test-pr-123.herokuapp.com', # add for heroku domain name
     #'somma-store-test.herokuapp.com',# add for heroku domain name

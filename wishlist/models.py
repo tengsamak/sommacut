@@ -12,7 +12,7 @@ class wish_list(models.Model):
     user=models.ForeignKey(User,on_delete=models.CASCADE,related_name='wish_list')
     product=models.ForeignKey(Product,on_delete=models.CASCADE,related_name='wish_list')
     #variant=models.ForeignKey(Variants,on_delete=models.CASCADE,related_name='wishl_ist')
-    created_at = models.DateTimeField(auto_now_add=True,editable=False,blank=True)
+    created_at = models.DateTimeField(auto_now_add=True,editable=False,blank=True,null=True)
 
     class Meta:
         ordering = ['-created_at']
@@ -39,6 +39,7 @@ class Wishlist(models.Model):
         auto_now_add=True,
         editable=False,
         blank=True,
+        null=True,
     )
 
     class Meta:
