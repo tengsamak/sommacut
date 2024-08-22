@@ -28,7 +28,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     'localhost',
-    #'.vercel.app', # add for vercel.com domain name
+    '.vercel.app', # add for vercel.com domain name
     '127.0.0.1' # for local host
     #'web-production-56d4b.up.railway.app',
     # 'mydjangoajax.herokuapp.com' # add for heroku domain name
