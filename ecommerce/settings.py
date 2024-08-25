@@ -61,7 +61,7 @@ INSTALLED_APPS = [
     'coupons',
     'wishlist', # for wish list or favorit products lsit
     'django_simple_coupons', #install package django simple coupons
-    'debug_toolbar', # debug toolbar package
+    # 'debug_toolbar', # debug toolbar package
     # install the socialmedia login
     'django.contrib.sites',
     #install socialmedia login
@@ -103,7 +103,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware', # for debug toolbar
+    # 'debug_toolbar.middleware.DebugToolbarMiddleware', # for debug toolbar
 ]
 
 ROOT_URLCONF = 'ecommerce.urls'
