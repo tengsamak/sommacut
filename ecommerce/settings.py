@@ -9,12 +9,17 @@ https://docs.djangoproject.com/en/3.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
+from dotenv import load_dotenv # for env 
 import os
 from pathlib import Path
 from django.utils.translation import gettext_lazy as _  #for multi languanges
 
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# load our environmental variable
+load_dotenv()
 
 
 # Quick-start development settings - unsuitable for production
@@ -30,7 +35,7 @@ ALLOWED_HOSTS = [
     'localhost',
     #'.vercel.app', # add for vercel.com domain name
     '127.0.0.1', # for local host
-    'https://sommacut.onrender.com',# add for render.com domain name
+    # 'https://sommacut.onrender.com',# add for render.com domain name
     #'web-production-56d4b.up.railway.app',
     # 'mydjangoajax.herokuapp.com' # add for heroku domain name
     #'somma-store-test-pr-123.herokuapp.com', # add for heroku domain name
@@ -142,6 +147,13 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
+        # 'ENGINE': 'django.db.backends.postgresql',
+        # 'NAME': os.environ.get('DB_NAME_SM'),         #'db_name',                      
+        # 'USER': os.environ.get('DB_USER_SM'),         #'db_user',
+        # 'PASSWORD': os.environ.get('DB_PASSWORD_SM'),      #'db_user_password' set in .env, 
+        # 'HOST': os.environ.get('DB_HOST_SM'),
+        # 'PORT': os.environ.get('DB_PORT_SM'),        #'db_port_number',
+        
     }
 }
 
@@ -262,13 +274,14 @@ SOCIALACCOUNT_PROVIDERS = {
 }
 # socialmedia allauth required
 #for sending email contactus.html emailsetting
+
 #EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_BACKEND = os.environ.get('EMAIL_BACKEND')
+EMAIL_HOST = os.environ.get('EMAIL_HOST')
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'tengsamak@gmail.com' #sender email-id your email account
-EMAIL_HOST_PASSWORD = 'xuol jvia dthn wyoo' #password associated with sender email-id your email encrip pass
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER') #sender email-id your email account
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD') #password associated with sender email-id your email encrip pass
 #end sending email
 
 # install socialmedia required
@@ -295,10 +308,12 @@ INTERNAL_IPS = [
     # ...
 ]
 
+
+
 # For reCapcha
-RECAPTCHA_PUBLIC_KEY = '6LeBti8pAAAAAMYVX1AHQNvqIxNO7e5jMxKq_p0M'
-RECAPTCHA_PRIVATE_KEY = '6LeBti8pAAAAALaK4X84WTKhuWyyaiC2xljYSNoa'
-SILENCED_SYSTEM_CHECKS = ['django_recaptcha.recaptcha_test_key_error']
+RECAPTCHA_PUBLIC_KEY = os.environ.get('RECAPTCHA_PUBLIC_KEY')
+RECAPTCHA_PRIVATE_KEY = os.environ.get('RECAPTCHA_PRIVATE_KEY')
+SILENCED_SYSTEM_CHECKS = [os.environ.get('SILENCED_SYSTEM_CHECKS')]
 
 #RECAPTCHA_DOMAIN = 'www.recaptcha.net'
 #RECAPTCHA_PROXY = {'http': 'http://127.0.0.1:8000', 'https': 'https://127.0.0.1:8000'}
@@ -321,6 +336,10 @@ AUTH_TOKEN_VALIDITY=1
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # info for Telegram TOKEN when sent to group
-TOKEN="7043199444:AAGRP4Uo25wOHY6_7Y-rbtWCV-iTxGMDPUg"
-CHAT_ID="-4159721907"
+
+# end info
+# info for Telegram TOKEN when sent to group
+TOKEN=os.environ.get('TOKEN')
+CHAT_ID=os.environ.get('CHAT_ID')
+
 # end info
